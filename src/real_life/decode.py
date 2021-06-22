@@ -13,7 +13,7 @@ from real_life.utils import BITSTREAM_SUFFIX, GOP_HEADER_SUFFIX, GOP_SUFFIX,\
                             VIDEO_HEADER_SUFFIX
 from real_life.check_md5sum import compute_md5sum, read_md5sum
 from real_life.header import read_gop_header, read_video_header
-from func_util.nn_util import get_value, push_dic_to_device, quantize_decoded_frame
+from func_util.nn_util import get_value, push_dic_to_device
 from func_util.GOP_structure import FRAME_B, FRAME_P, FRAME_I, get_name_frame_code,\
                                     get_depth_gop
 from func_util.img_processing import cast_before_png_saving, save_tensor_as_img,\
@@ -503,7 +503,7 @@ class Decoder(Module):
             v_next = tmp_out.get('v_next')
 
             # Perform motion compensation
-            tmp_out, _ = self.motion_compensation({
+            tmp_out = self.motion_compensation({
                 'prev': prev_ref,
                 'next': next_ref,
                 'v_prev': v_prev,
@@ -554,7 +554,6 @@ class Decoder(Module):
         # ===== DOWNSCALING AND 420 STUFF ===== #
 
         # ===== QUANTIZE THE OUTPUT TENSOR ===== #
-        # output_frame = quantize_decoded_frame(output_frame)
         output_frame = cast_before_png_saving(
             {'x': output_frame, 'data_type': 'yuv_dic'}
         )
@@ -845,19 +844,19 @@ class ConditionalDecoder(Module):
 
         # Input of the gain matrix
         gain_matrix_in = {
-            'x': y_hat, 'idx_rate': idx_rate, 'mode': 'dec', 'flag_visu': False
+            'x': y_hat, 'idx_rate': idx_rate, 'mode': 'dec'
         }
 
         # Get the correct gain matrix
         if not(self.flag_gain_p_b):
-            tmp_out, _ = self.gain_I(gain_matrix_in)
+            tmp_out = self.gain_I(gain_matrix_in)
         else:
             if frame_type == FRAME_I:
-                tmp_out, _ = self.gain_I(gain_matrix_in)
+                tmp_out = self.gain_I(gain_matrix_in)
             elif frame_type == FRAME_P:
-                tmp_out, _ = self.gain_P(gain_matrix_in)
+                tmp_out = self.gain_P(gain_matrix_in)
             elif frame_type == FRAME_B:
-                tmp_out, _ = self.gain_B(gain_matrix_in)
+                tmp_out = self.gain_B(gain_matrix_in)
         
         y_hat = tmp_out.get('output')
 

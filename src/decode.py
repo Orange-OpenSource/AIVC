@@ -10,8 +10,6 @@ from real_life.decode import decode_one_video, Decoder
 from model_mngt.model_management import load_model
 
 # ! Must be launched from within /src
-# ! Must do this before launching anything (outside of python) 
-# !     export CUBLAS_WORKSPACE_CONFIG=:4096:8
 
 # ============================ Arguments parsing ============================ #
 parser = argparse.ArgumentParser()

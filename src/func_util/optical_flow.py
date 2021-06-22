@@ -2,8 +2,6 @@ import torch
 import torch.nn as nn
 from torch.autograd import Variable
 
-from func_util.nn_util import get_value
-
 def warp(x, flo, interpol_mode='bilinear', padding_mode='border', align_corners=True):
     """
     warp an image/tensor (im2) back to im1, according to the optical flow

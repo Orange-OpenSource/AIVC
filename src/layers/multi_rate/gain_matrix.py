@@ -99,18 +99,12 @@ class GainMatrix(Module):
             #   <dec>: use dec_gain_list[idx_rate] (to be used at the decoder
             # input).
             'mode': None,
-            # If true, generate a visualisation dictionnary
-            'flag_visu': False,
-
         }
 
         x = get_value('x', param, DEFAULT_PARAM)
         idx_rate = get_value('idx_rate', param, DEFAULT_PARAM)
         mode = get_value('mode', param, DEFAULT_PARAM)
-        flag_visu = get_value('flag_visu', param, DEFAULT_PARAM)
-
         net_out = {}
-        visu = {}
 
         # For now we don't interpolate. We just take the gain as it is.
         if self.training:
@@ -120,11 +114,7 @@ class GainMatrix(Module):
 
         net_out['output'] = x * cur_gain
 
-        if flag_visu:
-            visu['enc_gain'] = self.get_gain(idx_rate, mode='enc')
-            visu['dec_gain'] = self.get_gain(idx_rate, mode='dec')
-
-        return net_out, visu
+        return net_out
 
     def get_gain(self, idx_rate, mode=''):
         """
