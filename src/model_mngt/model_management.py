@@ -306,10 +306,10 @@ def infer_one_GOP(param):
 
     # Set model to evaluation mode
     model = model.eval()
-    # Retrieve the device on which we're working
-    my_device = COMPUTE_PARAM.get('device')
-    # Data represent the raw frames (i.e. uncompressed)
-    raw_frames = push_gop_to_device(raw_frames, my_device)
+    # # Retrieve the device on which we're working
+    # my_device = COMPUTE_PARAM.get('device')
+    # # Data represent the raw frames (i.e. uncompressed)
+    # raw_frames = push_gop_to_device(raw_frames, my_device)
 
     model_input = {
         'GOP_struct': GOP_struct,
@@ -332,6 +332,7 @@ def infer_one_GOP(param):
                 'data_type': 'yuv_dic',
             })
 
+    torch.cuda.empty_cache()
     _, result = compute_metrics_one_GOP({
         'net_out': net_out,
         'target': raw_frames,

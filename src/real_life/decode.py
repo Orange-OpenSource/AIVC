@@ -266,6 +266,11 @@ def decode_one_GOP(param):
             'idx_rate': idx_rate,
             'device': device,
         })
+
+        # Send decoded frame to CPU and clear GPU memory
+        decoded_frame = push_dic_to_device(decoded_frame, 'cpu')
+        torch.cuda.empty_cache()
+
         decoded_frame = cast_before_png_saving({'x': decoded_frame, 'data_type': 'yuv_dic'})
 
         decoded_GOP[frame_name_inside_GOP] = decoded_frame
