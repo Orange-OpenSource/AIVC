@@ -33,14 +33,11 @@ class MotionCompensation(Module):
             'beta': None,
             # Interpolation mode
             'interpol_mode': 'bilinear',
-            # Wether to output visualisation or not
-            'flag_visu': False,
             # Which padding mode to use, available: 'zeros', 'border', 'reflection'
             'padding_mode': 'border',
             # Flag align_corners. Should be set to True every time
             'align_corners': True,
-            # If true, we generate a bitstream at the end (and we don't go 
-            # in the visu part?)
+            # If true, we generate a bitstream at the end
             'generate_bitstream': False,
             # Used to quantize the floatting grid in the warping function
             'quantizer': None,
@@ -53,7 +50,6 @@ class MotionCompensation(Module):
         v_next = get_value('v_next', param, DEFAULT_PARAM)
         beta = get_value('beta', param, DEFAULT_PARAM)
         interpol_mode = get_value('interpol_mode', param, DEFAULT_PARAM)
-        flag_visu = get_value('flag_visu', param, DEFAULT_PARAM)
         padding_mode = get_value('padding_mode', param, DEFAULT_PARAM)
         align_corners = get_value('align_corners', param, DEFAULT_PARAM)
         generate_bitstream = get_value('generate_bitstream', param, DEFAULT_PARAM)
@@ -86,14 +82,4 @@ class MotionCompensation(Module):
             # Pixel-wise weighted combination
             net_out['x_warp'] = beta * x_warp_from_prev + (1 - beta) * x_warp_from_next
 
-        visu = {}
-        if flag_visu:
-            TAG = 'MotionComp_'
-            visu[TAG + 'png_warp_from_prev'] = x_warp_from_prev
-            visu[TAG + 'png_warp_from_next'] = x_warp_from_next
-            visu[TAG + 'png_warp_from_prev_masked'] = beta * x_warp_from_prev
-            visu[TAG + 'png_warp_from_next_masked'] = (1 - beta) * x_warp_from_next
-
-
-
-        return net_out, visu
+        return net_out

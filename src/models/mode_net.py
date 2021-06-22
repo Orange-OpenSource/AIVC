@@ -40,14 +40,11 @@ class ModeNet(Module):
             'prev': None,
             # Next reference x_{t+1}
             'next': None,
-            # If True: return visu, a dictionnary full of visualisations
-            'flag_visu': False,
             # If not None: override the y with external y
             'external_y': None,
             # For multi-rate, not used for now
             'idx_rate': 0.,
-            # If true, we generate a bitstream at the end (and we don't go 
-            # in the visu part?)
+            # If true, we generate a bitstream at the end
             'generate_bitstream': False,
             # Path where the bistream is written
             'bitstream_path': '',
@@ -63,7 +60,6 @@ class ModeNet(Module):
         code = get_value('code', param, DEFAULT_PARAM)
         prev_ref = get_value('prev', param, DEFAULT_PARAM)
         next_ref = get_value('next', param, DEFAULT_PARAM)
-        flag_visu = get_value('flag_visu', param, DEFAULT_PARAM)
         external_y = get_value('external_y', param, DEFAULT_PARAM)
         idx_rate = get_value('idx_rate', param, DEFAULT_PARAM)
         generate_bitstream = get_value('generate_bitstream', param, DEFAULT_PARAM)
@@ -84,7 +80,6 @@ class ModeNet(Module):
         net_input = {
             'in_enc': in_enc,
             'in_shortcut': in_shortcut,
-            'flag_visu': flag_visu,
             'external_y': external_y,
             'idx_rate': idx_rate,
             'use_shortcut_vector': frame_type == FRAME_B,
@@ -96,7 +91,7 @@ class ModeNet(Module):
         }
         
         # Perform forward pass        
-        raw_net_out, raw_visu = self.mode_net(net_input)
+        raw_net_out = self.mode_net(net_input)
 
         # Some of ModeNet outputs need to be re-parameterized or slightly
         # modified
@@ -117,20 +112,8 @@ class ModeNet(Module):
             'rate_y': raw_net_out.get('rate_y'),
             'rate_z': raw_net_out.get('rate_z'),
         }
-
-        visu = {}
-        if net_input.get('flag_visu'):
-            TAG = 'ModeNet_'
-
-            for k in raw_visu:
-                visu[TAG + k] = raw_visu.get(k)
-
-            visu[TAG + 'alpha'] = alpha
-            visu[TAG + 'beta'] = beta
-            visu[TAG + 'v_prev'] = v_prev
-            visu[TAG + 'v_next'] = v_next
                 
-        return net_out, visu
+        return net_out
 
     def print_debug_dic(self, debug_dic):
         for k, v in debug_dic.items():

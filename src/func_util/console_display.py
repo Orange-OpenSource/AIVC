@@ -1,12 +1,11 @@
 """Utilitary function for a neat console display
 """
 
-from func_util.cluster_mngt import COMPUTE_PARAM
-
 LINE_LENGTH = 80
 MSG_TYPE_LEN = 10
 FN_NAME_LEN = 30
 VAR_NAME_LEN = 30
+FLAG_QUIET = False
 
 def print_dic_content(dic_to_print, dic_name=''):
     """Print the content of a dictionnary:
@@ -14,7 +13,7 @@ def print_dic_content(dic_to_print, dic_name=''):
             key: value
     etc.
     """
-    if COMPUTE_PARAM.get('flag_quiet'):
+    if FLAG_QUIET:
         return
 
     total_length = 120
@@ -34,7 +33,7 @@ def print_dic_content(dic_to_print, dic_name=''):
 
 
 def print_log_msg(msg_type, fn_name, var_name, var):
-    if COMPUTE_PARAM.get('flag_quiet'):
+    if FLAG_QUIET:
         return
 
     print(('[' + str(msg_type) + ']').ljust(MSG_TYPE_LEN, ' ')

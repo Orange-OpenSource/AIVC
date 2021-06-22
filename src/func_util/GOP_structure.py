@@ -104,6 +104,7 @@ def chained_gop(gop_size, n):
 
     return first_gop
 
+
 def generate_ldp_gop(gop_size):
     """
     Generate a low-delay P gop of one I + <gop_size> P-framess

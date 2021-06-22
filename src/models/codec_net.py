@@ -34,8 +34,6 @@ class CodecNet(Module):
             'code': None,
             # Predicted frame \tilde{x}_t
             'prediction': None,
-            # If True: return visu, a dictionnary full of visualisations
-            'flag_visu': False,
             # If not None: override the y with external y
             'external_y': None,
             # For multi-rate, not used for now
@@ -44,8 +42,7 @@ class CodecNet(Module):
             # each of the B examples which are either: FRAME_I, FRAME_P or 
             # FRAME_B
             'frame_type': None,
-            # If true, we generate a bitstream at the end (and we don't go 
-            # in the visu part?)
+            # If true, we generate a bitstream at the end
             'generate_bitstream': False,
             # Path where the bistream is written
             'bitstream_path': '',
@@ -56,7 +53,6 @@ class CodecNet(Module):
         # Retrieve mode_net input data
         code = get_value('code', param, DEFAULT_PARAM)
         prediction = get_value('prediction', param, DEFAULT_PARAM)
-        flag_visu = get_value('flag_visu', param, DEFAULT_PARAM)
         external_y = get_value('external_y', param, DEFAULT_PARAM)
         idx_rate = get_value('idx_rate', param, DEFAULT_PARAM)
         frame_type = get_value('frame_type', param, DEFAULT_PARAM)
@@ -67,7 +63,6 @@ class CodecNet(Module):
         net_input = {
             'in_enc': torch.cat((prediction, code), dim=1),
             'in_shortcut': prediction,
-            'flag_visu': flag_visu,
             'external_y': external_y,
             'idx_rate': idx_rate,
             'use_shortcut_vector': frame_type != FRAME_I,
@@ -78,7 +73,7 @@ class CodecNet(Module):
             'latent_name': 'codecnet'
         }
 
-        raw_net_out, raw_visu = self.codec_net(net_input)
+        raw_net_out = self.codec_net(net_input)
 
         # Some of CodecNet outputs need to be re-parameterized or slightly
         # modified
@@ -90,11 +85,4 @@ class CodecNet(Module):
             'rate_z': raw_net_out.get('rate_z'),
         }
 
-        visu = {}
-        if net_input.get('flag_visu'):
-            TAG = 'CodecNet_'
-
-            for k in raw_visu:
-                visu[TAG + k] = raw_visu.get(k)
-
-        return net_out, visu
+        return net_out

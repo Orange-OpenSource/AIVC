@@ -99,6 +99,7 @@ def compute_ms_ssim(x, y, max_value=1.):
 
     return res
 
+
 def compute_squared_err(x, y, mode='torch'):
     """
     Return both sum of squared error and mean squarred error between x and y

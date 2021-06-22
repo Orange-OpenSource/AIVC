@@ -18,7 +18,6 @@ from torchvision.transforms.functional import to_tensor, to_pil_image
 from torch.nn.functional import interpolate
 from func_util.nn_util import add_dummy_batch_dim, convert_tensor_to_dic, get_value,\
                               add_dummy_batch_dim_dic
-from torch.nn import ReplicationPad2d
 
 def cast_before_png_saving(param):
     """
@@ -65,7 +64,6 @@ def cast_before_png_saving(param):
             x_png[c] = ((255. * torch.clamp(x.get(c), 0., 1.) ).round() / 255.).float()
 
     return x_png
-
 
 
 def load_frames(param):
@@ -297,48 +295,6 @@ def save_yuv_separately(x, path_img):
 
 def get_y_u_v(x):
     return x.get('y'), x.get('u'), x.get('v')
-
-
-def compute_diff_img(img1, img2, mode='yuv420'):
-    """
-    mode='yuv420', 'yuv444' or 'rgb'
-    if yuv420:
-        img are a dic
-    if yuv444:
-        img are a dic
-    if rgb:
-        img are 4-D or 3-D tensors
-    """
-    if mode == 'yuv420' or mode == 'yuv444':
-
-        # Compute diff image channel by channel
-        diff_dic = {}
-        for key in img1:
-            diff_dic[key] = (img1.get(key) - img2.get(key)).abs()
-
-        diff_y, diff_u, diff_v = get_y_u_v(diff_dic)
-
-        B = diff_y.size()[0]
-        H = diff_y.size()[2]
-        W = diff_y.size()[3]
-
-        diff_tensor = torch.zeros(B, 3, H, W, device=diff_y.device)
-
-        diff_tensor[:, 0, :, :] = diff_y
-
-        if mode == 'yuv420':
-            diff_tensor[:, 1, :, :] = interpolate_nearest(diff_u)
-            diff_tensor[:, 2, :, :] = interpolate_nearest(diff_v)
-
-        diff_tensor = torch.sum(diff_tensor, dim=1).squeeze(0)
-
-    # Nothing to do for rgb format
-    if mode == 'rgb':
-        diff_tensor = torch.sum((img1 - img2).abs(), dim=1).squeeze(0)
-
-    # We represent the square root of the error
-    # as a 3-d tensor [1, H, W]
-    return torch.sqrt(diff_tensor).unsqueeze(0)
 
 
 def interpolate_nearest(x, scale=2):

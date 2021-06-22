@@ -9,8 +9,7 @@ from torch.nn import Module, ReplicationPad2d
 # Custom modules
 from func_util.console_display import print_log_msg, print_dic_content
 from func_util.img_processing import get_y_u_v, save_yuv_separately, cast_before_png_saving
-from func_util.nn_util import get_value, dic_zeros_like, cat_N_yuv_dic, push_dic_to_device,\
-                              crop_dic, quantize_decoded_frame
+from func_util.nn_util import get_value, dic_zeros_like
 from func_util.cluster_mngt import COMPUTE_PARAM
 from func_util.GOP_structure import get_name_frame_code, get_depth_gop,\
                                     FRAME_B, FRAME_P, FRAME_I, GOP_STRUCT_DIC
@@ -19,7 +18,6 @@ from models.mode_net import ModeNet
 from models.motion_compensation import MotionCompensation
 from layers.ae.ae_layers import InputLayer, OutputLayer
 
-from real_life.bitstream import ArithmeticCoder
 from real_life.utils import GOP_HEADER_SUFFIX
 from real_life.check_md5sum import write_md5sum
 from real_life.header import write_gop_header
@@ -125,8 +123,6 @@ class FullNet(Module):
             'prev_dic': None,
             # YUV dictionnary of the next frame
             'next_dic': None,
-            # If True: return visu, a dictionnary full of visualisations
-            'flag_visu': False,
             # A tensor of dimension B, indicating the type of the frame for
             # each of the B examples which are either: FRAME_I, FRAME_P or 
             # FRAME_B
@@ -150,14 +146,12 @@ class FullNet(Module):
             'flag_bitstream_debug': False,        
         }
 
-        visu = {}
         net_out = {}
 
         # ===== RETRIEVE INPUTS ===== #
         p = get_value('prev_dic', param, DEFAULT_PARAM)
         c = get_value('code_dic', param, DEFAULT_PARAM)
         n = get_value('next_dic', param, DEFAULT_PARAM)
-        flag_visu = get_value('flag_visu', param, DEFAULT_PARAM)
         frame_type = get_value('frame_type', param, DEFAULT_PARAM)
         external_y_modenet = get_value('external_y_modenet', param, DEFAULT_PARAM)
         external_y_codecnet = get_value('external_y_codecnet', param, DEFAULT_PARAM)
@@ -191,7 +185,6 @@ class FullNet(Module):
             'code': code,
             'prev': prev_ref,
             'next': next_ref,
-            'flag_visu': flag_visu,
             'external_y': external_y_modenet,
             'idx_rate': idx_rate,
             'frame_type': frame_type,
@@ -211,7 +204,6 @@ class FullNet(Module):
             # No rate because we didn't use MOFNet
             # Dummy net_out_mode tensor
             net_out_mode = {}
-            visu_mode = {}
             net_out_mode['rate_y'] = torch.zeros(1, 1, 1, 1, device=cur_device)
             net_out_mode['rate_z'] = torch.zeros(1, 1, 1, 1, device=cur_device)
             net_out_mode['alpha'] = torch.ones_like(code, device=cur_device)
@@ -224,7 +216,6 @@ class FullNet(Module):
                 'code': code,
                 'prev': prev_ref,
                 'next': next_ref,
-                'flag_visu': flag_visu,
                 'external_y': external_y_modenet,
                 'idx_rate': idx_rate,
                 'frame_type': frame_type,
@@ -232,7 +223,7 @@ class FullNet(Module):
                 'bitstream_path': bitstream_path,
                 'flag_bitstream_debug': flag_bitstream_debug,
             }
-            net_out_mode, visu_mode = self.mode_net(mode_net_input)
+            net_out_mode = self.mode_net(mode_net_input)
 
         # Retrieve value from net_out
         alpha = net_out_mode.get('alpha')
@@ -257,10 +248,9 @@ class FullNet(Module):
             'v_next': v_next,
             'beta': beta,
             'interpol_mode': self.warping_mode,
-            'flag_visu': flag_visu
         }
 
-        motion_comp_out, motion_comp_visu = self.motion_compensation(motion_comp_input)
+        motion_comp_out = self.motion_compensation(motion_comp_input)
         warped_ref = motion_comp_out.get('x_warp')
         skip_part = warped_ref * (1 - alpha)
         # ===== INTER PRED ===== #
@@ -272,7 +262,6 @@ class FullNet(Module):
         codec_net_input = {
             'code': in_codec_net,
             'prediction': in_prediction_codec_net,
-            'flag_visu': flag_visu,
             'external_y': external_y_codecnet,
             'idx_rate': idx_rate,
             'use_shortcut_vector': frame_type != FRAME_I, # Shortcut in CodecNet is useless for I-frame
@@ -281,7 +270,7 @@ class FullNet(Module):
             'bitstream_path': bitstream_path,
             'flag_bitstream_debug': flag_bitstream_debug,
         }
-        net_out_codec, visu_codec = self.codec_net(codec_net_input)
+        net_out_codec = self.codec_net(codec_net_input)
         codec_part = net_out_codec.get('x_hat')
         # ===== CODEC NET ===== #
 
@@ -308,7 +297,6 @@ class FullNet(Module):
         }
 
         if generate_bitstream:
-            # x_hat = quantize_decoded_frame(x_hat)
             x_hat = cast_before_png_saving({'x': x_hat, 'data_type': 'yuv_dic'})
         # ===== DOWNSCALING AND 420 STUFF ===== #
 
@@ -327,77 +315,8 @@ class FullNet(Module):
         net_out['codec_rate_z'] = net_out_codec.get('rate_z')
         net_out['mode_rate_y'] = net_out_mode.get('rate_y')
         net_out['mode_rate_z'] = net_out_mode.get('rate_z')
-        if flag_visu:
-            visu.update(visu_codec)
-            visu.update(visu_mode)
-            visu.update(motion_comp_visu)
-
-            # Override alpha and beta from visu_mode as we have modified them here
-            # We take only one channel but we let it 4D nonetheless
-            visu['ModeNet_alpha'] = alpha[:, 0, :, :].unsqueeze(0)
-            visu['ModeNet_beta'] = beta[:, 0, :, :].unsqueeze(0)
-            # Same for both optical flow
-            visu['ModeNet_v_prev'] = v_prev
-            visu['ModeNet_v_next'] = v_next
-            # And for modenet rate
-            
-            # If we have a dummy mode rate tensor, change it to have the same size
-            # as the codec net rate tensor
-
-            for rate_name in ['rate_y', 'rate_z']:
-                if net_out_mode.get(rate_name).numel() == 1:
-                    net_out_mode[rate_name] = torch.zeros_like(net_out_codec.get(rate_name), device=cur_device)
-                    
-            visu['ModeNet_y_rate'] = net_out_mode.get('rate_y')
-            visu['ModeNet_z_rate'] = net_out_mode.get('rate_z')
-
-            visu['png_codecnet_input'] = in_codec_net
-            visu['png_copy_part'] = skip_part
-            visu['png_codecnet_output'] = codec_part
-            visu['png_final_warping'] = warped_ref
-            visu['png_nn_output_420'] = x_hat
-            visu['png_target_420'] = c
-            visu['png_prev_ref_420'] = p
-            visu['png_next_ref_420'] = n
-
-            # Sum of absolute error channel-wise but we keep a 4D tensor
-            error_code_prev = (code - prev_ref).abs().sum(dim=1).unsqueeze(0)
-            error_code_next = (code - next_ref).abs().sum(dim=1).unsqueeze(0)
-            error_code_warp = (code - warped_ref).abs().sum(dim=1).unsqueeze(0)
-
-            # Compute error max.
-            error_max = torch.tensor([
-                error_code_prev.max(), error_code_next.max(), error_code_warp.max()
-            ], device=cur_device).max()
-
-            # Normalize error so we can compare between them
-            error_code_prev /= error_max
-            error_code_next /= error_max
-            error_code_warp /= error_max
-
-            visu['png_error_code_prev_bw'] = error_code_prev
-            visu['png_error_code_next_bw'] = error_code_next
-            visu['png_error_code_warp_bw'] = error_code_warp
-
-
-            # CodecNet output is 444 but it will be downsampled by out_layer so 
-            # we need to process it to display properly the codec net output
-            # (raw codecnet output is in png_codecnet_output)
-
-            codec_out_420 = self.out_layer(codec_part)
-            # Same operations as for the normal output
-            codec_out_420_y, codec_out_420_u, codec_out_420_v =\
-                get_y_u_v(codec_out_420)
-
-            codecnec_out_420 = {
-                'y': codec_out_420_y,
-                'u': my_padding(codec_out_420_u),
-                'v': my_padding(codec_out_420_v)
-            }
-
-            visu['png_codecnet_output_420'] = codecnec_out_420
-
-        return net_out, visu
+        
+        return net_out
 
     def GOP_forward(self, param):
         """
@@ -410,14 +329,11 @@ class FullNet(Module):
             #   frame_0: {'y': tensor, 'u': tensor, 'v': tensor}
             #   frame_1: {'y': tensor, 'u': tensor, 'v': tensor}
             'raw_frames': None,
-            # Return additional data for visualisation
-            'flag_visu': False,
             # For multi-rate, not used for now
             'idx_rate': 0.,
             # Index of the GOP in the video. Scalar in [0, N]
             'index_GOP_in_video': 0,
-            # If true, we generate a bitstream at the end (and we don't go 
-            # in the visu part?)
+            # If true, we generate a bitstream at the end
             'generate_bitstream': False,
             # Path of the directory in which we output the bitstream
             'bitstream_dir': '',
@@ -431,7 +347,6 @@ class FullNet(Module):
         # ========== RETRIEVE INPUTS ========== #
         GOP_struct = get_value('GOP_struct', param, DEFAULT_PARAM)
         raw_frames = get_value('raw_frames', param, DEFAULT_PARAM)
-        flag_visu = get_value('flag_visu', param, DEFAULT_PARAM)
         idx_rate = get_value('idx_rate', param, DEFAULT_PARAM)
         index_GOP_in_video = get_value('index_GOP_in_video', param, DEFAULT_PARAM)
         generate_bitstream = get_value('generate_bitstream', param, DEFAULT_PARAM)
@@ -444,7 +359,6 @@ class FullNet(Module):
         # Outputs, each dic are structured as:
         # net_out: {'frame_0': {all entries}, 'frame_1': all entries}...
         net_out = {}
-        visu = {}
 
         # Number of temporal layers in the GOP, i.e. number of forward pass
         # to be performed. Get depth gop return the biggest coding order.
@@ -484,7 +398,6 @@ class FullNet(Module):
                 'code_dic': code,
                 'prev_dic': prev_ref,
                 'next_dic': next_ref,
-                'flag_visu': flag_visu,
                 'idx_rate': idx_rate,
                 'frame_type': type_frame,
                 'generate_bitstream': generate_bitstream,
@@ -494,11 +407,10 @@ class FullNet(Module):
                 'flag_bitstream_debug': flag_bitstream_debug,
             }
 
-            cur_net_out, cur_visu = self.forward(model_input)
+            cur_net_out = self.forward(model_input)
 
             # Add the current frame dictionaries to the global ones                
             net_out[name_frame_code] = cur_net_out
-            visu[name_frame_code] = cur_visu
 
             # If we're generating a bitstream and if we're debugging this
             # bitstream, save the reconstructed PNGs (YUV) for the frame,
@@ -554,4 +466,4 @@ class FullNet(Module):
                 'idx_gop': index_GOP_in_video,
             })
 
-        return net_out, visu
+        return net_out

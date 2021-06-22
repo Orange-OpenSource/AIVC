@@ -258,8 +258,6 @@ class ConditionalNet(Module):
             'in_enc': None,
             # Input of the shortcut (4 dimensional)
             'in_shortcut': None,
-            # If True: return visu, a dictionnary full of visualisations
-            'flag_visu': False,
             # For multi-rate, not used for now
             'idx_rate': 0.,
             # A boolean indicating wether we use the shortcut
@@ -269,8 +267,7 @@ class ConditionalNet(Module):
             # each of the B examples which are either: FRAME_I, FRAME_P or 
             # FRAME_B
             'frame_type': None,
-            # If true, we generate a bitstream at the end (and we don't go 
-            # in the visu part?)
+            # If true, we generate a bitstream at the end
             'generate_bitstream': False,
             # Path where the bistream is written
             'bitstream_path': '',
@@ -286,7 +283,6 @@ class ConditionalNet(Module):
 
         in_enc = get_value('in_enc', param, DEFAULT_PARAM)
         raw_in_shortcut = get_value('in_shortcut', param, DEFAULT_PARAM)
-        flag_visu = get_value('flag_visu', param, DEFAULT_PARAM)
         idx_rate = get_value('idx_rate', param, DEFAULT_PARAM)
         use_shortcut_vector = get_value('use_shortcut_vector', param, DEFAULT_PARAM)
         frame_type = get_value('frame_type', param, DEFAULT_PARAM)
@@ -295,7 +291,6 @@ class ConditionalNet(Module):
         flag_bitstream_debug = get_value('flag_bitstream_debug', param, DEFAULT_PARAM)
         latent_name = get_value('latent_name', param, DEFAULT_PARAM)
 
-        visu = {}
         net_out = {}
         cur_device = in_enc.device
 
@@ -317,18 +312,18 @@ class ConditionalNet(Module):
         # Select the appropriate gain matrix
         # We don't have a dedicated gain matrix for P or B frames
         gain_matrix_input = {
-            'x': y_code, 'idx_rate': idx_rate, 'mode': 'enc', 'flag_visu': False
+            'x': y_code, 'idx_rate': idx_rate, 'mode': 'enc'
         }
         
         if not(self.flag_gain_p_b):
-            net_out_gain_1, _ = self.gain_I(gain_matrix_input)
+            net_out_gain_1 = self.gain_I(gain_matrix_input)
         else:
             if frame_type == FRAME_I:
-                net_out_gain_1, _ = self.gain_I(gain_matrix_input)
+                net_out_gain_1 = self.gain_I(gain_matrix_input)
             elif frame_type == FRAME_P:
-                net_out_gain_1, _ = self.gain_P(gain_matrix_input)
+                net_out_gain_1 = self.gain_P(gain_matrix_input)
             elif frame_type == FRAME_B:
-                net_out_gain_1, _ = self.gain_B(gain_matrix_input)
+                net_out_gain_1 = self.gain_B(gain_matrix_input)
         
         y_code_scaled = net_out_gain_1.get('output')
 
@@ -388,19 +383,19 @@ class ConditionalNet(Module):
         # Theoretically after sending
         # ===== Y GAIN VECTOR PT. 2 ===== #
         gain_matrix_input_2 = {
-            'x': y_decoder, 'idx_rate': idx_rate, 'mode': 'dec', 'flag_visu': flag_visu
+            'x': y_decoder, 'idx_rate': idx_rate, 'mode': 'dec'
         }        
 
         # Get the correct gain matrix        
         if not(self.flag_gain_p_b):
-            net_out_gain_2, visu_gain_2 = self.gain_I(gain_matrix_input_2)
+            net_out_gain_2 = self.gain_I(gain_matrix_input_2)
         else:
             if frame_type == FRAME_I:
-                net_out_gain_2, visu_gain_2 = self.gain_I(gain_matrix_input_2)
+                net_out_gain_2 = self.gain_I(gain_matrix_input_2)
             elif frame_type == FRAME_P:
-                net_out_gain_2, visu_gain_2 = self.gain_P(gain_matrix_input_2)
+                net_out_gain_2 = self.gain_P(gain_matrix_input_2)
             elif frame_type == FRAME_B:
-                net_out_gain_2, visu_gain_2 = self.gain_B(gain_matrix_input_2)
+                net_out_gain_2 = self.gain_B(gain_matrix_input_2)
         
         y_code_hat = net_out_gain_2.get('output')
         # ===== Y GAIN VECTOR PT. 2 ===== #
@@ -442,49 +437,7 @@ class ConditionalNet(Module):
                 'latent_name': latent_name + '_y',
             })
             
-        if flag_visu:
-            # New naming conventions
-            visu['input'] = in_enc
-            visu['output'] = x_hat
-
-            TAG = 'y_'
-            for k in range(len(pdf_param_y)):
-                visu[TAG + 'mu_' + str(k)] = pdf_param_y[k].get('mu')
-                visu[TAG + 'sigma_' + str(k)] = pdf_param_y[k].get('sigma')
-                if self.flag_binary_model:
-                    visu[TAG + 'pgt0_' + str(k)] = pdf_param_y[k].get('p_gt0')
-                    visu[TAG + 'pgt1_' + str(k)] = pdf_param_y[k].get('p_gt1')
-                else:
-                    visu[TAG + 'gamma_' + str(k)] = pdf_param_y[k].get('gamma')
-                    visu[TAG + 'weight_' + str(k)] =\
-                        pdf_param_y[k].get('weight')
-
-            visu['y_rate'] = rate_y_hat
-            visu['z_rate'] = rate_z_hat
-            visu['y_sent'] = centered_y
-            visu['z_sent'] = z_hat_scaled
-            visu['y_shortcut'] = y_shortcut
-            visu['z_shortcut'] = z_shortcut
-            visu['y'] = y_code
-            if self.flag_gain_p_b:
-                visu['enc_gain'] = visu_gain_2.get('enc_gain')
-                visu['dec_gain'] = visu_gain_2.get('dec_gain')
-
-        # debug_dic = {
-        #     'x_hat': x_hat,
-        #     'rate_y': rate_y,
-        #     'rate_z': rate_z,
-        #     'code': code,
-        #     'pdf_param_y': pdf_param_y,
-        #     'pdf_param_z': pdf_param_z,
-        #     'y_hat': y_code_hat,
-        #     'z_hat': z_hat,
-        # }
-
-        # self.print_debug_param()
-        # self.print_debug_dic(debug_dic)
-
-        return net_out, visu
+        return net_out
 
 
     def print_debug_dic(self, debug_dic):

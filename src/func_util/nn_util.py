@@ -154,19 +154,3 @@ def override_default_dic(dic, default_dic):
         default_dic[k] = dic.get(k)
 
     return dic
-
-
-def quantize_decoded_frame(dic):
-    """
-    Quantize the reconstructed frame dictionnary with a precision of 1 / precision.
-    It is different from the quantized before saving to png.
-    """
-
-    precision = 1024
-
-    for k in dic:
-        dic[k] = torch.round(dic.get(k) * precision).to(torch.int) / float(precision)
-        dic[k] = torch.clamp(dic.get(k), 0., 1.)
-
-
-    return dic

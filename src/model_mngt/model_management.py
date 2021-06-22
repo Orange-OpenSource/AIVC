@@ -49,8 +49,6 @@ def infer_one_sequence(param):
         'GOP_struct': None,
         # The name of the GOP structure, mainly for logging purpose
         'GOP_struct_name': None,
-        # Return additional data for visualisation
-        'flag_visu': False,
         # Absolute path of the folder containing the 3N PNG of the sequences
         # (if YUV) of the N PNG if RGB.
         'sequence_path': '',
@@ -66,8 +64,7 @@ def infer_one_sequence(param):
         #   <old> : used for the ICLR paper i.e. <sequence_path>/idx_<y,u,v>.png
         #   <clic>: <sequence_path>/<sequence_name>_<padded_idx>_<y,u,v>.png
         'loading_mode': 'old',
-        # If true, we generate a bitstream at the end (and we don't go 
-        # in the visu part?)
+        # If true, we generate a bitstream at the end
         'generate_bitstream': False,
         # Path of the directory in which we output the bitstream
         'bitstream_dir': '',
@@ -85,7 +82,6 @@ def infer_one_sequence(param):
     model = get_value('model', param, DEFAULT_PARAM)
     GOP_struct = get_value('GOP_struct', param, DEFAULT_PARAM)
     GOP_struct_name = get_value('GOP_struct_name', param, DEFAULT_PARAM)
-    flag_visu = get_value('flag_visu', param, DEFAULT_PARAM)
     sequence_path = get_value('sequence_path', param, DEFAULT_PARAM)
     # nb_GOP = get_value('nb_GOP', param, DEFAULT_PARAM)
     idx_starting_frame = get_value('idx_starting_frame', param, DEFAULT_PARAM)
@@ -188,11 +184,10 @@ def infer_one_sequence(param):
         })
 
         # Perform forward for this GOP
-        GOP_net_out, GOP_visu, GOP_result = infer_one_GOP({
+        GOP_net_out, GOP_result = infer_one_GOP({
             'model': model,
             'GOP_struct': GOP_struct,
             'raw_frames': raw_frames,
-            'flag_visu': flag_visu,
             'l_codec': l_codec,
             'l_mof': l_mof,
             'index_GOP_in_video': i,
@@ -205,7 +200,7 @@ def infer_one_sequence(param):
         })
 
         # Retrieve some results for this GOP. To spare some memory, we don't
-        # keep trace of everything in net_out or visu.
+        # keep trace of everything in net_out
         # Beware, we do not retrieve GOP average result i.e. 'GOP' entry.
         for f in range(GOP_size):           
             # Name of the frame inside the GOP
@@ -262,8 +257,7 @@ def infer_one_sequence(param):
 def infer_one_GOP(param):
     """
     The purpose of this function is to infer one GOP and to 
-    return a visualisation dictionnary if needed and a result
-    dictionnary, gathering as much metrics as needed.
+    return a result dictionnary, gathering as much metrics as needed.
 
     This is separate from the training function, and it is basically
     a warper around the GOP_forward function of the model.
@@ -277,16 +271,13 @@ def infer_one_GOP(param):
         #   frame_0: {'y': tensor, 'u': tensor, 'v': tensor}
         #   frame_1: {'y': tensor, 'u': tensor, 'v': tensor}
         'raw_frames': None,
-        # Return additional data for visualisation
-        'flag_visu': False,
         # Lambda for CodecNet rate
         'l_codec': 0.,
         # Lambda for MOFNet rate
         'l_mof': 0.,
         # Index of the GOP in the video. Scalar in [0, N]
         'index_GOP_in_video': 0,
-        # If true, we generate a bitstream at the end (and we don't go 
-        # in the visu part?)
+        # If true, we generate a bitstream at the end
         'generate_bitstream': False,
         # Path of the directory in which we output the bitstream
         'bitstream_dir': '',
@@ -303,7 +294,6 @@ def infer_one_GOP(param):
     model = get_value('model', param, DEFAULT_PARAM)
     GOP_struct = get_value('GOP_struct', param, DEFAULT_PARAM)
     raw_frames = get_value('raw_frames', param, DEFAULT_PARAM)
-    flag_visu = get_value('flag_visu', param, DEFAULT_PARAM)
     l_codec = get_value('l_codec', param, DEFAULT_PARAM)
     l_mof = get_value('l_mof', param, DEFAULT_PARAM)
     index_GOP_in_video = get_value('index_GOP_in_video', param, DEFAULT_PARAM)
@@ -324,7 +314,6 @@ def infer_one_GOP(param):
     model_input = {
         'GOP_struct': GOP_struct,
         'raw_frames': raw_frames,
-        'flag_visu': flag_visu,
         'idx_rate': idx_rate,
         'index_GOP_in_video': index_GOP_in_video,
         'generate_bitstream': generate_bitstream,
@@ -334,7 +323,7 @@ def infer_one_GOP(param):
     }
 
     with torch.no_grad():
-        net_out, visu_out = model.GOP_forward(model_input)
+        net_out = model.GOP_forward(model_input)
         for f in net_out:
             # Clamp and crop the output
             net_out[f]['x_hat'] = crop_dic(net_out.get(f).get('x_hat'), raw_frames.get(f))
@@ -343,14 +332,6 @@ def infer_one_GOP(param):
                 'data_type': 'yuv_dic',
             })
 
-    # The visu_out dictionnary is returned as is. Now we compute the 
-    # results dictionnary which logs metric for each frame and for the
-    # entire GOP. Its structure is:
-    # result = {
-    #   'frame_0': {a: 4, b: 2},
-    #   'frame_1': {a: 0, b: 3},
-    #   'GOP':     {a: 1, b: 8},
-    # }
     _, result = compute_metrics_one_GOP({
         'net_out': net_out,
         'target': raw_frames,
@@ -358,10 +339,9 @@ def infer_one_GOP(param):
         'l_codec': l_codec,
     })
 
-    # net_out should not be that useful, visu is here to print everything
-    # inside the system and results contains a bunch of metrics for the 
-    # different frames.
-    return net_out, visu_out, result
+    # net_out should not be that useful,;and results contains a bunch of metrics 
+    # for the different frames.
+    return net_out, result
 
 
 def load_model(prefix='', on_cpu=False):
