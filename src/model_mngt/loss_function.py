@@ -1,9 +1,10 @@
 import torch
 from torch.nn import Module
 
-from func_util.nn_util import get_value
+from func_util.nn_util import get_value, push_dic_to_device
 from func_util.img_processing import get_y_u_v
 from func_util.ms_ssim import MSSSIM
+from func_util.cluster_mngt import COMPUTE_PARAM
 
 class EntropyDistLossEndToEnd(Module):
     """
@@ -137,7 +138,7 @@ def compute_metrics_one_GOP(param):
     nb_pad_frame = get_value('nb_pad_frame', param, DEFAULT_PARAM)
     # ========== RETRIEVE INPUTS ========== #
 
-    cur_device = target.get('frame_0').get('y').device
+    cur_device = COMPUTE_PARAM.get('device')
     mse_fn = MSELoss()
     ms_ssim_fn = MSSSIMLoss()
 
@@ -175,6 +176,10 @@ def compute_metrics_one_GOP(param):
         for rate_name in rate_list:
             rate_dic_bpp[f][rate_name] = cur_frame_out.get(rate_name).sum() / (B * nb_pixel)
         # ======= RETRIEVE STUFF ======== #
+
+        # Push to device if needed
+        x_hat = push_dic_to_device(x_hat, cur_device)
+        cur_target = push_dic_to_device(cur_target, cur_device)
 
         # ========= DISTORTION ========= #
         mse = mse_fn(x_hat, cur_target)
@@ -229,6 +234,10 @@ def compute_metrics_one_GOP(param):
         result[f]['h'] = torch.tensor([float(H)], device=cur_device)
         result[f]['w'] = torch.tensor([float(W)], device=cur_device)
         # ========== LOGGING =========== #
+
+        # Push back to cpu
+        x_hat = push_dic_to_device(x_hat, 'cpu')
+        cur_target = push_dic_to_device(cur_target, 'cpu')
 
     # Previous logging what a frame by frame logging, here we log the final
     # (i.e. on the whole GOP) values

@@ -9,7 +9,7 @@ from torch.nn import Module, ReplicationPad2d
 # Custom modules
 from func_util.console_display import print_log_msg, print_dic_content
 from func_util.img_processing import get_y_u_v, save_yuv_separately, cast_before_png_saving
-from func_util.nn_util import get_value, dic_zeros_like
+from func_util.nn_util import get_value, dic_zeros_like, push_dic_to_device
 from func_util.cluster_mngt import COMPUTE_PARAM
 from func_util.GOP_structure import get_name_frame_code, get_depth_gop,\
                                     FRAME_B, FRAME_P, FRAME_I, GOP_STRUCT_DIC
@@ -394,6 +394,12 @@ class FullNet(Module):
             else:
                 prev_ref = dic_zeros_like(code)
 
+            # Push frame to device before the forward pass
+            my_device = COMPUTE_PARAM.get('device')
+            code = push_dic_to_device(code, my_device)
+            prev_ref = push_dic_to_device(prev_ref, my_device)
+            next_ref = push_dic_to_device(next_ref, my_device)
+
             model_input = {
                 'code_dic': code,
                 'prev_dic': prev_ref,
@@ -408,6 +414,13 @@ class FullNet(Module):
             }
 
             cur_net_out = self.forward(model_input)
+
+            # Push frame to cpu after the forward pass
+            my_device = 'cpu'
+            code = push_dic_to_device(code, my_device)
+            prev_ref = push_dic_to_device(prev_ref, my_device)
+            next_ref = push_dic_to_device(next_ref, my_device)
+            torch.cuda.empty_cache()
 
             # Add the current frame dictionaries to the global ones                
             net_out[name_frame_code] = cur_net_out
