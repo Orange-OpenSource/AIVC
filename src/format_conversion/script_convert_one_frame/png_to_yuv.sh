@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Software Name: AIVC
+# SPDX-FileCopyrightText: Copyright (c) 2021 Orange
+# SPDX-License-Identifier: BSD 3-Clause "New"
+#
+# This software is distributed under the BSD-3-Clause license.
+#
+# Authors: Theo Ladune <theo.ladune@orange.com>
+#          Pierrick Philippe <pierrick.philippe@orange.com>
+
+
+
 # Convert a triplet of PNG <src>_<y,u,v>.png to a .yuv file
 # and append it to a existing .yuv file <out_file>.
 # If needed, <out_file> is created.

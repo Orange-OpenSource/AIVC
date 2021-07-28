@@ -1,3 +1,12 @@
+# Software Name: AIVC
+# SPDX-FileCopyrightText: Copyright (c) 2021 Orange
+# SPDX-License-Identifier: BSD 3-Clause "New"
+#
+# This software is distributed under the BSD-3-Clause license.
+#
+# Authors: Theo Ladune <theo.ladune@orange.com>
+#          Pierrick Philippe <pierrick.philippe@orange.com>
+
 import argparse
 import subprocess
 import torch
@@ -11,9 +20,6 @@ from func_util.GOP_structure import GOP_STRUCT_DIC
 from model_mngt.model_management import load_model
 from real_life.encode import encode
 from real_life.decode import Decoder
-
-# TODO: Remove constructor?
-# TODO: Remove visualisation
 
 # ! Must be launched from within /src
 

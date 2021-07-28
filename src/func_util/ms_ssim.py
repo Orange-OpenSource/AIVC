@@ -1,10 +1,16 @@
+# Software Name: AIVC
+# SPDX-FileCopyrightText: Copyright (c) 2021 Orange
+# SPDX-License-Identifier: BSD 3-Clause "New"
+#
+# This software is distributed under the BSD-3-Clause license.
+#
+# Authors: Theo Ladune <theo.ladune@orange.com>
+#          Pierrick Philippe <pierrick.philippe@orange.com>
+
 import torch
 import torch.nn.functional as F
 from torch.nn import ReflectionPad2d
 from math import exp
-
-# ! MEMORY TRANSFER WITH .TO(CUR_DEVICE)
-# ! PREFER TORCH.DEVICE(X, DEVICE=CUR_DEVICE)
 
 """
 PyTorch re-implementation of MS-SSIM from
