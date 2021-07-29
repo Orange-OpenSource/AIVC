@@ -73,13 +73,15 @@ def decode_one_video(param):
     os.system('mkdir -p ' + out_dir)
 
     # ! HARDCODED
-    bitstream_dir = './tmp_out_bitstream/'
+    # Increment the number of the directory
+    # by counting what's inside ../tmp using glob
+    bitstream_dir = '../tmp/' + str(len(glob.glob('../tmp/*'))) + '/tmp_out_bitstream/'
 
     print_log_msg('INFO', 'Bitstream path', '', bitstream_path)
     print_log_msg('INFO', 'Bitstream processing dir.', '', bitstream_dir)
     print_log_msg('INFO', 'Decoded frames directory', '', out_dir)
 
-    uncat_one_video({'video_file': bitstream_path, 'out_dir': './tmp_out_bitstream/'})
+    uncat_one_video({'video_file': bitstream_path, 'out_dir': bitstream_dir})
     data_dim, nb_GOP, idx_starting_frame, idx_end_frame = read_video_header({
         'header_path': bitstream_dir + VIDEO_HEADER_SUFFIX
     })
@@ -145,6 +147,7 @@ def decode_one_video(param):
 
     # Delete the temporary directory used to process the bitsream
     os.system('rm -r ' + bitstream_dir)
+    os.system('rmdir ' + '/'.join(bitstream_dir.rstrip('/').split('/')[:-1]))
 
 
 def remove_padded_frames(param):

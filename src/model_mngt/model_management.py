@@ -82,7 +82,7 @@ def infer_one_sequence(param):
         # Set to true to generate more stuff, useful for debug
         'flag_bitstream_debug': False,
         # All internal log files for the NN will be written in this directory
-        'working_dir': './logs/',
+        'working_dir': '../logs/',
         # Path of the final bitstream file
         'final_bitstream_path': '',
     }
