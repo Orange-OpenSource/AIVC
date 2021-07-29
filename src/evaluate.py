@@ -73,6 +73,7 @@ try:
     size_bytes = os.path.getsize(bitstream_path)
 except FileNotFoundError:
     print('[ERROR]: bitstream not found, can not evaluate its size!')
+    print('Bistream path: ' + bitstream_path)
 
 print('Size [bytes]: ' + '%.0f' % (size_bytes))
 # ===================== Print the size of the bitstream ===================== #

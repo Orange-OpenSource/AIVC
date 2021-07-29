@@ -180,6 +180,11 @@ def cat_one_video(param):
     
     # Finally, write all the video bytes to a single out file
     out_file = final_bitstream_path
+
+    # Create the parent directory of out_file if needed
+    parent_dir_path = '/'.join(out_file.rstrip('/').split('/')[:-1])
+    os.system('mkdir -p ' + parent_dir_path)
+
     with open(out_file, 'wb') as fout:
         fout.write(byte_to_write)
 

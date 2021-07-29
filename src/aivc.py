@@ -134,6 +134,7 @@ print(('*' * 80).center(120))
 print('Starting evaluation'.center(120))
 cmd = 'python evaluate.py --raw ' + args.i.rstrip('.yuv').rstrip('/') + '/'
 cmd += ' --compressed ' + args.o.rstrip('.yuv').rstrip('/') + '/'
+cmd += ' --bitstream ' + args.bitstream_out
 subprocess.call(cmd, shell=True)
 # ================ Perform encoding, decoding and evaluation ================ #
 

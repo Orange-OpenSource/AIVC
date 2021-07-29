@@ -52,8 +52,9 @@ def encode(param):
 
     # =========================== RETRIEVE INPUTS =========================== #
 
-    # Internal bitstream working dir
-    bitstream_dir = './tmp_bitstream_working_dir/'
+    # Internal bitstream working dir, increment the number of the directory
+    # by counting what's inside ../tmp using glob
+    bitstream_dir = '../tmp/' + str(len(glob.glob('../tmp/*'))) + '/tmp_bitstream_working_dir/'
 
     if final_file == bitstream_dir.split('/')[-2]:
         print('ERROR: The bitstream file can not be in bitstream_dir')
@@ -165,6 +166,7 @@ def encode(param):
 
     # Clean the internal bitstream working dir
     os.system('rm -r ' + bitstream_dir)
+    os.system('rmdir ' + '/'.join(bitstream_dir.rstrip('/').split('/')[:-1]))
 
 
     return encoder_out
