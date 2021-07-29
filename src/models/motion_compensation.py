@@ -61,34 +61,24 @@ class MotionCompensation(Module):
         interpol_mode = get_value('interpol_mode', param, DEFAULT_PARAM)
         padding_mode = get_value('padding_mode', param, DEFAULT_PARAM)
         align_corners = get_value('align_corners', param, DEFAULT_PARAM)
-        generate_bitstream = get_value('generate_bitstream', param, DEFAULT_PARAM)
-        quantizer = get_value('quantizer', param, DEFAULT_PARAM)
         # ===== RETRIEVE INPUTS ===== #
 
         net_out = {}
 
-        if self.exact_p_frame:
-            x_warp_from_prev = warp(
-                prev_ref, v_prev, interpol_mode=interpol_mode, padding_mode=padding_mode, align_corners=align_corners
-            )
-            x_warp_from_next = torch.zeros_like(x_warp_from_prev, device=x_warp_from_prev.device)
-            # Pixel-wise weighted combination
-            net_out['x_warp'] = x_warp_from_prev
-        else:
-            # Perform both warpings
-            x_warp_from_prev = warp(
-                prev_ref, v_prev,
-                interpol_mode=interpol_mode,
-                padding_mode=padding_mode,
-                align_corners=align_corners,
-            )
-            x_warp_from_next = warp(
-                next_ref, v_next,
-                interpol_mode=interpol_mode,
-                padding_mode=padding_mode,
-                align_corners=align_corners,
-            )
-            # Pixel-wise weighted combination
-            net_out['x_warp'] = beta * x_warp_from_prev + (1 - beta) * x_warp_from_next
+        # Perform both warpings
+        x_warp_from_prev = warp(
+            prev_ref, v_prev,
+            interpol_mode=interpol_mode,
+            padding_mode=padding_mode,
+            align_corners=align_corners,
+        )
+        x_warp_from_next = warp(
+            next_ref, v_next,
+            interpol_mode=interpol_mode,
+            padding_mode=padding_mode,
+            align_corners=align_corners,
+        )
+        # Pixel-wise weighted combination
+        net_out['x_warp'] = beta * x_warp_from_prev + (1 - beta) * x_warp_from_next
 
         return net_out

@@ -364,7 +364,7 @@ class ConditionalNet(Module):
 
         # ===== SHORTCUT TRANSFORM ABSENT ====== #
         if not(self.flag_shortcut_y):
-            y_shortcut = torch.zeros_like(y_code_hat_scaled, device=cur_device)
+            y_shortcut = torch.zeros_like(y_code_scaled, device=cur_device)
         # ===== SHORTCUT ABSENT ====== #
 
         # ===== DECODE Z WITH THE SHORTCUT TRANSFORM ===== #

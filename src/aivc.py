@@ -100,7 +100,7 @@ elif args.coding_config == 'RA':
         gop = 'GOP_'
     else:
         gop = str(nb_gop) + '_GOP_' 
-    gop += str(args.intra_period) 
+    gop += str(args.gop_size) 
 else:
     print('[ERROR]: unknown coding configuration. Should be either RA, AI or LDP.')
     sys.exit(1)

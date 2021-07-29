@@ -765,7 +765,13 @@ class ConditionalDecoder(Module):
 
         self.g_s = conditional_net.g_s
         self.h_s = conditional_net.h_s
-        self.g_a_ref = conditional_net.g_a_ref
+
+        # Some models don't have the shortcut transform
+        if not(getattr(conditional_net, 'g_a_ref', None)) is None:
+            self.g_a_ref = conditional_net.g_a_ref
+        else:
+            self.g_a_ref = None
+
         self.pdf_y = conditional_net.pdf_y
         self.pdf_z = conditional_net.pdf_z
         self.pdf_parameterizer = conditional_net.pdf_parameterizer
@@ -874,8 +880,8 @@ class ConditionalDecoder(Module):
         
         y_hat = tmp_out.get('output')
 
-        # Shortcut if required
-        if flag_shortcut:
+        # Shortcut if required and available
+        if flag_shortcut and not(self.g_a_ref is None):
             y_shortcut = self.g_a_ref(in_shortcut)
         else:
             # Dummy input if shortcut is not available
