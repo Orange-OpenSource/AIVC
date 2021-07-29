@@ -58,7 +58,7 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    '--bitsream_out', default='../bitstream.bin', type=str,
+    '--bitstream_out', default='../bitstream.bin', type=str,
     help='Path of the output bitstream.',
 )
 
@@ -94,6 +94,8 @@ elif args.coding_config == 'RA':
         print('[ERROR]: Intra period must be a multiple of intra period')
         sys.exit(1)
 
+    nb_gop = int(nb_gop)
+
     if nb_gop == 1:
         gop = 'GOP_'
     else:
@@ -113,7 +115,7 @@ print(('*' * 80).center(120))
 print('Starting encoding'.center(120))
 cmd = 'python encode.py -i ' + args.i + ' --gop ' + gop + ' --model ' + args.model
 cmd += ' --start_frame ' + str(args.start_frame) + ' --end_frame ' + str(args.end_frame) 
-cmd += ' -o ' + args.bitsream_out
+cmd += ' -o ' + args.bitstream_out
 if args.cpu:
     cmd += ' --cpu'
 subprocess.call(cmd, shell=True)
@@ -121,7 +123,7 @@ subprocess.call(cmd, shell=True)
 # Perform decoding
 print(('*' * 80).center(120))
 print('Starting decoding'.center(120))
-cmd = 'python decode.py --model ' + args.model + ' -i ' + args.bitsream_out
+cmd = 'python decode.py --model ' + args.model + ' -i ' + args.bitstream_out
 cmd += ' -o ' + args.o
 if args.cpu:
     cmd += ' --cpu'
