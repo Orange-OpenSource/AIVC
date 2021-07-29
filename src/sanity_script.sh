@@ -7,8 +7,8 @@ python aivc.py \
     -o ../compressed.yuv \
     --bitstream_out ../bitstream.bin \
     --start_frame 0 \
-    --end_frame 100 \
+    --end_frame 10 \
     --coding_config RA \
-    --gop_size 16 \
-    --intra_period 32 \
-    --model ms_ssim-2021cc-1
+    --gop_size 4 \
+    --intra_period 8 \
+    --model ms_ssim-2021cc-7
