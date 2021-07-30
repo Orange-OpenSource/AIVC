@@ -36,8 +36,8 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    '--model', default='ms_ssim-3', type=str,
-    help='Name of the pre-trained model. Either ms_ssim-x or psnr-x. ' +
+    '--model', default='ms_ssim-2021cc-3', type=str,
+    help='Name of the pre-trained model: ms_ssim-2021cc-x ' +
     'x ranges from 1 (high rate) to 7 (low rate).'
 )
 
