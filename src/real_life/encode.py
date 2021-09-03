@@ -12,6 +12,9 @@ import math
 import time
 import glob
 
+from numpy.random import randint
+from sys import maxsize
+
 from model_mngt.model_management import infer_one_sequence
 from func_util.nn_util import get_value
 from func_util.GOP_structure import GOP_STRUCT_DIC, get_gop_struct_name
@@ -52,10 +55,14 @@ def encode(param):
 
     # =========================== RETRIEVE INPUTS =========================== #
 
-    # Internal bitstream working dir, increment the number of the directory
-    # by counting what's inside ../tmp using glob
-    bitstream_dir = '../tmp/' + str(len(glob.glob('../tmp/*'))) + '/tmp_bitstream_working_dir/'
-
+    
+    # Random number for the bitstream dir. Then count what's inside with glob to increment the number
+    # Format of the bitstream dir: ../tmp/RANDOMNUMBER_X/tmp_out_bitstream_dir
+    # Where X is the result of len(glob.glob())
+    random_bitstream_dir = str(randint(maxsize))
+    bitstream_dir = '../tmp/' + str(random_bitstream_dir) + '_' \
+    + str(len(glob.glob('../tmp/' + str(random_bitstream_dir) + '*'))) + '/tmp_bitstream_working_dir/'
+    
     if final_file == bitstream_dir.split('/')[-2]:
         print('ERROR: The bitstream file can not be in bitstream_dir')
         print('ERROR: Please change your directory!')

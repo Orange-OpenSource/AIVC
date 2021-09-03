@@ -32,6 +32,11 @@ parser.add_argument(
     'x ranges from 1 (high rate) to 7 (low rate).'
 )
 
+parser.add_argument(
+    '--rng_seed', default=666, type=int,
+    help='RNG seed, must be set identically between encoder and decoder.'
+)
+
 args = parser.parse_args()
 
 if not(args.o.endswith('.yuv')):
@@ -69,7 +74,7 @@ else:
 set_compute_param('flag_gpu', flag_gpu)
 set_compute_param('device', device)
 # ! This is absolutely necessary to ensure proper arithmetic encoding/decoding
-seed_all()
+seed_all(seed=args.rng_seed)
 
 my_decoder = my_decoder.to(COMPUTE_PARAM.get('device'))
 # ========================== Manage cuda parameters ========================= #

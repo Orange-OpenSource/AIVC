@@ -24,8 +24,7 @@ COMPUTE_PARAM = {
 def set_compute_param(key, value):
     COMPUTE_PARAM[key] = value
 
-def seed_all():
-    seed = 666
+def seed_all(seed=666):
 
     print_log_msg('INFO', 'Seed', '', seed)
     torch.manual_seed(seed)

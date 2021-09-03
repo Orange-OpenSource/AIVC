@@ -57,6 +57,11 @@ parser.add_argument(
     'process until the last frame.'
 )
 
+parser.add_argument(
+    '--rng_seed', default=666, type=int,
+    help='RNG seed, must be set identically between encoder and decoder.'
+)
+
 parser.add_argument('--cpu', help='Run on cpu', action='store_true')
 args = parser.parse_args()
 # ============================ Arguments parsing ============================ #
@@ -87,7 +92,7 @@ set_compute_param('flag_gpu', flag_gpu)
 set_compute_param('device', device)
 set_compute_param('workers', 1)
 # ! This is absolutely necessary to ensure proper arithmetic encoding/decoding
-seed_all()
+seed_all(seed=args.rng_seed)
 # ========================= Compute param arguments ========================= #
 
 

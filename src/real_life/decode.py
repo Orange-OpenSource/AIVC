@@ -16,6 +16,8 @@ import torch
 import time
 
 from torch.nn import ReplicationPad2d, Module
+from numpy.random import randint
+from sys import maxsize
 
 from real_life.bitstream import ArithmeticCoder
 from real_life.utils import BITSTREAM_SUFFIX, GOP_HEADER_SUFFIX, GOP_SUFFIX,\
@@ -73,9 +75,12 @@ def decode_one_video(param):
     os.system('mkdir -p ' + out_dir)
 
     # ! HARDCODED
-    # Increment the number of the directory
-    # by counting what's inside ../tmp using glob
-    bitstream_dir = '../tmp/' + str(len(glob.glob('../tmp/*'))) + '/tmp_out_bitstream/'
+    # Random number for the bitstream dir. Then count what's inside with glob to increment the number
+    # Format of the bitstream dir: ../tmp/RANDOMNUMBER_X/tmp_out_bitstream_dir
+    # Where X is the result of len(glob.glob())
+    random_bitstream_dir = str(randint(maxsize))
+    bitstream_dir = '../tmp/' + str(random_bitstream_dir) + '_' \
+    + str(len(glob.glob('../tmp/' + str(random_bitstream_dir) + '*'))) + '/tmp_out_bitstream/'
 
     print_log_msg('INFO', 'Bitstream path', '', bitstream_path)
     print_log_msg('INFO', 'Bitstream processing dir.', '', bitstream_dir)
