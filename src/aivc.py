@@ -67,6 +67,11 @@ parser.add_argument(
     help='Path of the output compressed video.'
 )
 
+parser.add_argument(
+    '--rng_seed', default=666, type=int,
+    help='RNG seed, must be set identically between encoder and decoder.'
+)
+
 parser.add_argument('--cpu', help='Run on cpu', action='store_true')
 args = parser.parse_args()
 # ============================ Arguments parsing ============================ #
@@ -115,7 +120,7 @@ print(('*' * 80).center(120))
 print('Starting encoding'.center(120))
 cmd = 'python encode.py -i ' + args.i + ' --gop ' + gop + ' --model ' + args.model
 cmd += ' --start_frame ' + str(args.start_frame) + ' --end_frame ' + str(args.end_frame) 
-cmd += ' -o ' + args.bitstream_out
+cmd += ' -o ' + args.bitstream_out + ' --rng_seed ' + args.rng_seed
 if args.cpu:
     cmd += ' --cpu'
 subprocess.call(cmd, shell=True)
@@ -124,7 +129,7 @@ subprocess.call(cmd, shell=True)
 print(('*' * 80).center(120))
 print('Starting decoding'.center(120))
 cmd = 'python decode.py --model ' + args.model + ' -i ' + args.bitstream_out
-cmd += ' -o ' + args.o
+cmd += ' -o ' + args.o + ' --rng_seed ' + args.rng_seed
 if args.cpu:
     cmd += ' --cpu'
 subprocess.call(cmd, shell=True)
