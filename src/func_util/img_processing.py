@@ -150,7 +150,6 @@ def load_frames(param):
             frames[name_frame] = load_RGB_as_YUV420_dic(storage_name)
         else:
             frames[name_frame] = add_dummy_batch_dim_dic(load_YUV_as_dic_tensor(storage_name))
-
         GOP_idx += 1
 
     # This is the very last frame of the video. To go from this one to the last needed frames
