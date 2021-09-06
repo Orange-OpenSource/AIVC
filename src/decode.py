@@ -94,7 +94,7 @@ decode_one_video({
 
 # =========================== Convert PNG to YUV ============================ #
 # Get index of the decoded frame.
-list_png_idx = [int(x.split('/')[-1].rstrip('_y.png')) for x in glob.glob(out_dir + '*_y.png')]
+list_png_idx = sorted([int(x.split('/')[-1].rstrip('_y.png')) for x in glob.glob(out_dir + '*_y.png')])
 
 # Convert all the decoded PNGs in out_dir into a single .yuv file called out_file
 png_to_yuv(out_dir, out_file, min(list_png_idx), max(list_png_idx), quiet=False)

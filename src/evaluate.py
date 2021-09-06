@@ -48,11 +48,11 @@ if not(path_compressed.endswith('/')):
 
 # ========================= Evaluate the encoding =========================== #
 # Get the indices of all images in path_compress
-compressed_images_idx = [int(x.split('/')[-1].rstrip('_y.png')) for x in glob.glob(path_compressed + '*_y.png')]
+compressed_images_idx = sorted([int(x.split('/')[-1].rstrip('_y.png')) for x in glob.glob(path_compressed + '*_y.png')])
 
 target = {}
 submit = {}
-for idx in compressed_images_idx:
+for idx in compressed_images_idx:   
     for c in ['y', 'u', 'v']:
         cur_key = str(idx) + '_' + c
         submit[cur_key] = path_raw + str(idx) + '_' + c + '.png'
