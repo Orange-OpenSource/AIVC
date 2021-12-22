@@ -3,7 +3,7 @@
 export CUBLAS_WORKSPACE_CONFIG=:4096:8
 
 python aivc.py \
-    -i ../raw_videos/BlowingBubbles_416x240_50_420 \
+    -i ../raw_videos/BlowingBubbles_416x240_50_420.yuv \
     -o ../compressed.yuv \
     --bitstream_out ../bitstream.bin \
     --start_frame 0 \
