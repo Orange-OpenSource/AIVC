@@ -11,5 +11,4 @@ python aivc.py \
     --coding_config RA \
     --gop_size 16 \
     --intra_period 32 \
-    --model ms_ssim-2021cc-6 \
-    --cpu
+    --model ms_ssim-2021cc-6
