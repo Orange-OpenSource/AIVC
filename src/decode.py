@@ -27,8 +27,8 @@ parser.add_argument('-i', default='../bitstream.bin', type=str, help='Bitstream 
 parser.add_argument('-o', default='../compressed.yuv', type=str, help='Output file')
 
 parser.add_argument(
-    '--model', default='ms_ssim-1', type=str,
-    help='Name of the pre-trained model. Either ms_ssim-x or psnr-x. ' +
+    '--model', default='ms_ssim-2021cc-6', type=str,
+    help='Name of the pre-trained model. Either ms_ssim-2021cc-x ' +
     'x ranges from 1 (high rate) to 7 (low rate).'
 )
 

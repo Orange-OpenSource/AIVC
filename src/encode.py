@@ -32,8 +32,8 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    '--model', default='ms_ssim-1', type=str,
-    help='Name of the pre-trained model. Either ms_ssim-x or psnr-x. ' +
+    '--model', default='ms_ssim-2021cc-6', type=str,
+    help='Name of the pre-trained model. Either ms_ssim-2021cc-x ' +
     'x ranges from 1 (high rate) to 7 (low rate).'
 )
 
@@ -73,7 +73,7 @@ flag_yuv = args.i.endswith('.yuv')
 if flag_yuv:
     seq_path = args.i.rstrip('.yuv') + '/'
     yuv_to_png(args.i, seq_path, args.start_frame, args.end_frame, check_lossless=False)
-    
+
 else:
     seq_path = args.i
     if not(seq_path.endswith('/')):
@@ -87,7 +87,7 @@ if args.cpu:
 else:
     flag_gpu = True
     device = 'cuda:0'
-    
+
 set_compute_param('flag_gpu', flag_gpu)
 set_compute_param('device', device)
 set_compute_param('workers', 1)

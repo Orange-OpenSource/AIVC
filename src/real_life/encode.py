@@ -17,8 +17,8 @@ from sys import maxsize
 
 from model_mngt.model_management import infer_one_sequence
 from func_util.nn_util import get_value
-from func_util.GOP_structure import GOP_STRUCT_DIC, get_gop_struct_name
 from func_util.console_display import print_log_msg
+
 
 def encode(param):
     DEFAULT_PARAM = {
@@ -27,7 +27,7 @@ def encode(param):
         # Absolute path of the folder containing the PNGs.
         'sequence_path': '',
         # The GOP structure name, used only for logging, must be a string
-        'GOP_struct_name': '',        
+        'GOP_struct_name': '',
         # The GOP structure defined as in func_util/GOP_structure.py
         'GOP_struct': None,
         # For multi-rate
@@ -55,14 +55,13 @@ def encode(param):
 
     # =========================== RETRIEVE INPUTS =========================== #
 
-    
     # Random number for the bitstream dir. Then count what's inside with glob to increment the number
     # Format of the bitstream dir: ../tmp/RANDOMNUMBER_X/tmp_out_bitstream_dir
     # Where X is the result of len(glob.glob())
     random_bitstream_dir = str(randint(maxsize))
     bitstream_dir = '../tmp/' + str(random_bitstream_dir) + '_' \
     + str(len(glob.glob('../tmp/' + str(random_bitstream_dir) + '*'))) + '/tmp_bitstream_working_dir/'
-    
+
     if final_file == bitstream_dir.split('/')[-2]:
         print('ERROR: The bitstream file can not be in bitstream_dir')
         print('ERROR: Please change your directory!')
@@ -83,7 +82,7 @@ def encode(param):
     if idx_end_frame > max_index:
         print('ERROR: Last frame index exceeds the last frame index')
         return
-    
+
     if idx_end_frame == -1:
         idx_end_frame = max_index
 
@@ -99,7 +98,7 @@ def encode(param):
     start_time = time.time()
     infer_one_sequence({
         'model': model,
-        'GOP_struct_name': GOP_struct_name,        
+        'GOP_struct_name': GOP_struct_name,
         'GOP_struct': GOP_struct,
         'sequence_path': sequence_path,
         'idx_starting_frame': idx_starting_frame,
@@ -121,7 +120,6 @@ def encode(param):
     encoder_out = {}
     encoder_out['real_rate_byte'] = os.path.getsize(final_file)
 
-
     # Read log file to display some info
     result_file_name = working_dir + 'detailed.txt'
     f = open(result_file_name, 'r')
@@ -130,7 +128,6 @@ def encode(param):
     line = f.readlines()[-1]
     # Parse line
     line = [x.lstrip(' ').rstrip(' ') for x in line.rstrip('\n').split('|')][1:-1]
-    cur_seq_name = line[0]
     cur_psnr = float(line[2])
     cur_rate_bpp = float(line[3])
     cur_ms_ssim_db = float(line[9])
@@ -152,7 +149,7 @@ def encode(param):
     encoder_out['nb_frames_to_code'] = nb_frames_to_code
     encoder_out['nb_frames_gop'] = len(GOP_struct)
     encoder_out['estimated_rate_byte'] = cur_rate_byte
-    rate_overhead = (encoder_out.get('real_rate_byte') / encoder_out.get('estimated_rate_byte') - 1) * 100        
+    rate_overhead = (encoder_out.get('real_rate_byte') / encoder_out.get('estimated_rate_byte') - 1) * 100
     encoder_out['rate_overhead_percent'] = rate_overhead
 
     # Display the encoding results
@@ -174,6 +171,5 @@ def encode(param):
     # Clean the internal bitstream working dir
     os.system('rm -r ' + bitstream_dir)
     os.system('rmdir ' + '/'.join(bitstream_dir.rstrip('/').split('/')[:-1]))
-
 
     return encoder_out

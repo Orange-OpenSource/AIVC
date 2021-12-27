@@ -34,12 +34,12 @@ Video header format:
 [H_y (2 bytes)] [W_y (2 bytes)]
 [H_z (2 bytes)] [W_z (2 bytes)]
 [Nb GOP              (2 bytes)]
-[Index first frame   (2 bytes)]  Code from idx_first to idx_last included 
+[Index first frame   (2 bytes)]  Code from idx_first to idx_last included
 [Index last frame    (2 bytes)]  This is needed to remove the padded frames
 """
 
 # Used in the header:
-GOP_NAME_LIST = list(GOP_STRUCT_DIC.keys())# ['GOP_0', 'GOP_2', 'GOP_4', 'GOP_8', 'GOP_16', 'GOP_32', 'GOP_64']
+GOP_NAME_LIST = list(GOP_STRUCT_DIC.keys())
 
 def write_video_header(param):
     DEFAULT_PARAM = {
@@ -100,13 +100,13 @@ def read_video_header(param):
 
     H_x = int.from_bytes(byte_stream[0:2], byteorder='big')
     W_x = int.from_bytes(byte_stream[2:4], byteorder='big')
-    
+
     H_y = int.from_bytes(byte_stream[4:6], byteorder='big')
     W_y = int.from_bytes(byte_stream[6:8], byteorder='big')
 
     H_z = int.from_bytes(byte_stream[8:10], byteorder='big')
     W_z = int.from_bytes(byte_stream[10:12], byteorder='big')
-    
+
     nb_gop = int.from_bytes(byte_stream[12:14], byteorder='big')
 
     idx_starting_frame = int.from_bytes(byte_stream[14:16], byteorder='big')
@@ -142,7 +142,7 @@ def write_gop_header(param):
         # dir. It is overwritten at each GOP forward (not really elegant...)
         # At the end of the encoding process it is loaded in the
         # write_header_function to be properly written in the binary file.
-        'data_dim': None,        
+        'data_dim': None,
     }
 
     header_path = get_value('header_path', param, DEFAULT_PARAM)
@@ -157,7 +157,7 @@ def write_gop_header(param):
 
     idx_gop_struct = GOP_NAME_LIST.index(GOP_struct_name)
     byte_to_write += idx_gop_struct.to_bytes(1, byteorder='big')
-    
+
     casted_idx_rate = int(round(idx_rate * 16))
     byte_to_write += casted_idx_rate.to_bytes(1, byteorder='big')
 
@@ -168,6 +168,7 @@ def write_gop_header(param):
     # print('data_dim_path: ' + data_dim_path)
     with open(data_dim_path, 'wb') as fout:
         pickle.dump(data_dim, fout, pickle.HIGHEST_PROTOCOL)
+
 
 def read_gop_header(param):
     """
@@ -189,7 +190,7 @@ def read_gop_header(param):
 
     idx_gop_struct = byte_stream[0]
     idx_rate = byte_stream[1] / 16
-    
+
     GOP_struct = GOP_STRUCT_DIC.get(GOP_NAME_LIST[idx_gop_struct])
 
     return GOP_struct, idx_rate

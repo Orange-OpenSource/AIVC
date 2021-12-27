@@ -7,11 +7,7 @@
 # Authors: Theo Ladune <theo.ladune@orange.com>
 #          Pierrick Philippe <pierrick.philippe@orange.com>
 
-# Built-in modules
-import math
 import os
-
-# Third-party modules
 import torch
 from torch.nn import Module, ReplicationPad2d
 
@@ -133,7 +129,7 @@ class FullNet(Module):
             # YUV dictionnary of the next frame
             'next_dic': None,
             # A tensor of dimension B, indicating the type of the frame for
-            # each of the B examples which are either: FRAME_I, FRAME_P or 
+            # each of the B examples which are either: FRAME_I, FRAME_P or
             # FRAME_B
             'frame_type': None,
             # If not None: override the ModeNet y with external y
@@ -144,15 +140,17 @@ class FullNet(Module):
             'idx_rate': 0.,
             # If True, alpha is equal to 1 for the entire frame (everything goes
             # into the CodecNet and ignore skip mode)
+            # ! Deprecated
             'flag_no_copy': False,
             # If True, alpha is equal to 0 for the entire frame (everything goes
             # into the Skip Mode and ignore CodecNet)
+            # ! Deprecated
             'flag_no_coder': False,
             'generate_bitstream': False,
             # Path where the bistream is written
             'bitstream_path': '',
             # Set to true to generate more stuff, useful for debug
-            'flag_bitstream_debug': False,        
+            'flag_bitstream_debug': False,
         }
 
         net_out = {}
@@ -165,8 +163,6 @@ class FullNet(Module):
         external_y_modenet = get_value('external_y_modenet', param, DEFAULT_PARAM)
         external_y_codecnet = get_value('external_y_codecnet', param, DEFAULT_PARAM)
         idx_rate = get_value('idx_rate', param, DEFAULT_PARAM)
-        flag_no_copy = get_value('flag_no_copy', param, DEFAULT_PARAM)
-        flag_no_coder = get_value('flag_no_coder', param, DEFAULT_PARAM)
         generate_bitstream = get_value('generate_bitstream', param, DEFAULT_PARAM)
         bitstream_path = get_value('bitstream_path', param, DEFAULT_PARAM)
         flag_bitstream_debug = get_value('flag_bitstream_debug', param, DEFAULT_PARAM)
@@ -180,14 +176,6 @@ class FullNet(Module):
 
         B, C, H, W = prev_ref.size()
         cur_device = prev_ref.device
-
-        # Compute frame_type selection indices
-        idx_I = frame_type == FRAME_I
-        idx_P = frame_type == FRAME_P
-        idx_B = frame_type == FRAME_B
-        idx_no_I = idx_P + idx_B
-        idx_no_B = idx_I + idx_P
-
 
         # ===== MODE NET ===== #
         mode_net_input = {
@@ -207,7 +195,7 @@ class FullNet(Module):
         #   - I-frame: MOFNet and CodecNet shortcut
         #   - P-frame: MOFNet shortcut
         #   - B-frame: Nothing
-        
+
         # I-frame: skip the entire MOFNet
         if frame_type == FRAME_I:
             # No rate because we didn't use MOFNet
@@ -243,7 +231,7 @@ class FullNet(Module):
         # alpha is not used for I frame
         if frame_type == FRAME_I:
             alpha[:, :, :, :] = 1.
-        
+
         # Beta is only relevant for B frame
         if frame_type != FRAME_B:
             beta[:, :, :, :] = 1.
@@ -312,8 +300,8 @@ class FullNet(Module):
         net_out['x_hat'] = x_hat
 
         # We don't use this in the loss, it's only here for logging purpose.
-        # However as no optimizer goes through its gradient and reset it, 
-        # it keeps accumulating its computational graph. 
+        # However as no optimizer goes through its gradient and reset it,
+        # it keeps accumulating its computational graph.
         # Using detach() avoid this issue
         net_out['alpha'] = alpha.detach()
         net_out['beta'] = beta.detach()
@@ -324,7 +312,7 @@ class FullNet(Module):
         net_out['codec_rate_z'] = net_out_codec.get('rate_z')
         net_out['mode_rate_y'] = net_out_mode.get('rate_y')
         net_out['mode_rate_z'] = net_out_mode.get('rate_z')
-        
+
         return net_out
 
     def GOP_forward(self, param):
@@ -350,7 +338,7 @@ class FullNet(Module):
             # GOP.
             'real_idx_first_frame': 0,
             # Set to true to generate more stuff, useful for debug
-            'flag_bitstream_debug': False,        
+            'flag_bitstream_debug': False,
         }
 
         # ========== RETRIEVE INPUTS ========== #
@@ -363,7 +351,6 @@ class FullNet(Module):
         real_idx_first_frame = get_value('real_idx_first_frame', param, DEFAULT_PARAM)
         flag_bitstream_debug = get_value('flag_bitstream_debug', param, DEFAULT_PARAM)
         # ========== RETRIEVE INPUTS ========== #
-
 
         # Outputs, each dic are structured as:
         # net_out: {'frame_0': {all entries}, 'frame_1': all entries}...
@@ -378,7 +365,7 @@ class FullNet(Module):
         # Inside a temporal layer, all frames are independent so we code
         # them in parallel.
         for i in range(N + 1):
-            # For a gop4 I - B - B - B - P, 
+            # For a gop4 I - B - B - B - P,
             # i = 0 --> name_frame_code = ['frame_0']
             # i = 1 --> name_frame_code = ['frame_4']
             # i = 2 --> name_frame_code = ['frame_2']
@@ -396,7 +383,7 @@ class FullNet(Module):
                 next_ref = net_out.get(GOP_struct.get(name_frame_code).get('next_ref')).get('x_hat')
             else:
                 next_ref = dic_zeros_like(code)
-            
+
             # We have a previous frame. Retrieve the compressed version
             if type_frame != FRAME_I:
                 prev_ref = net_out.get(GOP_struct.get(name_frame_code).get('prev_ref')).get('x_hat')
@@ -431,7 +418,7 @@ class FullNet(Module):
             next_ref = push_dic_to_device(next_ref, my_device)
             torch.cuda.empty_cache()
 
-            # Add the current frame dictionaries to the global ones                
+            # Add the current frame dictionaries to the global ones
             net_out[name_frame_code] = cur_net_out
 
             # If we're generating a bitstream and if we're debugging this
@@ -440,7 +427,7 @@ class FullNet(Module):
             if generate_bitstream and flag_bitstream_debug:
                 # /RealLife/debug/SequenceName/
                 root_debug_path = '.' + '/'.join(bitstream_dir.split('/')[:-3]) + '/debug/' + bitstream_dir.split('/')[-2] + '/'
-                                
+
                 # Real index of the frame in the video
                 idx_frame = real_idx_first_frame + int(name_frame_code.split('_')[-1])
 
@@ -458,7 +445,6 @@ class FullNet(Module):
                         'out_file': root_debug_path + str(idx_frame) + '_' + channel + '.md5',
                     })
                     os.system('rm ' + root_debug_path + str(idx_frame) + '_' + channel + '.png')
-
 
         if generate_bitstream:
             # Write a header for this GOP
@@ -481,7 +467,6 @@ class FullNet(Module):
                 'GOP_struct_name': GOP_struct_name,
                 'idx_rate': idx_rate,
             })
-
 
             cat_one_gop({
                 'bitstream_dir': bitstream_dir,
