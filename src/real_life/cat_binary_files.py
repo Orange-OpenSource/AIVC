@@ -11,6 +11,7 @@ import os
 import glob
 
 from func_util.nn_util import get_value
+from func_util.console_display import print_log_msg
 from real_life.utils import GOP_SUFFIX, GOP_HEADER_SUFFIX, BITSTREAM_SUFFIX, VIDEO_HEADER_SUFFIX
 from real_life.header import write_video_header
 
@@ -58,6 +59,8 @@ def cat_one_gop(param):
     gop_header = bitstream_dir + str(idx_gop) + GOP_HEADER_SUFFIX
 
     # Get the index of all the compressed frames
+    # This loop is for getting the smallest frame index
+    # No need to sort the glob.glob
     list_all_files = glob.glob(bitstream_dir + '*')
     list_idx_frame = []
     for file_name in list_all_files:
@@ -144,7 +147,7 @@ def cat_one_video(param):
     if not(bitstream_dir.endswith('/')):
         bitstream_dir += '/'
 
-    list_gop_files = glob.glob(bitstream_dir + '*' + GOP_SUFFIX)
+    list_gop_files = sorted(glob.glob(bitstream_dir + '*' + GOP_SUFFIX))
 
     # Temporary video header file: we write it, then we take its raw bytes to
     # concatenate them to the rest of the video bitstream. At the end, delete
@@ -163,6 +166,7 @@ def cat_one_video(param):
 
     # Loop on all the gop files
     for f in list_gop_files:
+        print_log_msg('DEBUG', 'cat_one_video', 'gop_file', f)
         if not(f.endswith(GOP_SUFFIX)):
             print('[ERROR] cat_one_video should only process gop_files')
             print('[ERROR] current file is: ' + str(f))

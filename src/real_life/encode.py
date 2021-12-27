@@ -71,6 +71,7 @@ def encode(param):
         sequence_path += '/'
 
     # Count number of PNGs for the Y channel in sequence_path
+    # The goal is to get the max index, no need to sort glob.glob
     png_list = glob.glob(sequence_path + '*_y.png')
     png_idx = [int(x.split('/')[-1].rstrip('_y.png')) for x in png_list]
     max_index = max(png_idx)
