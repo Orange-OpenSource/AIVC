@@ -55,7 +55,7 @@ def decode_one_video(param):
         # the filename will be derived from the bitstream_name
         'out_dir': '',
         # Set to true to generate more stuff, useful for debug
-        'flag_bitstream_debug': False,        
+        'flag_bitstream_debug': False,
     }
 
     decoder = get_value('decoder', param, DEFAULT_PARAM)
@@ -91,8 +91,8 @@ def decode_one_video(param):
         'header_path': bitstream_dir + VIDEO_HEADER_SUFFIX
     })
 
-    first_video_frame = idx_starting_frame # int(bitstream_dir.split('/')[-2].split('_')[-1])
-    
+    first_video_frame = idx_starting_frame  # int(bitstream_dir.split('/')[-2].split('_')[-1])
+
     print_log_msg('INFO', 'Number of GOPs in bitstream', '', int(nb_GOP))
     print_log_msg('INFO', 'Index first frame', '', int(first_video_frame))
     print_log_msg('INFO', 'Index last frame', '', int(idx_end_frame))
@@ -114,7 +114,7 @@ def decode_one_video(param):
         list_bitstream_path = []
 
         # Create list of the bitstream in CODING ORDER
-        # * + 1 because we want to compress the last idx_code 
+        # * + 1 because we want to compress the last idx_code
         # GOP_2: index GOP is 0, 1, 2 and we want to code 0, 1 and 2
         for idx_code in range(get_depth_gop(GOP_struct) + 1):
             # get_name_frame_to_code[0]: there should be only one element in the list
@@ -197,7 +197,7 @@ def decode_one_GOP(param):
         # Decoder with which we're going to decode the GOP
         'decoder': None,
         # List of the bitstream files for all frames of this GOP
-        # Given without suffix. 
+        # Given without suffix.
         # ! Given in coding order, not temporal order!
         'list_bitstream_path': None,
         # Structure of the GOP,
@@ -213,11 +213,11 @@ def decode_one_GOP(param):
         # the filename will be derived from the bitstream_name
         'out_dir': '',
         # Set to true to generate more stuff, useful for debug
-        'flag_bitstream_debug': False,   
+        'flag_bitstream_debug': False,
         # For multi rate
-        'idx_rate': 0.,     
+        'idx_rate': 0.,
     }
-    
+
     decoder = get_value('decoder', param, DEFAULT_PARAM)
     list_bitstream_path = get_value('list_bitstream_path', param, DEFAULT_PARAM)
     GOP_struct = get_value('GOP_struct', param, DEFAULT_PARAM)
@@ -235,8 +235,6 @@ def decode_one_GOP(param):
         print('[ERROR] len(GOP_struct)         : ' + str(len(GOP_struct)))
         print('[ERROR] Exiting')
         return
-    
-    nb_frames = len(GOP_struct)
 
     # Used to store the decoded frames as YUV 420 dictionnaries
     decoded_GOP = {}
@@ -245,7 +243,7 @@ def decode_one_GOP(param):
     h_x_uv, w_x_uv = data_dim.get('x_uv')
 
     for idx_code, cur_bitstream in enumerate(list_bitstream_path):
-        
+
         # ! Same as above, we have only one frame per idx_code because
         # ! there is no parallel coding per temporal layer. Thus each idx_code
         # ! correspond to exactly one frame, resulting in a list with a single element
@@ -270,8 +268,7 @@ def decode_one_GOP(param):
                 'y': torch.zeros((1, 1, h_x, w_x), device=device),
                 'u': torch.zeros((1, 1, h_x_uv, w_x_uv), device=device),
                 'v': torch.zeros((1, 1, h_x_uv, w_x_uv), device=device),
-            } 
-
+            }
 
         decoded_frame = decoder.decode({
             'prev_dic': prev_ref,
@@ -294,7 +291,7 @@ def decode_one_GOP(param):
 
         # Save frame as png: frame_name = padded index
         frame_name = cur_bitstream.split('/')[-1]
-        # frame_name: sequence_name + idx + '.png'        
+        # frame_name: sequence_name + idx + '.png'
         # '_'.join(cur_bitstream.split('/')[-2].split('_')[:-1]) + '_' + cur_bitstream.split('/')[-1]
 
         if flag_bitstream_debug:
@@ -331,9 +328,9 @@ def decode_one_GOP(param):
 
 
 def uncat_one_GOP(param):
-    
+
     DEFAULT_PARAM = {
-        # Absolute path of the file containing the GOP bitstream. 
+        # Absolute path of the file containing the GOP bitstream.
         # This file will be deleted at the end and replaced by one GOP header
         # and all the separated frame bitstreams.
         'gop_file': '',
@@ -381,7 +378,7 @@ def uncat_one_GOP(param):
 def uncat_one_video(param):
 
     DEFAULT_PARAM = {
-        # Absolute path of the file containing the video bitstream. 
+        # Absolute path of the file containing the video bitstream.
         # This file will be deleted at the end and replaced by one video header
         # and all the separated gop bitstream
         'video_file': '',
@@ -425,7 +422,7 @@ def uncat_one_video(param):
             fout.write(byte_stream[:nb_bytes_cur_gop])
         # skip them
         byte_stream = byte_stream[nb_bytes_cur_gop:]
-    
+
     # # Remove the video file
     # os.system('rm ' + video_file + '.bin')
 
@@ -630,7 +627,7 @@ class CodecNetDecoder(Module):
         data_dim = get_value('data_dim', param, DEFAULT_PARAM)
         flag_bitstream_debug = get_value('flag_bitstream_debug', param, DEFAULT_PARAM)
         idx_rate = get_value('idx_rate', param, DEFAULT_PARAM)
-        device = get_value('device', param, DEFAULT_PARAM)        
+        device = get_value('device', param, DEFAULT_PARAM)
 
         # Check if we need the shortcut and compute its input
         flag_shortcut = frame_type != FRAME_I
@@ -708,7 +705,7 @@ class MOFNetDecoder(Module):
         data_dim = get_value('data_dim', param, DEFAULT_PARAM)
         flag_bitstream_debug = get_value('flag_bitstream_debug', param, DEFAULT_PARAM)
         idx_rate = get_value('idx_rate', param, DEFAULT_PARAM)
-        device = get_value('device', param, DEFAULT_PARAM)        
+        device = get_value('device', param, DEFAULT_PARAM)
 
         # Check if we need the shortcut and compute its input
         flag_shortcut = frame_type == FRAME_B
@@ -727,7 +724,7 @@ class MOFNetDecoder(Module):
             'flag_bitstream_debug': flag_bitstream_debug,
             'latent_name': 'mofnet',
             'idx_rate': idx_rate,
-            'device': device,            
+            'device': device,
         })
 
         # Get alpha, beta, v_prev and v_next from MOFNet decodin
@@ -795,7 +792,7 @@ class ConditionalDecoder(Module):
         if self.flag_gain_p_b:
             self.gain_P = conditional_net.gain_P
             self.gain_B = conditional_net.gain_B
-        
+
         self.ac = conditional_net.ac
 
 
@@ -815,7 +812,7 @@ class ConditionalDecoder(Module):
             # For multi rate
             'idx_rate': 0.,
             # Set to true to generate more stuff, useful for debug
-            'flag_bitstream_debug': False,        
+            'flag_bitstream_debug': False,
             # Specify what quantity we're entropy coding.
             # It can be <mofnet_y>, <mofnet_z>, <codecnet_y>, codecnet_z>.
             # This is needed for the decoding part, to know which part of the
@@ -830,8 +827,8 @@ class ConditionalDecoder(Module):
         frame_type = get_value('frame_type', param, DEFAULT_PARAM)
         flag_shortcut = get_value('flag_shortcut', param, DEFAULT_PARAM)
         in_shortcut = get_value('in_shortcut', param, DEFAULT_PARAM)
-        data_dim = get_value('data_dim', param, DEFAULT_PARAM)     
-        idx_rate = get_value('idx_rate', param, DEFAULT_PARAM)     
+        data_dim = get_value('data_dim', param, DEFAULT_PARAM)
+        idx_rate = get_value('idx_rate', param, DEFAULT_PARAM)
         flag_bitstream_debug = get_value('flag_bitstream_debug', param, DEFAULT_PARAM)
         latent_name = get_value('latent_name', param, DEFAULT_PARAM)
         device = get_value('device', param, DEFAULT_PARAM)
@@ -864,8 +861,8 @@ class ConditionalDecoder(Module):
             'bitstream_path': bitstream_path,
             'data_dim': (1, self.nb_ft_y, h_y, w_y),
             'device': device,
-            'latent_name': latent_name + '_y',  
-            'sigma': sigma,          
+            'latent_name': latent_name + '_y',
+            'sigma': sigma,
         })
 
         y_hat = y_centered + mu
@@ -885,7 +882,7 @@ class ConditionalDecoder(Module):
                 tmp_out = self.gain_P(gain_matrix_in)
             elif frame_type == FRAME_B:
                 tmp_out = self.gain_B(gain_matrix_in)
-        
+
         y_hat = tmp_out.get('output')
 
         # Shortcut if required and available

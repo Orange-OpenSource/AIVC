@@ -15,31 +15,15 @@ This module contains all the methods needed to train a model:
     - Setting a model to training of evaluation mode
 """
 
-import time
 import os
 import torch
 import math
-import random
-
-from torch.nn.utils import clip_grad_norm_
-from torch.optim import Adam
-from torch.optim.lr_scheduler import LambdaLR
-from torch.nn.parallel import DistributedDataParallel as DDP
-import torch.distributed as dist
-
-from layers.misc.misc_layers import GDN
 
 from func_util.console_display import print_log_msg
-from func_util.cluster_mngt import COMPUTE_PARAM
-from func_util.img_processing import save_tensor_as_img, save_yuv_separately, load_frames,\
-                                     cast_before_png_saving
-from func_util.nn_util import get_lr, push_dic_to_device, clamp_dic, crop_dic, set_dic_to_zero,\
-                              push_gop_to_device, get_value
+from func_util.img_processing import load_frames, cast_before_png_saving
+from func_util.nn_util import crop_dic, get_value
 from func_util.result_logging import generate_header_file, generate_log_metric_one_frame
-from func_util.GOP_structure import get_depth_gop
-
 from model_mngt.loss_function import compute_metrics_one_GOP, average_N_frame
-
 from real_life.cat_binary_files import cat_one_video
 from real_life.bitstream import ArithmeticCoder
 
@@ -124,7 +108,7 @@ def infer_one_sequence(param):
     # file_res = open(result_file_name, 'w')
     # file_res.write(generate_header_file())
 
-    # Lambda trade-off is only useful to compute some losses in the metric    
+    # Lambda trade-off is only useful to compute some losses in the metric
     # ! For now, round idx_rate to select the lambda trade_off
     rounded_idx_rate = int(round(idx_rate))
     lambda_tradeoff = lambda_tradeoff_list[rounded_idx_rate]
@@ -149,7 +133,6 @@ def infer_one_sequence(param):
             debug_dir = '.' + '/'.join(bitstream_dir.split('/')[:-3]) + '/debug/' + bitstream_dir.split('/')[-2] + '/'
             os.system('rm ' + debug_dir + '*.md5')
             os.system('mkdir -p ' + debug_dir)
-
 
     # Number of frames in the video sequence
     if not(sequence_path.endswith('/')):
@@ -193,7 +176,7 @@ def infer_one_sequence(param):
         })
 
         # Perform forward for this GOP
-        GOP_net_out, GOP_result = infer_one_GOP({
+        _, GOP_result = infer_one_GOP({
             'model': model,
             'GOP_struct': GOP_struct,
             'raw_frames': raw_frames,
@@ -211,7 +194,7 @@ def infer_one_sequence(param):
         # Retrieve some results for this GOP. To spare some memory, we don't
         # keep trace of everything in net_out
         # Beware, we do not retrieve GOP average result i.e. 'GOP' entry.
-        for f in range(GOP_size):           
+        for f in range(GOP_size):
             # Name of the frame inside the GOP
             GOP_frame_name = 'frame_' + str(f)
             # Name of the frame in the entire sequence
@@ -219,7 +202,7 @@ def infer_one_sequence(param):
 
             # Retrieve all results from the current frame
             sequence_result[seq_frame_name] = GOP_result.get(GOP_frame_name)
-    
+
     # We're almost done, we just have to average the results from the N frame
     # to obtain the 'sequence' entry of the sequence_result dictionnary.
     # This is pretty much the same thing as what is done for a GOP averaging in the
@@ -254,10 +237,7 @@ def infer_one_sequence(param):
     # file_res.write(generate_log_metric_one_frame(sequence_result.get('sequence')))
 
     file_res_sequence.close()
-
     # ========== IT WAS IN THE TEST FUNCTION ============= #
-
-
 
     # We're done we can return the sequence result
     return sequence_result
@@ -265,7 +245,7 @@ def infer_one_sequence(param):
 
 def infer_one_GOP(param):
     """
-    The purpose of this function is to infer one GOP and to 
+    The purpose of this function is to infer one GOP and to
     return a result dictionnary, gathering as much metrics as needed.
 
     This is separate from the training function, and it is basically
@@ -292,11 +272,11 @@ def infer_one_GOP(param):
         'bitstream_dir': '',
         # Frame index in the video of the first frame (I) of the
         # GOP.
-        'real_idx_first_frame': 0,        
+        'real_idx_first_frame': 0,
         # For multi-rate
         'idx_rate': 0.,
         # Set to true to generate more stuff, useful for debug
-        'flag_bitstream_debug': False,        
+        'flag_bitstream_debug': False,
     }
 
     # ========== RETRIEVE INPUTS ========== #
@@ -337,8 +317,7 @@ def infer_one_GOP(param):
             # Clamp and crop the output
             net_out[f]['x_hat'] = crop_dic(net_out.get(f).get('x_hat'), raw_frames.get(f))
             net_out[f]['x_hat'] = cast_before_png_saving({
-                'x': net_out.get(f).get('x_hat'),
-                'data_type': 'yuv_dic',
+                'x': net_out.get(f).get('x_hat'), 'data_type': 'yuv_dic',
             })
 
     torch.cuda.empty_cache()
@@ -349,7 +328,7 @@ def infer_one_GOP(param):
         'l_codec': l_codec,
     })
 
-    # net_out should not be that useful,;and results contains a bunch of metrics 
+    # net_out should not be that useful,;and results contains a bunch of metrics
     # for the different frames.
     return net_out, result
 

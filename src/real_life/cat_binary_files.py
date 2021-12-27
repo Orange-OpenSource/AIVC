@@ -11,8 +11,7 @@ import os
 import glob
 
 from func_util.nn_util import get_value
-from real_life.utils import GOP_SUFFIX, GOP_HEADER_SUFFIX, BITSTREAM_SUFFIX,\
-                            VIDEO_HEADER_SUFFIX
+from real_life.utils import GOP_SUFFIX, GOP_HEADER_SUFFIX, BITSTREAM_SUFFIX, VIDEO_HEADER_SUFFIX
 from real_life.header import write_video_header
 
 
@@ -27,7 +26,7 @@ def cat_one_gop(param):
     of the GOP. They are concatenated into a single <idx_gop><GOP_SUFFIX>.
 
     The structure of the resulting file is as follows:
-    
+
     [GOP_Header       (X bytes)]
 
     [Size of frame 0  (4 bytes)]
@@ -45,7 +44,7 @@ def cat_one_gop(param):
         # Idx of the GOP in the sequence.
         'idx_gop': 0,
         # Directory where all the bitstream files are located.
-        'bitstream_dir': '',        
+        'bitstream_dir': '',
     }
 
     # =========================== RETRIEVE INPUTS =========================== #
@@ -57,7 +56,7 @@ def cat_one_gop(param):
         bitstream_dir += '/'
 
     gop_header = bitstream_dir + str(idx_gop) + GOP_HEADER_SUFFIX
-    
+
     # Get the index of all the compressed frames
     list_all_files = glob.glob(bitstream_dir + '*')
     list_idx_frame = []
@@ -78,25 +77,25 @@ def cat_one_gop(param):
 
     with open(gop_header, 'rb') as fin:
         byte_to_write += fin.read()
-    
+
     # Remove gop header separate file
     os.system('rm ' + gop_header)
 
-    # Concatenate all the files 
+    # Concatenate all the files
     for i in range(first_GOP_frame_idx, first_GOP_frame_idx + len(list_idx_frame)):
         frame_name = bitstream_dir + str(i) + BITSTREAM_SUFFIX
         size_frame = os.path.getsize(frame_name)
 
         with open(frame_name, 'rb') as fin:
-            byte_to_write += int(size_frame).to_bytes(4, byteorder='big') 
+            byte_to_write += int(size_frame).to_bytes(4, byteorder='big')
             byte_to_write += fin.read()
-        
+
         # Remove this frame separate file
         os.system('rm ' + frame_name)
 
     # Write to the output file
     with open(out_file, 'wb') as fout:
-        fout.write(byte_to_write)        
+        fout.write(byte_to_write)
 
 
 def cat_one_video(param):
@@ -111,7 +110,7 @@ def cat_one_video(param):
     In the end we remove bitstream_dir
 
     The structure of the resulting file is as follows:
-    
+
     [Video header     (X bytes)]
 
     [Size of GOP 0    (4 bytes)]
@@ -168,16 +167,16 @@ def cat_one_video(param):
             print('[ERROR] cat_one_video should only process gop_files')
             print('[ERROR] current file is: ' + str(f))
             continue
-        
+
         # Append size of the gop file + its content to byte_to_write
         size_file = os.path.getsize(f)
         with open(f, 'rb') as fin:
-            byte_to_write += int(size_file).to_bytes(4, byteorder='big') 
+            byte_to_write += int(size_file).to_bytes(4, byteorder='big')
             byte_to_write += fin.read()
-        
+
         # Delete the gop file
         os.system('rm ' + f)
-    
+
     # Finally, write all the video bytes to a single out file
     out_file = final_bitstream_path
 
@@ -192,4 +191,3 @@ def cat_one_video(param):
     # os.system('rmdir ' + bitstream_dir)
     # # Remove the .bin at the end of the out file and we're done!
     # os.system('mv ' + out_file + ' ' + out_file.rstrip('.bin'))
-        
