@@ -165,7 +165,6 @@ def write_gop_header(param):
         fout.write(byte_to_write)
 
     data_dim_path = '/'.join(header_path.split('/')[:-1]) + '/data_dim.pkl'
-    # print('data_dim_path: ' + data_dim_path)
     with open(data_dim_path, 'wb') as fout:
         pickle.dump(data_dim, fout, pickle.HIGHEST_PROTOCOL)
 
