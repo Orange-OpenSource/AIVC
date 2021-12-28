@@ -165,8 +165,9 @@ def cat_one_video(param):
     os.system('rm ' + video_header_path)
 
     # Loop on all the gop files
-    for f in list_gop_files:
-        print_log_msg('DEBUG', 'cat_one_video', 'gop_file', f)
+    for idx_gop in range(len(list_gop_files)):
+        f = bitstream_dir + str(idx_gop) + GOP_SUFFIX
+        # print_log_msg('DEBUG', 'cat_one_video', 'gop_file', f)
         if not(f.endswith(GOP_SUFFIX)):
             print('[ERROR] cat_one_video should only process gop_files')
             print('[ERROR] current file is: ' + str(f))

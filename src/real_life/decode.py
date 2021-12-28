@@ -25,10 +25,9 @@ from real_life.utils import BITSTREAM_SUFFIX, GOP_HEADER_SUFFIX, GOP_SUFFIX,\
 from real_life.check_md5sum import compute_md5sum, read_md5sum
 from real_life.header import read_gop_header, read_video_header
 from func_util.nn_util import get_value, push_dic_to_device
-from func_util.GOP_structure import FRAME_B, FRAME_P, FRAME_I, get_name_frame_code,\
-                                    get_depth_gop
+from func_util.GOP_structure import FRAME_B, FRAME_P, FRAME_I, get_name_frame_code, get_depth_gop
 from func_util.img_processing import cast_before_png_saving, save_tensor_as_img,\
-                                     get_y_u_v, save_yuv_separately
+                                    get_y_u_v, save_yuv_separately
 from func_util.console_display import print_log_msg
 
 """
