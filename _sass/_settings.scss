@@ -13,9 +13,12 @@ $focusColour: #fa407a !default;
 $captionColour: #a8adac !default;
 $white: #ffffff !default;
 
+// @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&family=Raleway&family=Ubuntu+Mono&display=swap');
 // Typography
 $bodytype: (
-  font-family: "Georgia, serif",
+  // font-family: "Georgia, serif",
+  font-family: "Source Sans Pro, sans-serif",
   regular: 400,
   bold: 700,
   italic: italic,
@@ -23,16 +26,17 @@ $bodytype: (
 ) !default;
 
 $headingtype: (
-  font-family: '"Merriweather", serif',
+  // font-family: '"Merriweather", serif',
+  font-family: "Raleway",
   regular: 400,
   bold: 700,
   cap-height: 0.75
 ) !default;
 
 $monospacetype: (
-  font-family: "Menlo, monospace",
-  regular: 400,
-  cap-height: 0.68
+  font-family: "Ubuntu Mono, monospace",
+  regular: 500,
+  cap-height: 0.75
 ) !default;
 
 // TIP: Load custom fonts in _config.yaml

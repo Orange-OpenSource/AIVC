@@ -1,0 +1,44 @@
+{
+  "lang": "en-GB",
+  "name": "Orange AIVC",
+  "short_name": "OrangeAIVC",
+  "theme_color": "#24292e",
+  "background_color": "#ffffff",
+  "icons": [
+      {
+        "src": "/assets/logos/logo@16px.png",
+        "sizes": "16x16"
+      },
+      {
+        "src": "/assets/logos/logo@32px.png",
+        "sizes": "32x32"
+      },
+      {
+        "src": "/assets/logos/logo@96px.png",
+        "sizes": "96x96"
+      },
+      {
+        "src": "/assets/logos/logo@120px.png",
+        "sizes": "120x120"
+      },
+      {
+        "src": "/assets/logos/logo@144px.png",
+        "sizes": "144x144"
+      },
+      {
+        "src": "/assets/logos/logo@180px.png",
+        "sizes": "180x180"
+      },
+      {
+        "src": "/assets/logos/logo@512px.png",
+        "sizes": "512x512"
+      },
+      {
+        "src": "/assets/logos/logo@1024px.png",
+        "sizes": "1024x1024"
+      }
+      
+    ],
+  "start_url": "/",
+  "display": "standalone"
+}

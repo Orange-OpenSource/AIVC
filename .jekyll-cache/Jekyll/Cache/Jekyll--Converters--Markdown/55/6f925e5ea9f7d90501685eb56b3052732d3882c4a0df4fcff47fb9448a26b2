@@ -1,0 +1,105 @@
+I"1'<p>Alembic is a starting point for <a href="https://jekyllrb.com/">Jekyll</a> projects. Rather than starting from scratch, this boilerplate is designed to get rolling immediately. Install it, configure it, tweak it, push it.</p>
+
+<p><a class="button" href="https://github.com/daviddarnes/alembic" style="background: #0366d6">Fork it  <svg width="16" height="16" class="icon  icon--github" role="img" alt="github"><title>github</title><use xlink:href="#github" fill="CurrentColor"></use></svg>
+</a>
+ <a class="button" href="https://buymeacoffee.com/daviddarnes#support" style="background: #f68140">Buy me a coffee ☕️</a>
+ <a class="button" href="https://twitter.com/intent/tweet/?url=https://alembic.darn.es&amp;text=Alembic%20-%20A%20Jekyll%20boilerplate%20theme&amp;via=DavidDarnes" style="background: #0d94e7">Tweet it  <svg width="16" height="16" class="icon  icon--twitter" role="img" alt="twitter"><title>twitter</title><use xlink:href="#twitter" fill="CurrentColor"></use></svg>
+</a>
+ <a class="button" href="https://github.com/daviddarnes/alembic#installation">Install Alembic ⚗️</a></p>
+
+<h2 id="features">Features</h2>
+
+<ul>
+  <li>Available as a <strong>theme gem</strong> and <strong>GitHub Pages</strong> theme</li>
+  <li>Clear and elegant design that can be used out of the box or as solid starting point</li>
+  <li>Tested in all major browsers, including <strong>IE and Edge</strong></li>
+  <li>Built in <strong>Service Worker</strong> so it can work offline and on slow connections</li>
+  <li><strong>Configurable colours</strong> and typography in a single settings file</li>
+  <li>Extensive set of <strong>shortcodes</strong> to include various elements; such as buttons, icons, figure images and more</li>
+  <li>Solid <strong>typographic framework</strong> from <a href="https://sassline.com/">Sassline</a></li>
+  <li>Configurable navigation via a single file</li>
+  <li>Modular Jekyll components</li>
+  <li>Post category support in the form of a single post index page grouped by category</li>
+  <li>Built in live search using JavaScript</li>
+  <li><strong>Contact form</strong> built in using <a href="https://formspree.io/">Formspree</a></li>
+  <li>Designed with <strong><a href="https://www.siteleaf.com/">Siteleaf</a></strong> in mind</li>
+  <li>Has 9 of the most popular networks as performant sharing buttons</li>
+  <li>Has documentation</li>
+</ul>
+
+<h2 id="examples">Examples</h2>
+
+<p>Here are a few examples of Alembic out in the wild being used in a variety of ways:</p>
+
+<ul>
+  <li><a href="https://bawejakunal.github.io/">bawejakunal.github.io</a></li>
+  <li><a href="https://case2111.github.io/">case2111.github.io</a></li>
+  <li><a href="https://www.karateca.org/">karateca.org</a></li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+
+<h3 id="quick-setup">Quick setup</h3>
+
+<p>To give you a running start I’ve put together some starter kits that you can download, fork or even deploy immediately:</p>
+
+<ul>
+  <li>⚗️🍨 Vanilla Jekyll starter kit<br />
+<a href="https://app.netlify.com/start/deploy?repository=https://github.com/daviddarnes/alembic-kit" style="background: none"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" /></a></li>
+  <li>⚗️🌲 Forestry starter kit<br />
+<a href="https://app.forestry.io/quick-start?repo=daviddarnes/alembic-forestry-kit&amp;engine=jekyll" style="background: none"><img src="https://assets.forestry.io/import-to-forestry.svg" alt="Deploy to Forestry" /></a><br />
+<a href="https://app.netlify.com/start/deploy?repository=https://github.com/daviddarnes/alembic-forestry-kit" style="background: none"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" /></a></li>
+  <li>
+    <p>⚗️💠 Netlify CMS starter kit<br />
+<a href="https://app.netlify.com/start/deploy?repository=https://github.com/daviddarnes/alembic-netlifycms-kit&amp;stack=cms" style="background: none"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" /></a></p>
+  </li>
+  <li>
+    <p>⚗️:octocat: GitHub Pages with remote theme kit<br />
+<a class="button" href="https://github.com/daviddarnes/alembic-kit/archive/remote-theme.zip" style="background: #24292e">Download kit</a></p>
+  </li>
+  <li>⚗️🚀 Stackbit starter kit<br />
+<a href="https://app.stackbit.com/create?theme=https://github.com/daviddarnes/alembic-stackbit-kit" style="background: none"><img src="https://assets.stackbit.com/badge/create-with-stackbit.svg" alt="Create with Stackbit" /></a></li>
+</ul>
+
+<h3 id="as-a-jekyll-theme">As a Jekyll theme</h3>
+
+<ol>
+  <li>Add <code class="language-plaintext highlighter-rouge">gem "alembic-jekyll-theme"</code> to your <code class="language-plaintext highlighter-rouge">Gemfile</code> to add the theme as a dependancy</li>
+  <li>Run the command <code class="language-plaintext highlighter-rouge">bundle install</code> in the root of project to install the theme and its dependancies</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">theme: alembic-jekyll-theme</code> to your <code class="language-plaintext highlighter-rouge">_config.yml</code> file to set the site theme</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code> to build and serve your site</li>
+  <li>Done! Use the <a href="#configuration">configuration</a> documentation and the example <a href="https://github.com/daviddarnes/alembic/blob/master/_config.yml"><code class="language-plaintext highlighter-rouge">_config.yml</code></a> file to set things like the navigation, contact form and social sharing buttons</li>
+</ol>
+
+<h3 id="as-a-github-pages-remote-theme">As a GitHub Pages remote theme</h3>
+
+<ol>
+  <li>Add <code class="language-plaintext highlighter-rouge">gem "jekyll-remote-theme"</code> to your <code class="language-plaintext highlighter-rouge">Gemfile</code> to add the theme as a dependancy</li>
+  <li>Run the command <code class="language-plaintext highlighter-rouge">bundle install</code> in the root of project to install the jekyll remote theme gem as a dependancy</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">jekyll-remote-theme</code> to the list of <code class="language-plaintext highlighter-rouge">plugins</code> in your <code class="language-plaintext highlighter-rouge">_config.yml</code> file</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">remote_theme: daviddarnes/alembic@main</code> to your <code class="language-plaintext highlighter-rouge">_config.yml</code> file to set the site theme</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code> to build and serve your site</li>
+  <li>Done! Use the <a href="#configuration">configuration</a> documentation and the example <a href="https://github.com/daviddarnes/alembic/blob/master/_config.yml"><code class="language-plaintext highlighter-rouge">_config.yml</code></a> file to set things like the navigation, contact form and social sharing buttons</li>
+</ol>
+
+<h3 id="as-a-boilerplate--fork">As a Boilerplate / Fork</h3>
+
+<p><em>(deprecated, not recommended)</em></p>
+
+<ol>
+  <li><a href="https://github.com/daviddarnes/alembic#fork-destination-box">Fork the repo</a></li>
+  <li>Replace the <code class="language-plaintext highlighter-rouge">Gemfile</code> with one stating all the gems used in your project</li>
+  <li>Delete the following unnecessary files/folders: <code class="language-plaintext highlighter-rouge">.github</code>, <code class="language-plaintext highlighter-rouge">LICENSE</code>, <code class="language-plaintext highlighter-rouge">screenshot.png</code>, <code class="language-plaintext highlighter-rouge">CNAME</code> and <code class="language-plaintext highlighter-rouge">alembic-jekyll-theme.gemspec</code></li>
+  <li>Run the command <code class="language-plaintext highlighter-rouge">bundle install</code> in the root of project to install the jekyll remote theme gem as a dependancy</li>
+  <li>Run <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code> to build and serve your site</li>
+  <li>Done! Use the <a href="#configuration">configuration</a> documentation and the example <a href="https://github.com/daviddarnes/alembic/blob/master/_config.yml"><code class="language-plaintext highlighter-rouge">_config.yml</code></a> file to set things like the navigation, contact form and social sharing buttons</li>
+</ol>
+
+<h2 id="customising">Customising</h2>
+
+<p>When using Alembic as a theme means you can take advantage of the file overriding method. This allows you to overwrite any file in this theme with your own custom file, by matching the file name and path. The most common example of this would be if you want to add your own styles or change the core style settings.</p>
+
+<p>To add your own styles copy the <a href="https://github.com/daviddarnes/alembic/blob/master/assets/styles.scss"><code class="language-plaintext highlighter-rouge">styles.scss</code></a> into your own project with the same file path (<code class="language-plaintext highlighter-rouge">assets/styles.scss</code>). From there you can add your own styles, you can even optionally ignore the theme styles by removing the <code class="language-plaintext highlighter-rouge">@import "alembic";</code> line.</p>
+
+<p>If you’re looking to set your own colours and fonts you can overwrite them by matching the variable names from the <a href="https://github.com/daviddarnes/alembic/blob/master/_sass/_settings.scss"><code class="language-plaintext highlighter-rouge">_settings.scss</code></a> file in your own <code class="language-plaintext highlighter-rouge">styles.scss</code>, make sure to state them before the <code class="language-plaintext highlighter-rouge">@import "alembic";</code> line so they take effect. The settings are a mixture of custom variables and settings from <a href="https://medium.com/@jakegiltsoff/sassline-v2-0-e424b2881e7e">Sassline</a> - follow the link to find out how to configure the typographic settings.</p>
+:ET
