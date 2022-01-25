@@ -33,7 +33,7 @@ Intelligence for Video Coding*, Ladune *et al.*
   <table>
     <tr>
       <td>
-        <div style="text-align: center">Original video $\mathbf{x}_t$ </div>
+        <div style="text-align: center">Original video \(\mathbf{x}_t\) </div>
       </td>
       <td>
         <video height="240" autoplay loop>
@@ -43,7 +43,7 @@ Intelligence for Video Coding*, Ladune *et al.*
     </tr>
     <tr>
       <td>
-        <div style="text-align: center">Optical flow $\mathbf{v}_p$ </div>
+        <div style="text-align: center">Optical flow \(\mathbf{v}_p\) </div>
       </td>
       <td>
         <video height="240" autoplay loop>
@@ -53,7 +53,7 @@ Intelligence for Video Coding*, Ladune *et al.*
     </tr>
     <tr>
       <td>
-        <div style="text-align: center">Optical flow $\mathbf{v}_f$ </div>
+        <div style="text-align: center">Optical flow \(\mathbf{v}_f\) </div>
       </td>
       <td>
         <video height="240" autoplay loop>
@@ -64,7 +64,7 @@ Intelligence for Video Coding*, Ladune *et al.*
     <tr>
       <td>
         <div style="text-align: center">Coding mode </div>
-        <div style="text-align: center">selection $\boldsymbol{\alpha}$</div>
+        <div style="text-align: center">selection \(\boldsymbol{\alpha}\)</div>
       </td>
       <td>
         <video height="240" autoplay loop>
@@ -75,7 +75,7 @@ Intelligence for Video Coding*, Ladune *et al.*
     <tr>
       <td>
         <div style="text-align: center">Skip mode contribution</div>
-        <div style="text-align: center">$(1 - \boldsymbol{\alpha}) \odot \tilde{\mathbf{x}}_t$ </div>
+        <div style="text-align: center">\((1 - \boldsymbol{\alpha}) \odot \tilde{\mathbf{x}}_t\) </div>
       </td>
       <td>
         <video height="240" autoplay loop>
@@ -85,7 +85,7 @@ Intelligence for Video Coding*, Ladune *et al.*
     </tr>
     <tr>
       <td>
-        <div style="text-align: center">Decoded video $\hat{\mathbf{x}}_t$ </div>
+        <div style="text-align: center">Decoded video \(\hat{\mathbf{x}}_t\) </div>
       </td>
       <td>
         <video height="240" autoplay loop>
@@ -104,7 +104,7 @@ stake during the coding of a video sequence.
     <tr>
       <td>
         <div style="text-align: center">Bi-directional prediction </div>
-        <div style="text-align: center">weighting $\boldsymbol{\beta}$</div>
+        <div style="text-align: center">weighting \(\boldsymbol{\beta}\)</div>
       </td>
       <td>
         <video height="240" autoplay loop>
@@ -115,7 +115,7 @@ stake during the coding of a video sequence.
     <tr>
       <td>
         <div style="text-align: center">Temporal prediction</div>
-        <div style="text-align: center">$\tilde{x}_t$ </div>
+        <div style="text-align: center">\(tilde{x}_t\) </div>
       </td>
       <td>
         <video height="240" autoplay loop>
@@ -128,4 +128,6 @@ stake during the coding of a video sequence.
 
 ## Conditional coding behavior
 
-Conditional coding plays a key role in AIVC compression performance.
+Conditional coding plays a key role in AIVC compression performance. In order to
+highlight its role, we present some insightful videos based on the separate
+synthesis of the analysis and conditioning latent variables.
