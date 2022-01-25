@@ -5,43 +5,8 @@
   
     
     
-      {
-        "title": "Description of an Alembic",
-        "excerpt": "The complete distilling apparatus consists of three parts: the “cucurbit” (Arabic ḳarʿa, Greek βίκος), the still pot containing the liquid to be distilled, which is heated by a flame; the “head” or “cap” (Arabic anbiḳ, Greek ἄμβιξ) which fits over the mouth of the cucurbit to receive the vapors, with an attached downward-sloping “tube” (Greek σωλήν), leading to the “receiver” (Arabic ḳābila, Greek ἄγγος or φιάλη) container.\n\n",
-        "content": "The complete distilling apparatus consists of three parts: the “cucurbit” (Arabic ḳarʿa, Greek βίκος), the still pot containing the liquid to be distilled, which is heated by a flame; the “head” or “cap” (Arabic anbiḳ, Greek ἄμβιξ) which fits over the mouth of the cucurbit to receive the vapors, with an attached downward-sloping “tube” (Greek σωλήν), leading to the “receiver” (Arabic ḳābila, Greek ἄγγος or φιάλη) container.\n\n\n\nRetorts have the “cap” and the “cucurbit” made into one. The anbik is also called the raʾs (head) of the cucurbit. The liquid in the cucurbit is heated or boiled; the vapour rises into the anbik, where it cools by contact with the walls and condenses, running down the spout into the receiver. A modern descendant of the alembic is the pot still, used to produce distilled beverages.\n\nOriginally from Alembic - Wikipedia\n",
-        "url": "/general/external%20sources/2016/08/27/example-post-one/"
-      },
-    
-      {
-        "title": "History of the Alembic",
-        "excerpt": "Dioscorides’ ambix (described in his De materia medica) is a helmet-shaped lid for gathering condensed mercury. For Athenaeus (~ 225 C.E.) it is a bottle or flask. For later chemists it denotes various parts of crude distillation devices.\n\n",
-        "content": "Dioscorides’ ambix (described in his De materia medica) is a helmet-shaped lid for gathering condensed mercury. For Athenaeus (~ 225 C.E.) it is a bottle or flask. For later chemists it denotes various parts of crude distillation devices.\n\n\n\nAlembic drawings appear in works of Cleopatra the Alchemist, Synesius, and Zosimos of Panopolis. There were alembics with two (dibikos) and three (tribikos) receivers.[4] According to Zosimos of Panopolis, the alembic was invented by Mary the Jewess.[5]\n\nThe anbik is described by Ibn al-Awwam in his Kitab al-Filaha (Book of Agriculture), where he explains how rose-water is distilled. Amongst others, it is mentioned in the Mafatih al-Ulum (Key of Sciences) of Khwarizmi and the Kitab al-Asrar (Book of Secrets) of Al-Razi. Some illustrations occur in the Latin translations of works which are attributed to Geber.[2]\n\nOriginally from Alembic - Wikipedia\n",
-        "url": "/history/external%20sources/2016/08/28/example-post-two/"
-      },
-    
-      {
-        "title": "Description of a Pot Still",
-        "excerpt": "A pot still is a type of still used in distilling spirits such as whisky or brandy. Heat is applied directly to the pot containing the wash (for whisky) or wine (for brandy).\n",
-        "content": "A pot still is a type of still used in distilling spirits such as whisky or brandy. Heat is applied directly to the pot containing the wash (for whisky) or wine (for brandy). This is called a batch distillation (as opposed to a continuous distillation).\n\nAt standard atmospheric pressure, alcohol boils at 78 °C (172 °F), while water boils at 100 °C (212 °F). During distillation, the vapour contains more alcohol than the liquid. When the vapours are condensed, the resulting liquid contains a higher concentration of alcohol. In the pot still, the alcohol and water vapour combine with esters and flow from the still through the condensing coil. There they condense into the first distillation liquid, the so-called “low wines”. The low wines have a strength of about 25–35% alcohol by volume, and flow into a second still. It is then distilled a second time to produce the colourless spirit, collected at about 70% alcohol by volume. Colour is added through maturation in an oak aging barrel, and develops over time.\n\nThe modern pot still is a descendant of the alembic, an earlier distillation device.\n",
-        "url": "/general/2016/08/29/example-post-three/"
-      },
-    
   
   
-  
-  {
-    "title": "Categories",
-    "excerpt": "Category index\n",
-    "content": "\n",
-    "url": "/categories/"
-  },
-  
-  {
-    "title": "Visual Examples",
-    "excerpt": "A demo of Markdown and HTML includes\n",
-    "content": "For latex\n\n\n\n\n\n\nWorks on firefox and Safari!\n\nExamples are presented on the video sequence Sports_1080P-6710 from the\nCLIC 2021 dataset.\n\n\n  \n  \n\n\nVideos from the paper\n\nThe videos presented here are from the Fig. 2 in the paper AIVC: Artificial\nIntelligence for Video Coding, Ladune et al.\n\n\n  \n    \n      \n        Original video $\\mathbf{x}_t$ \n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Optical flow $\\mathbf{v}_p$ \n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Optical flow $\\mathbf{v}_f$ \n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Coding mode \n        selection $\\boldsymbol{\\alpha}$\n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Skip mode contribution\n        $(1 - \\boldsymbol{\\alpha}) \\odot \\tilde{\\mathbf{x}}_t$ \n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Decoded video $\\hat{\\mathbf{x}}_t$ \n      \n      \n        \n          \n        \n      \n    \n  \n\n\nWe also provide supplementary examples which displays some other quantities at\nstake during the coding of a video sequence.\n\n\n  \n    \n      \n        Bi-directional prediction \n        weighting $\\boldsymbol{\\beta}$\n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Temporal prediction\n        $\\tilde{x}_t$ \n      \n      \n        \n          \n        \n      \n    \n  \n\n\n\nConditional coding behavior\n\nConditional coding plays a key role in AIVC compression performance. In order to\nbetter understand its behavior, we present some insightful videos based on the\nseparate synthesis of the analysis and conditioning MNet latent variables. We’ll\nhave a look at one optical flow $\\mathbf{v}_p$ when it is synthesized from:\n\n\n  The analysis latent variable only i.e. no decoder-side info used\n  The conditioning latent variable only i.e. not a single bit conveyed\n  Both latent variables\n\n\n\n  \n    \n      \n        Optical flow $\\mathbf{v}_p$\n        Only from conditioning \n        latent variable\n        Decoder-side only!\n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Optical flow $\\mathbf{v}_p$ \n        Only from analysis\n        latent variable \n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Optical flow $\\mathbf{v}_p$ \n        From all latent variables \n      \n      \n        \n          \n        \n      \n    \n  \n\n\nRecall that the conditioning is a decoder-side only transform, so the first\nvideo represents the motion information infered at the decoder without a\nsingle bit received. Most of the small motions in the background are inferred at\nthe decoder thanks to the conditioning transform. Yet, the motion of the girl in\nthe foreground is too complex to be anticipated at the decoder. Thus, the\nanalysis transform transmits motion information solely for the girl.\n",
-    "url": "/elements/"
-  },
   
   {
     "title": "AIVC",
@@ -51,10 +16,17 @@
   },
   
   {
-    "title": "Search",
-    "excerpt": "Search for a page or post you’re looking for\n",
-    "content": "{% include site-search.html %}\n",
-    "url": "/search/"
+    "title": "Categories",
+    "excerpt": "Category index\n",
+    "content": "\n",
+    "url": "/rd_results/"
+  },
+  
+  {
+    "title": "Visual Examples",
+    "excerpt": "Visual examples of AIVC behavior\n",
+    "content": "\n\n\n\n\n\nWorks on firefox and Safari!\n\nExamples are presented on the video sequence Sports_1080P-6710 from the\nCLIC 2021 dataset.\n\n{% include figure.html image=”../assets/diagram/Global_diagram.png” alt=”Image with just alt text” %}\n\nVideos from the paper\n\nThe videos presented here are from the Fig. 2 in the paper AIVC: Artificial\nIntelligence for Video Coding, Ladune et al.\n\n\n  \n    \n      \n        Original video $\\mathbf{x}_t$ \n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Optical flow $\\mathbf{v}_p$ \n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Optical flow $\\mathbf{v}_f$ \n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Coding mode \n        selection $\\boldsymbol{\\alpha}$\n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Skip mode contribution\n        $(1 - \\boldsymbol{\\alpha}) \\odot \\tilde{\\mathbf{x}}_t$ \n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Decoded video $\\hat{\\mathbf{x}}_t$ \n      \n      \n        \n          \n        \n      \n    \n  \n\n\nWe also provide supplementary examples which displays some other quantities at\nstake during the coding of a video sequence.\n\n\n  \n    \n      \n        Bi-directional prediction \n        weighting $\\boldsymbol{\\beta}$\n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Temporal prediction\n        $\\tilde{x}_t$ \n      \n      \n        \n          \n        \n      \n    \n  \n\n\n\nConditional coding behavior\n\nConditional coding plays a key role in AIVC compression performance. In order to\nbetter understand its behavior, we present some insightful videos based on the\nseparate synthesis of the analysis and conditioning MNet latent variables. We’ll\nhave a look at one optical flow $\\mathbf{v}_p$ when it is synthesized from:\n\n\n  The analysis latent variable only i.e. no decoder-side info used\n  The conditioning latent variable only i.e. not a single bit conveyed\n  Both latent variables\n\n\n\n  \n    \n      \n        Optical flow $\\mathbf{v}_p$\n        Only from conditioning \n        latent variable\n        Decoder-side only!\n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Optical flow $\\mathbf{v}_p$ \n        Only from analysis\n        latent variable \n      \n      \n        \n          \n        \n      \n    \n    \n      \n        Optical flow $\\mathbf{v}_p$ \n        From all latent variables \n      \n      \n        \n          \n        \n      \n    \n  \n\n\nRecall that the conditioning is a decoder-side only transform, so the first\nvideo represents the motion information infered at the decoder without a\nsingle bit received. Most of the small motions in the background are inferred at\nthe decoder thanks to the conditioning transform. Yet, the motion of the girl in\nthe foreground is too complex to be anticipated at the decoder. Thus, the\nanalysis transform transmits motion information solely for the girl.\n",
+    "url": "/visual_examples/"
   }
   
 ]

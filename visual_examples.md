@@ -1,15 +1,14 @@
 ---
 title: Visual Examples
-feature_text: |
-  Visual examples of AIVC behavior
+# feature_text: |
+#   Visual examples of AIVC behavior
 # feature_image: "https://picsum.photos/2560/600?image=873"
-# feature_image: assets/diagram/Global_diagram.png
-excerpt: "A demo of Markdown and HTML includes"
+# feature_image: ../assets/feature_images/Global_diagram.png
+excerpt: "Visual examples of AIVC behavior"
 aside: false  # No about AIVC
 ---
 
-# For latex
-
+<!-- For latex -->
 <!-- Load with https! Or it does not work -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});

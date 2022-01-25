@@ -1,9 +1,10 @@
 ---
 title: AIVC
-feature_text: |
+# feature_text: |
   ## AIVC
-  AIVC is an end-to-end neural video codec,  offering performance competitive with HEVC.
-feature_image: "https://picsum.photos/1300/400?image=989"
+  # AIVC is an end-to-end neural video codec,  offering performance competitive with HEVC.
+feature_image: ../assets/feature_images/Global_diagram.png
+# feature_image: "https://picsum.photos/1300/400?image=989"
 # excerpt: "Alembic is a starting point for [Jekyll](https://jekyllrb.com/) projects. Rather than starting from scratch, this boilerplate is designed to get the ball rolling immediately. Install it, configure it, tweak it, push it."
 ---
 
