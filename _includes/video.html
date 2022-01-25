@@ -1,10 +1,10 @@
 <div class="video">
   <iframe 
-    src="https://www.youtube.com/embed/{{ include.id }}?autoplay=1&loop=1&autopause=0" 
+    src="https://www.youtube.com/embed/{{ include.id }}"
     frameborder="0"
-    allowfullscreen=""
+    allowfullscreen
     title="{{ include.title | default: "Video" }}"
-    autoplay=true
-    muted>
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    mute>
 </iframe>
 </div>

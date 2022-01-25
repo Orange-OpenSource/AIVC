@@ -17,8 +17,8 @@
 <meta property="og:locale" content="en_GB" />
 <meta name="description" content="A demo of Markdown and HTML includes" />
 <meta property="og:description" content="A demo of Markdown and HTML includes" />
-<link rel="canonical" href="http://localhost:4000/elements.old/" />
-<meta property="og:url" content="http://localhost:4000/elements.old/" />
+<link rel="canonical" href="http://localhost:4000/elements/" />
+<meta property="og:url" content="http://localhost:4000/elements/" />
 <meta property="og:site_name" content="Orange AIVC" />
 <meta property="og:image" content="http://localhost:4000/assets/default-social-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -27,7 +27,7 @@
 <meta name="twitter:site" content="@DavidDarnes" />
 <meta name="twitter:creator" content="@DavidDarnes" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"http://localhost:4000/elements.old/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/logos/logo_aivc.svg"},"name":"DavidDarnes"},"author":{"@type":"Person","name":"DavidDarnes"},"image":"http://localhost:4000/assets/default-social-image.png","description":"A demo of Markdown and HTML includes","headline":"Visual Examples","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"http://localhost:4000/elements/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/logos/logo_aivc.svg"},"name":"DavidDarnes"},"author":{"@type":"Person","name":"DavidDarnes"},"image":"http://localhost:4000/assets/default-social-image.png","description":"A demo of Markdown and HTML includes","headline":"Visual Examples","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -143,7 +143,7 @@
 
       
 
-      <li class="item  item--nav">
+      <li class="item  item--nav  item--current">
         <a href="/elements/">Elements</a>
       </li>
     
@@ -221,7 +221,7 @@
 
 
 
-  <div class="feature" style="background-image: url(assets/diagram/Global_diagram.png)">
+  <div class="feature">
     <div class="container  typeset">
       <p>Visual examples of AIVC behavior</p>
 
@@ -242,19 +242,16 @@
     <p>Examples are presented on the video sequence <em>Sports_1080P-6710</em> from the
 <a href="http://clic.compression.cc/2021/">CLIC 2021</a> dataset.</p>
 
+<figure class="figure  figure--center">
+  <img class="image" src="../assets/diagram/Global_diagram.png" alt="Image with just alt text" width="" height="" />
+  
+</figure>
+
 <h1 id="heading-1">Heading 1</h1>
 
-<!-- <div class="video">
-  <iframe 
-    src="https://www.youtube.com/embed/vJxPs-nQhhI?autoplay=1&loop=1&autopause=0" 
-    frameborder="0"
-    allowfullscreen=""
-    title="Video to compress"
-    autoplay=true
-    muted>
-</iframe>
-</div>
- -->
+<video width="320" height="240" controls="" autoplay="" loop="">
+  <source src="../assets/videos/rawframe_even_pad.mp4" type="video/mp4" />
+</video>
 
 <h2 id="heading-2">Heading 2</h2>
 
@@ -397,7 +394,7 @@
 <h3 id="video-include">Video include</h3>
 
 <div class="video">
-  <iframe src="https://www.youtube.com/embed/zrkcGL5H3MU?autoplay=1&amp;loop=1&amp;autopause=0" frameborder="0" allowfullscreen="" title="Siteleaf tutorial video" autoplay="true" muted="">
+  <iframe src="https://www.youtube.com/embed/zrkcGL5H3MU" frameborder="0" allowfullscreen="" title="Siteleaf tutorial video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" mute="">
 </iframe>
 </div>
 

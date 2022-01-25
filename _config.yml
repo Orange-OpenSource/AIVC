@@ -136,15 +136,15 @@ navigation_header:
   url: https://github.com/daviddarnes/alembic
 
 navigation_footer:
-- title: Created by David Darnes
-  url: https://darn.es
+- title: Théo Ladune
+  url: https://theoladune.github.io/
 
 social_links: # Appears in sidebar. Set the urls then uncomment and comment out as desired
-  Twitter: https://twitter.com/DavidDarnes
-  LinkedIn: https://www.linkedin.com/in/daviddarnes
-  GitHub: https://github.com/daviddarnes
-  link: https://darn.es
-  RSS: /feed.xml
+  # Twitter: https://twitter.com/DavidDarnes
+  LinkedIn: https://www.linkedin.com/in/theo-ladune/
+  GitHub: https://github.com/theoladune
+  link: https://theoladune.github.io/
+  # RSS: /feed.xml
 
 sharing_links: # Appear at the bottom of single blog posts, add as desired. The value can be 'true' or the desired button colour
   Twitter: "#0d94e7"

@@ -3,7 +3,7 @@ title: Visual Examples
 feature_text: |
   Visual examples of AIVC behavior
 # feature_image: "https://picsum.photos/2560/600?image=873"
-feature_image: assets/diagram/Global_diagram.png
+# feature_image: assets/diagram/Global_diagram.png
 excerpt: "A demo of Markdown and HTML includes"
 aside: false  # No about AIVC
 ---
@@ -11,9 +11,13 @@ aside: false  # No about AIVC
 Examples are presented on the video sequence *Sports_1080P-6710* from the
 [CLIC 2021](http://clic.compression.cc/2021/) dataset.
 
+{% include figure.html image="../assets/diagram/Global_diagram.png" alt="Image with just alt text" %}
+
 # Heading 1
 
-<!-- {% include video.html id="vJxPs-nQhhI" title="Video to compress" %} -->
+<video width="320" height="240" controls autoplay loop>
+  <source src="../assets/videos/rawframe_even_pad.mp4" type="video/mp4">
+</video>
 
 ## Heading 2
 
