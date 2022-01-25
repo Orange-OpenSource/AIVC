@@ -1,5 +1,5 @@
 ---
-title: Elements
+title: Visual Examples
 feature_text: |
   Visual examples of AIVC behavior
 # feature_image: "https://picsum.photos/2560/600?image=873"
