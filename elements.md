@@ -15,7 +15,7 @@ Examples are presented on the video sequence *Sports_1080P-6710* from the
 
 # Heading 1
 
-<video width="320" height="240" controls autoplay loop>
+<video controls autoplay loop mute>
   <source src="../assets/videos/rawframe_even_pad.mp4" type="video/mp4">
 </video>
 
