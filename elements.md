@@ -1,13 +1,19 @@
 ---
-title: Elements
+title: Visual Examples
 feature_text: |
-  A demo of Markdown and HTML includes
-feature_image: "https://picsum.photos/2560/600?image=873"
+  Visual examples of AIVC behavior
+# feature_image: "https://picsum.photos/2560/600?image=873"
+feature_image: assets/diagram/Global_diagram.png
 excerpt: "A demo of Markdown and HTML includes"
-aside: true
+aside: false  # No about AIVC
 ---
 
+Examples are presented on the video sequence *Sports_1080P-6710* from the
+[CLIC 2021](http://clic.compression.cc/2021/) dataset.
+
 # Heading 1
+
+{% include video.html id="vJxPs-nQhhI" title="Video to compress" %}
 
 ## Heading 2
 

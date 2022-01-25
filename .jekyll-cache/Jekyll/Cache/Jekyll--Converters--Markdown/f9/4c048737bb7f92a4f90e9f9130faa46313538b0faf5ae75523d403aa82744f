@@ -1,0 +1,45 @@
+I"6<p><strong>AI</strong>-based <strong>V</strong>ideo <strong>C</strong>odec is an <strong>end-to-end neural video coder</strong>, offering many practical features and great flexibility:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>Features</strong></th>
+      <th style="text-align: center"><strong>What’s inside?</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Coding configurations</td>
+      <td style="text-align: center">Random Access, Low-delay P &amp; All Intra</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tunable Intra Period</td>
+      <td style="text-align: center">Up to 64</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Tunable GOP size</td>
+      <td style="text-align: center">Up to 64</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">7 Different rates target</td>
+      <td style="text-align: center">1 MBit/s to 20 MBit/s (for 1080p videos)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Competitive performances</td>
+      <td style="text-align: center">On par with HM (HEVC Test Model)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Convenient input format</td>
+      <td style="text-align: center">8-bit YUV 4:2:0 videos</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<p><a class="button" href="https://github.com/Orange-OpenSource/AIVC" style="background: #0366d6">Get the models  <svg width="16" height="16" class="icon  icon--github" role="img" alt="github"><title>github</title><use xlink:href="#github" fill="CurrentColor"></use></svg>
+</a>
+ <a class="button" href="(https://arxiv.org/abs/2104.09103" style="background: #f68140">Read the paper ☕️</a>
+ <a class="button" href="https://theoladune.github.io/AIVC-Seminar/" style="background: #0d94e7">See some slides</a></p>
+
+:ET

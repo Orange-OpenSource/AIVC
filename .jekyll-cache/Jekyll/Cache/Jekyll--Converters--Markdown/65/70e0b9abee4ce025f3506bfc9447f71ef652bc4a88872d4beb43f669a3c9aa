@@ -1,0 +1,183 @@
+I"�'<p>Examples are presented on the video sequence <code class="language-plaintext highlighter-rouge">Sports_1080P-6710</code> from the
+<a href="http://clic.compression.cc/2021/">CLIC 2021</a> dataset.</p>
+
+<h1 id="heading-1">Heading 1</h1>
+
+<h2 id="heading-2">Heading 2</h2>
+
+<h3 id="heading-3">Heading 3</h3>
+
+<h4 id="heading-4">Heading 4</h4>
+
+<h5 id="heading-5">Heading 5</h5>
+
+<h6 id="heading-6">Heading 6</h6>
+
+<p><small>A small element</small></p>
+
+<p><a href="https://david.darn.es" title="A link">A link</a></p>
+
+<p>Lorem ipsum dolor sit amet, consectetur adip* isicing elit, sed do eiusmod *tempor incididunt ut labore et dolore magna aliqua.</p>
+
+<p>Duis aute irure dolor in <a href="https://david.darn.es" title="A link">A link</a> reprehenderit in voluptate velit esse cillum <strong>bold text</strong> dolore eu fugiat nulla pariatur. Excepteur span element sint occaecat cupidatat non proident, sunt <em>italicised text</em> in culpa qui officia deserunt mollit anim id <code class="language-plaintext highlighter-rouge">some code</code> est laborum.</p>
+
+<ul>
+  <li>An item</li>
+  <li>An item</li>
+  <li>An item</li>
+  <li>An item</li>
+  <li>An item</li>
+</ul>
+
+<ol>
+  <li>Item one</li>
+  <li>Item two</li>
+  <li>Item three</li>
+  <li>Item four</li>
+  <li>Item five</li>
+</ol>
+
+<blockquote>
+  <p>A simple blockquote</p>
+</blockquote>
+
+<p>Some HTML…</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;blockquote</span> <span class="na">cite=</span><span class="s">"http://www.imdb.com/title/tt0284978/quotes/qt1375101"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;p&gt;</span>You planning a vacation, Mr. Sullivan?<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;footer&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://www.imdb.com/title/tt0284978/quotes/qt1375101"</span><span class="nt">&gt;</span>Sunways Security Guard<span class="nt">&lt;/a&gt;</span>
+  <span class="nt">&lt;/footer&gt;</span>
+<span class="nt">&lt;/blockquote&gt;</span>
+</code></pre></div></div>
+
+<p>…CSS…</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">blockquote</span> <span class="p">{</span>
+  <span class="nl">text-align</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+  <span class="nl">font-weight</span><span class="p">:</span> <span class="nb">bold</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">blockquote</span> <span class="nt">footer</span> <span class="p">{</span>
+  <span class="nl">font-size</span><span class="p">:</span> <span class="m">.8rem</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>…and JavaScript</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">blockquote</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">blockquote</span><span class="dl">"</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">bolden</span> <span class="o">=</span> <span class="p">(</span><span class="nx">keyString</span><span class="p">,</span> <span class="nx">string</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nx">string</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="nx">keyString</span><span class="p">,</span> <span class="dl">'</span><span class="s1">g</span><span class="dl">'</span><span class="p">),</span> <span class="dl">'</span><span class="s1">&lt;strong&gt;</span><span class="dl">'</span><span class="o">+</span><span class="nx">keyString</span><span class="o">+</span><span class="dl">'</span><span class="s1">&lt;/strong&gt;</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="nx">blockquote</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">bolden</span><span class="p">(</span><span class="dl">"</span><span class="s2">Mr. Sullivan</span><span class="dl">"</span><span class="p">,</span> <span class="nx">blockquote</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Single line of code</code></p>
+
+<h2 id="html-includes">HTML Includes</h2>
+
+<h3 id="contact-form">Contact form</h3>
+
+<form class="form  form--contact" method="post" name="Contact" action="/thanks/">
+  <fieldset class="fieldset  form__fieldset">
+    <legend class="legend form__legend">Contact</legend>
+    <label class="label" for="name--contact">Name: <span class="required">*</span></label>
+    <input class="input" id="name--contact" type="text" name="name" value="" placeholder="Your Name" required="required" />
+
+    <label class="label" for="email--contact">Email Address: <span class="required">*</span></label>
+    <input class="input" id="email--contact" type="email" name="email" value="" placeholder="email@website.com" required="required" />
+
+    <label class="label" for="message--contact">Message: <span class="required">*</span></label>
+    <textarea class="textarea" id="message--contact" name="message" placeholder="Your message..." required="required"></textarea>
+
+    <input class="button" type="submit" value="Send message" />
+    <br />
+    <small class="small"><span class="required">*</span> indicates a required field</small>
+
+    
+      <input type="text" name="_gotcha" style="display:none" />
+      <input type="hidden" name="_subject" value="Orange AIVC submission from Contact" />
+      <input type="hidden" name="_next" value="/thanks/" />
+    
+  </fieldset>
+</form>
+
+<script>
+    var email = "moc.senraddivad@em";
+    var unraveledEmail = email.split("").reverse().join("");
+    var form = document.querySelector(".form--contact");
+      form.setAttribute("action", "https://formspree.io/" + unraveledEmail);
+  </script>
+
+<noscript>Please enable JavaScript to use the form.</noscript>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% include site-form.html %}
+</code></pre></div></div>
+
+<h3 id="demo-map-embed">Demo map embed</h3>
+
+<div class="map"><iframe src="https://www.google.com/maps/d/u/0/embed?mid=1UT-2Z-Vg_MG_TrS5X2p8SthsJhc" title="Coffee shop map"></iframe></div>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% include map.html id="XXXXXX" title="Coffee shop map" %}
+</code></pre></div></div>
+
+<h3 id="button-include">Button include</h3>
+
+<p><a class="button" href="https://david.darn.es">A button</a></p>
+
+<p><a class="button" href="https://twitter.com/daviddarnes">A button with icon  <svg width="16" height="16" class="icon  icon--twitter" role="img" alt="twitter"><title>twitter</title><use xlink:href="#twitter" fill="CurrentColor"></use></svg>
+</a></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% include button.html text="A button" link="https://david.darn.es" %}
+{% include button.html text="A button with icon" link="https://twitter.com/daviddarnes" icon="twitter" %}
+</code></pre></div></div>
+
+<h3 id="icon-include">Icon include</h3>
+
+<svg width="16" height="16" class="icon  icon--twitter" role="img" alt="twitter"><title>twitter</title><use xlink:href="#twitter" fill="CurrentColor"></use></svg>
+<p><a href="https://www.linkedin.com/in/daviddarnes"><svg width="16" height="16" class="icon  icon--linkedin" role="img" alt="twitter"><title>twitter</title><use xlink:href="#linkedin" fill="CurrentColor"></use></svg>
+</a></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% include icon.html id="twitter" title="twitter" %}
+[{% include icon.html id="linkedin" title="twitter" %}](https://www.linkedin.com/in/daviddarnes)
+</code></pre></div></div>
+
+<h3 id="video-include">Video include</h3>
+
+<div class="video">
+  <iframe src="https://www.youtube.com/embed/zrkcGL5H3MU" frameborder="0" allowfullscreen="" title="Siteleaf tutorial video"></iframe>
+</div>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% include video.html id="zrkcGL5H3MU" title="Siteleaf tutorial video" %}
+</code></pre></div></div>
+
+<h3 id="image-includes">Image includes</h3>
+
+<figure class="figure  figure--center">
+  <img class="image" src="https://picsum.photos/600/800?image=894" alt="Image with caption" width="300" height="800" />
+  <figcaption class="caption">Image with caption</figcaption>
+</figure>
+
+<figure class="figure  figure--right">
+  <img class="image" src="https://picsum.photos/600/800?image=894" alt="Right aligned image" width="300" height="800" />
+  <figcaption class="caption">Right aligned image</figcaption>
+</figure>
+
+<figure class="figure  figure--left">
+  <img class="image" src="https://picsum.photos/600/800?image=894" alt="Left aligned image" width="300" height="800" />
+  <figcaption class="caption">Left aligned image</figcaption>
+</figure>
+
+<figure class="figure  figure--center">
+  <img class="image" src="https://picsum.photos/1600/800?image=894" alt="Image with just alt text" width="" height="" />
+  
+</figure>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% include figure.html image="https://picsum.photos/600/800?image=894" caption="Image with caption" width="300" height="800" %}
+
+{% include figure.html image="https://picsum.photos/600/800?image=894" caption="Right aligned image" position="right" width="300" height="800" %}
+
+{% include figure.html image="https://picsum.photos/600/800?image=894" caption="Left aligned image" position="left" width="300" height="800" %}
+
+{% include figure.html image="https://picsum.photos/1600/800?image=894" alt="Image with just alt text" %}
+</code></pre></div></div>
+:ET
