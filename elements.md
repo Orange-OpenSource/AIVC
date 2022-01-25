@@ -8,147 +8,124 @@ excerpt: "A demo of Markdown and HTML includes"
 aside: false  # No about AIVC
 ---
 
+# For latex
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript"
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+Use firefox!
+
 Examples are presented on the video sequence *Sports_1080P-6710* from the
 [CLIC 2021](http://clic.compression.cc/2021/) dataset.
 
 {% include figure.html image="../assets/diagram/Global_diagram.png" alt="Image with just alt text" %}
 
-# Heading 1
 
-<video controls autoplay loop mute>
-  <source src="../assets/videos/rawframe_even_pad.mp4" type="video/mp4">
-</video>
+## Videos from the paper
 
-## Heading 2
+The videos presented here are from the Fig. 2 in the paper *AIVC: Artificial
+Intelligence for Video Coding*, Ladune *et al.*
 
-### Heading 3
+<div>
+  <table>
+    <tr>
+      <td>
+        <div style="text-align: center">Original video $\mathbf{x}_t$ </div>
+      </td>
+      <td>
+        <video height="240" autoplay loop>
+          <source src="../assets/videos/rawframe_even_pad.mp4" type="video/mp4">
+        </video>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="text-align: center">Optical flow $\mathbf{v}_p$ </div>
+      </td>
+      <td>
+        <video height="240" autoplay loop>
+          <source src="../assets/videos/vprev_all_even_pad.mp4" type="video/mp4">
+        </video>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="text-align: center">Optical flow $\mathbf{v}_f$ </div>
+      </td>
+      <td>
+        <video height="240" autoplay loop>
+          <source src="../assets/videos/vnext_all_even_pad.mp4" type="video/mp4">
+        </video>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="text-align: center">Coding mode </div>
+        <div style="text-align: center">selection $\boldsymbol{\alpha}$</div>
+      </td>
+      <td>
+        <video height="240" autoplay loop>
+          <source src="../assets/videos/alpha_all_even_pad.mp4" type="video/mp4">
+        </video>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="text-align: center">Skip mode contribution</div>
+        <div style="text-align: center">$(1 - \boldsymbol{\alpha}) \odot \tilde{\mathbf{x}}_t$ </div>
+      </td>
+      <td>
+        <video height="240" autoplay loop>
+          <source src="../assets/videos/skippart_even_pad.mp4" type="video/mp4">
+        </video>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="text-align: center">Decoded video $\hat{\mathbf{x}}_t$ </div>
+      </td>
+      <td>
+        <video height="240" autoplay loop>
+          <source src="../assets/videos/outframe_even_pad.mp4" type="video/mp4">
+        </video>
+      </td>
+    </tr>
+  </table>
+</div>
 
-#### Heading 4
+We also provide supplementary examples which displays some other quantities at
+stake during the coding of a video sequence.
 
-##### Heading 5
+<div>
+  <table>
+    <tr>
+      <td>
+        <div style="text-align: center">Bi-directional prediction </div>
+        <div style="text-align: center">weighting $\boldsymbol{\beta}$</div>
+      </td>
+      <td>
+        <video height="240" autoplay loop>
+          <source src="../assets/videos/beta_all_even_pad.mp4" type="video/mp4">
+        </video>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div style="text-align: center">Temporal prediction</div>
+        <div style="text-align: center">$\tilde{x}_t$ </div>
+      </td>
+      <td>
+        <video height="240" autoplay loop>
+          <source src="../assets/videos/prediction_even_pad.mp4" type="video/mp4">
+        </video>
+      </td>
+    </tr>
+  </table>
+</div>
 
-###### Heading 6
+## Conditional coding behavior
 
-<small>A small element</small>
-
-[A link](https://david.darn.es "A link")
-
-Lorem ipsum dolor sit amet, consectetur adip* isicing elit, sed do eiusmod *tempor incididunt ut labore et dolore magna aliqua.
-
-Duis aute irure dolor in [A link](https://david.darn.es "A link") reprehenderit in voluptate velit esse cillum **bold text** dolore eu fugiat nulla pariatur. Excepteur span element sint occaecat cupidatat non proident, sunt _italicised text_ in culpa qui officia deserunt mollit anim id `some code` est laborum.
-
-* An item
-* An item
-* An item
-* An item
-* An item
-
-1. Item one
-2. Item two
-3. Item three
-4. Item four
-5. Item five
-
-> A simple blockquote
-
-Some HTML...
-
-``` html
-<blockquote cite="http://www.imdb.com/title/tt0284978/quotes/qt1375101">
-  <p>You planning a vacation, Mr. Sullivan?</p>
-  <footer>
-    <a href="http://www.imdb.com/title/tt0284978/quotes/qt1375101">Sunways Security Guard</a>
-  </footer>
-</blockquote>
-```
-
-...CSS...
-
-``` css
-blockquote {
-  text-align: center;
-  font-weight: bold;
-}
-blockquote footer {
-  font-size: .8rem;
-}
-```
-
-...and JavaScript
-
-``` js
-const blockquote = document.querySelector("blockquote")
-const bolden = (keyString, string) =>
-  string.replace(new RegExp(keyString, 'g'), '<strong>'+keyString+'</strong>')
-
-blockquote.innerHTML = bolden("Mr. Sullivan", blockquote.innerHTML)
-```
-
-`Single line of code`
-
-## HTML Includes
-
-### Contact form
-
-{% include site-form.html %}
-
-``` html
-{% raw %}{% include site-form.html %}{% endraw %}
-```
-
-### Demo map embed
-
-{% include map.html id="1UT-2Z-Vg_MG_TrS5X2p8SthsJhc" title="Coffee shop map" %}
-
-``` html
-{% raw %}{% include map.html id="XXXXXX" title="Coffee shop map" %}{% endraw %}
-```
-
-### Button include
-
-{% include button.html text="A button" link="https://david.darn.es" %}
-
-{% include button.html text="A button with icon" link="https://twitter.com/daviddarnes" icon="twitter" %}
-
-``` html
-{% raw %}{% include button.html text="A button" link="https://david.darn.es" %}
-{% include button.html text="A button with icon" link="https://twitter.com/daviddarnes" icon="twitter" %}{% endraw %}
-```
-
-### Icon include
-
-{% include icon.html id="twitter" title="twitter" %} [{% include icon.html id="linkedin" title="twitter" %}](https://www.linkedin.com/in/daviddarnes)
-
-``` html
-{% raw %}{% include icon.html id="twitter" title="twitter" %}
-[{% include icon.html id="linkedin" title="twitter" %}](https://www.linkedin.com/in/daviddarnes){% endraw %}
-```
-
-### Video include
-
-{% include video.html id="zrkcGL5H3MU" title="Siteleaf tutorial video" %}
-
-``` html
-{% raw %}{% include video.html id="zrkcGL5H3MU" title="Siteleaf tutorial video" %}{% endraw %}
-```
-
-
-### Image includes
-
-{% include figure.html image="https://picsum.photos/600/800?image=894" caption="Image with caption" width="300" height="800" %}
-
-{% include figure.html image="https://picsum.photos/600/800?image=894" caption="Right aligned image" position="right" width="300" height="800" %}
-
-{% include figure.html image="https://picsum.photos/600/800?image=894" caption="Left aligned image" position="left" width="300" height="800" %}
-
-{% include figure.html image="https://picsum.photos/1600/800?image=894" alt="Image with just alt text" %}
-
-``` html
-{% raw %}{% include figure.html image="https://picsum.photos/600/800?image=894" caption="Image with caption" width="300" height="800" %}
-
-{% include figure.html image="https://picsum.photos/600/800?image=894" caption="Right aligned image" position="right" width="300" height="800" %}
-
-{% include figure.html image="https://picsum.photos/600/800?image=894" caption="Left aligned image" position="left" width="300" height="800" %}
-
-{% include figure.html image="https://picsum.photos/1600/800?image=894" alt="Image with just alt text" %}{% endraw %}
-```
+Conditional coding plays a key role in AIVC compression performance.
