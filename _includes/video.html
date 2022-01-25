@@ -1,3 +1,10 @@
 <div class="video">
-  <iframe src="https://www.youtube.com/embed/{{ include.id }}" frameborder="0" allowfullscreen title="{{ include.title | default: "Video" }}"></iframe>
+  <iframe 
+    src="https://www.youtube.com/embed/{{ include.id }}?autoplay=1&loop=1&autopause=0" 
+    frameborder="0"
+    allowfullscreen=""
+    title="{{ include.title | default: "Video" }}"
+    autoplay=true
+    muted>
+</iframe>
 </div>

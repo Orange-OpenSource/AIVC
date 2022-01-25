@@ -17,8 +17,8 @@
 <meta property="og:locale" content="en_GB" />
 <meta name="description" content="A demo of Markdown and HTML includes" />
 <meta property="og:description" content="A demo of Markdown and HTML includes" />
-<link rel="canonical" href="http://localhost:4000/elements/" />
-<meta property="og:url" content="http://localhost:4000/elements/" />
+<link rel="canonical" href="http://localhost:4000/elements.old/" />
+<meta property="og:url" content="http://localhost:4000/elements.old/" />
 <meta property="og:site_name" content="Orange AIVC" />
 <meta property="og:image" content="http://localhost:4000/assets/default-social-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -27,7 +27,7 @@
 <meta name="twitter:site" content="@DavidDarnes" />
 <meta name="twitter:creator" content="@DavidDarnes" />
 <script type="application/ld+json">
-{"@type":"WebPage","url":"http://localhost:4000/elements/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/logos/logo_aivc.svg"},"name":"DavidDarnes"},"author":{"@type":"Person","name":"DavidDarnes"},"image":"http://localhost:4000/assets/default-social-image.png","description":"A demo of Markdown and HTML includes","headline":"Visual Examples","@context":"https://schema.org"}</script>
+{"@type":"WebPage","url":"http://localhost:4000/elements.old/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/logos/logo_aivc.svg"},"name":"DavidDarnes"},"author":{"@type":"Person","name":"DavidDarnes"},"image":"http://localhost:4000/assets/default-social-image.png","description":"A demo of Markdown and HTML includes","headline":"Visual Examples","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
     
@@ -143,7 +143,7 @@
 
       
 
-      <li class="item  item--nav  item--current">
+      <li class="item  item--nav">
         <a href="/elements/">Elements</a>
       </li>
     
@@ -245,11 +245,16 @@
 <h1 id="heading-1">Heading 1</h1>
 
 <!-- <div class="video">
-  <iframe src="https://www.youtube.com/embed/vJxPs-nQhhI" frameborder="0" allowfullscreen title="Video to compress"></iframe>
+  <iframe 
+    src="https://www.youtube.com/embed/vJxPs-nQhhI?autoplay=1&loop=1&autopause=0" 
+    frameborder="0"
+    allowfullscreen=""
+    title="Video to compress"
+    autoplay=true
+    muted>
+</iframe>
 </div>
  -->
-
-<iframe id="video" width="560" height="315" src="https://github.com/Orange-OpenSource/AIVC/blob/gh-page/assets/videos/rawframe_even_pad.mp4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
 
 <h2 id="heading-2">Heading 2</h2>
 
@@ -392,7 +397,8 @@
 <h3 id="video-include">Video include</h3>
 
 <div class="video">
-  <iframe src="https://www.youtube.com/embed/zrkcGL5H3MU" frameborder="0" allowfullscreen="" title="Siteleaf tutorial video"></iframe>
+  <iframe src="https://www.youtube.com/embed/zrkcGL5H3MU?autoplay=1&amp;loop=1&amp;autopause=0" frameborder="0" allowfullscreen="" title="Siteleaf tutorial video" autoplay="true" muted="">
+</iframe>
 </div>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{% include video.html id="zrkcGL5H3MU" title="Siteleaf tutorial video" %}

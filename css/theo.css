@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+.reveal h1 {
+    font-family: 'Raleway';
+    font-weight: normal;
+    text-transform: none;
+    letter-spacing:0.05em;margin-top:0em ;
+    text-align: center;
+}
+
+.reveal h2 {
+    font-family: 'Raleway';
+    font-weight: normal;
+    text-transform: none;
+    letter-spacing:0.05em;margin-top:0em ;
+    text-align: center;
+}
+
+
+.reveal h3 {
+    font-family: 'Raleway';
+    font-weight: normal;
+    text-transform: none;
+    letter-spacing:0.05em;margin-top:0em ;
+    text-align: center;
+
+}
+
+.reveal h4 {
+    font-family: 'Raleway';
+    font-weight: normal;
+    text-transform: none;
+    letter-spacing:0.05em;margin-top:0em ;
+    text-align: center;
+
+}
+
+/* Lists */
+ul li{
+    font-size: 1.1em;
+}
+
+/* List of list here */
+ul ul li{
+    font-size: 0.9em;  color:#404040; 
+}
+
+/* Some special classes */
+.maintitle {font-family: 'Raleway'; font-size: 2.5em; color:#606060; font-weight:bold;letter-spacing:0.40em}
+.subtitle {font-family: 'Raleway'; font-size: 1.7em; color:#606060;font-weight:normal;letter-spacing:0.05em}
+.subtitle2 {font-family: 'Raleway'; font-size: 1.5em; color:#000000;font-weight:normal;letter-spacing:0.05em}
+.author {font-family: 'Raleway'; font-size: 1.0em; color:#000000;font-weight:normal;letter-spacing:0.02em}  
+.date {font-family: 'Raleway'; font-size: 0.7em;font-style: italic}
+.note {font-family: 'Raleway'; font-size: 0.8em;font-style: italic}
+
+/* Set some special coloring */ 
+.inred {color:#E76F51;font-weight: bold}
+.inorange {color:#F4A261;font-weight: bold}
+.inyellow {color:#E9C46A;font-weight: bold}
+.ingreen {color:#2A9D8F;font-weight: bold}
+
+/* ======================= SOME SPECIAL PAGES LAYOUT ======================= */
+/* Two-column layout */
+.left-column {
+    width: 50%;
+    float: left;
+  }
+.right-column {
+    width: 49%;
+    float: right;
+    padding-top: 0em;
+    margin-top: 0em;
+    text-align: left;
+}
+
+.footnote {  
+    position:absolute;
+    bottom: 2em;
+    left: 14em;
+    font-size: 0.7em;
+}
+  
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.div-img-center {
+    height: 55vh;
+    position: relative;
+}
+
+.img-img-center {
+    position: absolute; 
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%,-50%);
+    height: 200px;
+}
+
+/* ======================= SOME SPECIAL PAGES LAYOUT ======================= */

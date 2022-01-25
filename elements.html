@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>AIVC – Artificial Intelligence for Video Coding</title>
+
+		<meta name="description" content="An open-source learned video coder">
+		<meta name="author" content="Théo Ladune & Pierrick Philippe">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		
+        <!-- Custom style sheet -->
+        <link rel="stylesheet" href="css/theo.css">
+	</head>
+
+    <body>
+        <div class="reveal">
+			<div class="slides">
+
+                <section data-auto-animate>
+                    <h3>Decoder-side motion inference</h3>
+
+                    <img src="figures/key_elements/decoder-side-motion/motion-all.png" height="260px"></img>
+
+                    <section>
+                        <ul>
+                            <li class="fragment fade-up">Frame to code and references as inputs</li>
+                            <li class="fragment fade-up">Two transforms extract motion info</li>
+                            <ul>
+                                <li class="fragment fade-up"><span class="inred">Conditioning</span> captures info available at the decoder</li>
+                                <li class="fragment fade-up"><span class="ingreen">Analysis</span> sends info missing at the decoder</li>
+                            </ul> 
+                            <li class="fragment fade-up">Both info are combined through the synthesis</li>
+                    </section>
+
+                    <section>
+                        <br/>
+                        <video data-autoplay loop=true src="videos/key-elements/decoder-side-motion/raw_and_vprev_even_pad.mp4" height=190px style="text-align: center; margin-left: auto; margin-right: auto; display: block;"> </video>
+                        
+                        <div class="left-column">
+                            <div style="margin-left: 150px; font-size: 0.9em;">Frame to code</div>
+                        </div>
+                        <div class="right-column">
+                            <div style="text-align: center; margin-right: 150px; font-size: 0.9em;">Motion info</div>
+                        </div>
+                    </section>
+                </section>
+
+                <section data-auto-animate>
+                    <h3>Decoder-side motion inference</h3>
+
+                    <section data-transition="none">
+                        <img src="figures/key_elements/decoder-side-motion/motion-all.png" height="260px"></img>
+                        <br/>
+                        <video data-autoplay loop=true src="videos/key-elements/decoder-side-motion/vprev_all_even_pad.mp4" height=190px style="float: left;"> </video>
+                        <br/>
+                        <div style="width: 33%;">
+                            <span style="text-align: left; font-size: 0.9em;">Motion info</span>                        
+                        </div>
+                    </section>
+
+                    <section data-transition="none">
+                        <img src="figures/key_elements/decoder-side-motion/motion-conditional.png" height="260px"></img>
+                        <br/>
+                        <video data-autoplay loop=true src="videos/key-elements/decoder-side-motion/vprev_all_and_shortcut_even_pad.mp4" height=190px style="float: left;"> </video>
+                        <br/>
+                        <div style="width: 66%;">
+                            <span style="text-align: left; font-size: 0.9em; margin-left: 40px;">Motion info&emsp;&emsp;&emsp;&emsp;<span class="inred">Conditioning</span></span>                        
+                       
+                        </div>
+                    </section>
+
+                    <section data-transition="none">
+                        <img src="figures/key_elements/decoder-side-motion/motion-analysis.png" height="260px"></img>
+                        <br/>
+                        <video data-autoplay loop=true src="videos/key-elements/decoder-side-motion/vprev_all_and_shortcut_and_sent_even_pad.mp4" height=190px style="float: left;"> </video>
+                        <br/>
+                        <div style="width: 99%;">
+                            <span style="text-align: left; font-size: 0.9em; margin-left: -35px;">Motion info&emsp;&emsp;&emsp;&emsp;<span class="inred">Conditioning</span>&emsp;&emsp;&emsp;<span class="ingreen">Analysis</span></span>                        
+                       
+                        </div>
+                    </section>
+
+                    <section data-auto-animate>
+                        <img src="figures/key_elements/decoder-side-motion/motion-all.png" height="300px"></img>
+                        <br/>
+                        <br/>
+                        <ul>
+                            <li>Conditioning transform allows</li>
+                            <ul>
+                                <li>Decoder-side <span class="inred">motion inference</span></li>
+                                <li class="fragment fade-up"><span class="ingreen">Spare rate</span> and get <span class="inorange">more precise </span> motion info</li>
+                            </ul>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <img src="figures/key_elements/decoder-side-motion/rd.png" width="83%"></img>
+                        <ul>
+                            <li>Particularly efficient for <span class="inred">lower rates</span></li>
+                        </ul>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section data-transition="none">
+                        <h3>Exploit the prediction</h3>
+                        <img src="figures/key_elements/send-prediction-correction/cnet-and-skip.png" height="320px"></img>
+                        <ul style="text-align: left;">
+                            <li>Two ways of leveraging the prediction</li>
+                        </ul>    
+                    </section>
+
+                    <section data-transition="none">
+                        <h3>Exploit the prediction</h3>
+                        <img src="figures/key_elements/send-prediction-correction/skip.png" height="320px"></img>
+                        <ul style="text-align: left;">
+                            <li>Two ways of leveraging the prediction</li>
+                            <ul>
+                                <li>Skip mode: <span class="inred">copy prediction</span></li>
+                            </ul>
+                        </ul>    
+                    </section>
+
+
+                    <section data-transition="none">
+                        <h3>Exploit the prediction</h3>
+                        <img src="figures/key_elements/send-prediction-correction/cnet.png" height="320px"></img>
+                        <ul style="text-align: left;">
+                            <li>Two ways of leveraging the prediction</li>
+                            <ul>
+                                <li>Skip mode: <span class="inred">copy prediction</span></li>
+                                <li><span class="ingreen">Sending correction</span> with a NN</li>
+                            </ul>
+                            <li class="fragment fade-up">More <span class="inorange">content adaptation</span></li>
+                        </ul>    
+                    </section>
+                </section>
+
+                <section>
+                    <h3>Sending the prediction correction</h3>
+                    <img src="figures/key_elements/send-prediction-correction/cnet-zoom.png" height="300px"></img>
+                    <ul style="text-align: left;">
+                        <li class="fragment fade-up"> Conditional coding to send the correction</li>
+                        <ul>
+                            <li class="fragment fade-up">Frame to code and prediction mixed in a <span class="inred">latent domain</span></span></li>
+                            <li class="fragment fade-up"><span class="ingreen">Richer mixture</span> than the usual residual coding</span></li>
+                            <li class="fragment fade-up">Spare <span class="inorange">30% rate</span> vs. residual coding</span></li>
+                        </ul>
+                    </ul>    
+                </section>
+
+                <section>
+                    <section>
+                    <h3>Skip mode</h3>
+                    <img src="figures/key_elements/send-prediction-correction/skip.png" height="350px"></img>
+                    <br/>
+                    <ul style="text-align: left;">
+                        <li>Skip mode is an additional coding mode</li>
+                        <ul>
+                            <li class="fragment fade-up">Copy areas of the prediction <span class="inred">well predicted enough</span></li>
+                            <li class="fragment fade-up">Selected by the <span class="ingreen">motion network</span></li>
+                            <li class="fragment fade-up">Offer better <span class="inorange">content adaptation</span>: -10% rate</li>
+                        </ul>
+                    </ul>    
+                    </section>
+                </section>
+                
+                    <section>
+                        <h3>Skip mode</h3>
+                        <img src="figures/key_elements/coder-overview-2/Global_diagram.png" height="260px"></img>
+                        <br/>
+
+                        <section data-transition="none">
+                            <video data-autoplay loop=true src="videos/key-elements/skip-mode/rawframe_even_pad.mp4" width="31%" style="float: left;"> </video>
+                            <br/>
+                            <div style="width: 31%;">
+                                <span style="text-align: left; font-size: 0.9em; margin-left: 8px;">Frame to code</span>                        
+                            </div>
+                        </section>
+    
+                        <section data-transition="none">
+                            <video data-autoplay loop=true src="videos/key-elements/skip-mode/raw_and_vprev_even_pad.mp4" width="62%" style="float: left;"> </video>
+                            <br/>
+                            <div style="width: 62%;">
+                                <span style="text-align: left; font-size: 0.9em; margin-left: 0px;">Frame to code&emsp;&emsp;&emsp;Motion info</span>                        
+                            </div>
+                        </section>
+    
+                        <section data-transition="none">
+                            <video data-autoplay loop=true src="videos/key-elements/skip-mode/raw_and_vprev_and_vnext_even_pad.mp4" width="93%" style="float: left;"> </video>
+                            <div style="width: 93%;">
+                                <span style="text-align: left; font-size: 0.9em; margin-left: 19px;">Frame to code&emsp;&emsp;&emsp;Motion info&emsp;&emsp;&emsp;Motion info 2</span>                        
+                            </div>
+                        </section>
+    
+                        <section data-transition="none">
+                            <video data-autoplay loop=true src="videos/key-elements/skip-mode/raw_and_pred_even_pad.mp4" width="62%" style="float: left;"> </video>
+                            <br/>
+                            <div style="width: 62%;">
+                                <span style="text-align: left; font-size: 0.9em; margin-left: -15px;">Frame to code&emsp;&emsp;&emsp;Prediction</span>                        
+                            </div>
+                        </section>
+
+                        <section data-transition="none">
+                            <video data-autoplay loop=true src="videos/key-elements/skip-mode/prediction_even_pad.mp4" width="31%" style="float: left;"> </video>
+                            <br/>
+                            <div style="width: 31%;">
+                                <span style="text-align: left; font-size: 0.9em;">Prediction</span>
+                            </div>
+                        </section>
+
+                        <section data-transition="none">
+                            <video data-autoplay loop=true src="videos/key-elements/skip-mode/pred_and_alpha_even_pad.mp4" width="62%" style="float: left;"> </video>
+                            <br/>
+                            <div style="width: 62%;">
+                                <span style="text-align: left; font-size: 0.9em; margin-left: 23px;">Prediction&emsp;&emsp;&emsp;Coding mode</span>                        
+                            </div>
+                        </section>
+
+                        <section data-transition="none">
+                            <video data-autoplay loop=true src="videos/key-elements/skip-mode/pred_and_alpha_and_skippart_even_pad.mp4" width="93%" style="float: left;"> </video>
+                            <br/>
+                            <div style="width: 93%;">
+                                <span style="text-align: left; font-size: 0.9em; margin-left: 3px;">Prediction&emsp;&emsp;&emsp;Coding mode&emsp;&emsp;&emsp;Skip mode</span>                        
+                            </div>
+                        </section>
+
+                        <section data-transition="none">
+                            <video data-autoplay loop=true src="videos/key-elements/skip-mode/pred_and_alpha_and_codecpart_even_pad.mp4" width="93%" style="float: left;"> </video>
+                            <br/>
+                            <div style="width: 93%;">
+                                <span style="text-align: left; font-size: 0.9em; margin-left: 3px;">Prediction&emsp;&emsp;&emsp;Coding mode&emsp;&emsp;&emsp;Correction</span>                        
+                            </div>
+                        </section>
+                    </section>
+                </section>
+
+                <!-- Visual example for the skip mode goes here  -->
+
+                <section class="center" data-auto-animate>
+                    <h2>
+                        CONCLUSION
+                    </h2>
+                </section>
+
+                <section data-auto-animate>
+                    <h3>Conclusion</h3>
+                    <ul style="text-align: left;">
+                        <li>The proposed codec is</li>
+                        <ul class="fragment fade-up">
+                            <li>Built only with <span class="inred">neural networks</span></li>
+                            <li>Able to achieve the usual <span class="ingreen">coding configurations </span></li>
+                            <li ><span class="inorange">competitive </span> with HEVC</li>
+                        </ul>
+                        <br/>
+                        <li class="fragment fade-up">Feel free to try it!
+                        <ul>
+                            <li>
+                                <span style="color: blue;">
+                                    <a href="https://github.com/Orange-OpenSource/AIVC" style="font-style:italic">https://github.com/Orange-OpenSource/AIVC</a>
+                                </span>
+            
+                            </li>
+                        </ul>
+                        </li>
+                        <br/>
+                        <li class="fragment fade-up">More info in my thesis manuscript
+                            <ul>
+                                <li>
+                                    <span style="color: blue;">
+                                        <a href="https://theoladune.github.io" style="font-style:italic">https://theoladune.github.io</a>
+                                    </span>
+                
+                                </li>
+                            </ul>
+                            </li>
+    
+                    </ul>
+
+                </section>
+
+            </div>
+        </div>
+
+
+
+        
+        <script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+        <link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<script src="plugin/highlight/highlight.js"></script>
+        <script src="plugin/math/math.js"></script>
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: false,
+				hash: true,
+                autoplay: true,
+                slideNumber: true,
+
+                math: {
+                    mathjax: 'https://cdn.jsdelivr.net/gh/mathjax/mathjax@2.7.8/MathJax.js',
+                    config: 'TeX-AMS_HTML-full',
+                    // pass other options into `MathJax.Hub.Config()`
+                    TeX: { Macros: { RR: "{\\bf R}" } }
+                },
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMath, RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+
+		</script>
+    
+    
+    </body>

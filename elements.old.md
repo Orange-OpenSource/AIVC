@@ -15,9 +15,6 @@ Examples are presented on the video sequence *Sports_1080P-6710* from the
 
 <!-- {% include video.html id="vJxPs-nQhhI" title="Video to compress" %} -->
 
-<iframe id="video" width="560" height="315" src="https://github.com/Orange-OpenSource/AIVC/blob/gh-page/assets/videos/rawframe_even_pad.mp4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
-
-
 ## Heading 2
 
 ### Heading 3
