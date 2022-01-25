@@ -1,10 +1,11 @@
+.jekyll-cache/*
+.vscode/*
+
 # Ignore some files
 *.bin
 *.yuv
-*.png
 *.pt
 *.pyc
-*.mp4
 
 # Ignore some temporary directories within the sources
 src/.vscode/settings.json
