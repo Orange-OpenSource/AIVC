@@ -229,34 +229,36 @@ HEVC test sequences. AIVC outperforms HEVC for All Intra coding. As such, these 
 <b>Unlike</b> the results shown in the paper, the anchors here are x264 and x265. The following command is used to code videos with x264 and x265:
 </div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```bash
-ffmpeg  -video_size WxH -i raw_video.yuv
-        -c:v lib&lt;codec&gt;                               #  &lt;codec&gt;: either x264 or x265
-        -pix_fmt yuv420p
-        -&lt;codec&gt;-params "keyint=&lt;IP&gt;:min_keyint=&lt;IP&gt;" # &lt;IP&gt;: intra period, set to 32
-                                                      # &lt;codec&gt;: either x264 or x265
-        -crf &lt;QP&gt;                                     # &lt;QP&gt;: Quality factor
-        -preset medium -f rawvideo bitstream.bin
-```
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ffmpeg  <span class="nt">-video_size</span> WxH <span class="nt">-i</span> raw_video.yuv
+        <span class="nt">-c</span>:v lib&lt;codec&gt;                               <span class="c">#  &lt;codec&gt;: either x264 or x265</span>
+        <span class="nt">-pix_fmt</span> yuv420p
+        -&lt;codec&gt;-params <span class="s2">"keyint=&lt;IP&gt;:min_keyint=&lt;IP&gt;"</span> <span class="c"># &lt;IP&gt;: intra period, set to 32</span>
+                                                        <span class="c"># &lt;codec&gt;: either x264 or x265</span>
+        <span class="nt">-crf</span> &lt;QP&gt;                                     <span class="c"># &lt;QP&gt;: Quality factor (22, 27, 32, 37, 42)</span>
+        <span class="nt">-preset</span> medium <span class="nt">-f</span> rawvideo bitstream.bin
 </code></pre></div></div>
 
 <h3 id="class-b-1080p-sequences">Class B: 1080p sequences</h3>
 
+<p><i>Open images in a new tab to zoom in</i></p>
+
 <div>
   <table>
     <tr>
-      <td><img height="700" src="/assets/rd_results/BasketballDrive_1920x1080_50_420.png" /></td>
-      <td><img height="700" src="/assets/rd_results/BQTerrace_1920x1080_60_420.png" /></td>
+      <td><img height="700" src="../assets/rd_results/BasketballDrive_1920x1080_50_420.png" /></td>
+      <td><img height="700" src="../assets/rd_results/BQTerrace_1920x1080_60_420.png" /></td>
     </tr>
     <tr>
-      <td><img height="700" src="/assets/rd_results/Cactus_1920x1080_50_420.png" /></td>
-      <td><img height="700" src="/assets/rd_results/Kimono_1920x1080_24_420.png" /></td>
+      <td><img height="700" src="../assets/rd_results/Cactus_1920x1080_50_420.png" /></td>
+      <td><img height="700" src="../assets/rd_results/Kimono_1920x1080_24_420.png" /></td>
     </tr>
     <tr>
-      <td><img height="700" src="/assets/rd_results/ParkScene_1920x1080_24_420.png" /></td>
+      <td><img height="700" src="../assets/rd_results/ParkScene_1920x1080_24_420.png" /></td>
     </tr>
 </table>
 </div>
+
+<h3 id="class-c-480p-sequences">Class C: 480p sequences</h3>
 
 
   </article>

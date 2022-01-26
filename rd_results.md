@@ -16,30 +16,34 @@ HEVC test sequences. AIVC outperforms HEVC for All Intra coding. As such, these 
 <b>Unlike</b> the results shown in the paper, the anchors here are x264 and x265. The following command is used to code videos with x264 and x265:
 </div>
 
-    ```bash
-    ffmpeg  -video_size WxH -i raw_video.yuv
-            -c:v lib<codec>                               #  <codec>: either x264 or x265
-            -pix_fmt yuv420p
-            -<codec>-params "keyint=<IP>:min_keyint=<IP>" # <IP>: intra period, set to 32
-                                                          # <codec>: either x264 or x265
-            -crf <QP>                                     # <QP>: Quality factor
-            -preset medium -f rawvideo bitstream.bin
-    ```
+```bash
+ffmpeg  -video_size WxH -i raw_video.yuv
+        -c:v lib<codec>                               #  <codec>: either x264 or x265
+        -pix_fmt yuv420p
+        -<codec>-params "keyint=<IP>:min_keyint=<IP>" # <IP>: intra period, set to 32
+                                                        # <codec>: either x264 or x265
+        -crf <QP>                                     # <QP>: Quality factor (22, 27, 32, 37, 42)
+        -preset medium -f rawvideo bitstream.bin
+```
 
 ### Class B: 1080p sequences
+
+<i>Open images in a new tab to zoom in</i>
 
 <div>
   <table>
     <tr>
-      <td><img height="700" src="/assets/rd_results/BasketballDrive_1920x1080_50_420.png"></td>
-      <td><img height="700" src="/assets/rd_results/BQTerrace_1920x1080_60_420.png"></td>
+      <td><img height="700" src="../assets/rd_results/BasketballDrive_1920x1080_50_420.png"></td>
+      <td><img height="700" src="../assets/rd_results/BQTerrace_1920x1080_60_420.png"></td>
     </tr>
     <tr>
-      <td><img height="700" src="/assets/rd_results/Cactus_1920x1080_50_420.png"></td>
-      <td><img height="700" src="/assets/rd_results/Kimono_1920x1080_24_420.png"></td>
+      <td><img height="700" src="../assets/rd_results/Cactus_1920x1080_50_420.png"></td>
+      <td><img height="700" src="../assets/rd_results/Kimono_1920x1080_24_420.png"></td>
     </tr>
     <tr>
-      <td><img height="700" src="/assets/rd_results/ParkScene_1920x1080_24_420.png"></td>
+      <td><img height="700" src="../assets/rd_results/ParkScene_1920x1080_24_420.png"></td>
     </tr>
 </table>
 </div>
+
+### Class C: 480p sequences
