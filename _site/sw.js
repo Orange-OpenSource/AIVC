@@ -1,8 +1,8 @@
-const version = '20220126091139';
+const version = '20220126093439';
 const cacheName = `static::${version}`;
 
 const buildContentBlob = () => {
-  return ["/","/manifest.json","/offline/","/rd_results/","/assets/search.json","/assets/styles.css","/visual_examples/","/redirects.json","/sitemap.xml","/robots.txt","/feed.xml","/assets/styles.css.map","/assets/logos/logo_aivc.svg", "/assets/default-offline-image.png", "/assets/scripts/fetch.js"
+  return ["/AIVC/","/AIVC/manifest.json","/AIVC/offline/","/AIVC/rd_results/","/AIVC/assets/search.json","/AIVC/assets/styles.css","/AIVC/visual_examples/","/AIVC/redirects.json","/AIVC/sitemap.xml","/AIVC/robots.txt","/AIVC/feed.xml","/AIVC/assets/styles.css.map","/AIVC/assets/logos/logo_aivc.svg", "/AIVC/assets/default-offline-image.png", "/AIVC/assets/scripts/fetch.js"
   ]
 }
 
@@ -60,7 +60,7 @@ self.addEventListener("fetch", event => {
 
   if (request.url.match(/\.(jpe?g|png|gif|svg)$/)) {
     // If url requested is an image and isn't cached, return default offline image
-    offlineAsset = "/assets/default-offline-image.png";
+    offlineAsset = "/AIVC/assets/default-offline-image.png";
   }
 
   // For all urls request image from network, then fallback to cache, then fallback to offline page

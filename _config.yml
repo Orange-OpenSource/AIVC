@@ -95,10 +95,10 @@ defaults:
 encoding: utf-8 # Make sure the encoding is right
 lang: en-GB # Set the site language
 title: "Orange AIVC" # Site name or title, also used in jekyll-seo-tag
-logo: "./assets/logos/logo_aivc.svg" # Site logo, also used in jekyll-seo-tag
+logo: "/assets/logos/logo_aivc.svg" # Site logo, also used in jekyll-seo-tag
 description: "AIVC is an end-to-end neural video codec,  offering performance competitive with HEVC." # Site description and default description, also used in jekyll-seo-tag
 url: "https://orange-opensource.github.io/AIVC/" # Site url, also used in jekyll-seo-tag
-baseurl: ""
+baseurl: "/AIVC"
 repo: "https://github.com/Orange-OpenSource/AIVC"
 email: "theo.ladune@orange.com"
 # disqus: "alembic-1" # Blog post comments, uncomment the option and set the site ID from your Disqus account
@@ -111,23 +111,23 @@ css_inline: true # Will insert all styles into a single <style> block in the <he
 
 # 8. Site favicons & manifest icons
 favicons: # Favicons are also used in the manifest file. Syntax is 'size: path'
-  16: './assets/logos/favicon@16px.png'
-  32: './assets/logos/favicon@32px.png'
-  96: './assets/logos/favicon@96px.png'
-  120: './assets/logos/favicon@120px.png'
-  144: './assets/logos/favicon@144px.png'
-  180: './assets/logos/favicon@180px.png'
-  512: './assets/logos/favicon@512px.png'
-  1024: './assets/logos/favicon@1024px.png'
+  16: '/assets/logos/favicon@16px.png'
+  32: '/assets/logos/favicon@32px.png'
+  96: '/assets/logos/favicon@96px.png'
+  120: '/assets/logos/favicon@120px.png'
+  144: '/assets/logos/favicon@144px.png'
+  180: '/assets/logos/favicon@180px.png'
+  512: '/assets/logos/favicon@512px.png'
+  1024: '/assets/logos/favicon@1024px.png'
 
 # 9. Site navigation
 navigation_header:
 - title: Home
-  url: /AIVC/
+  url: /
 - title: Visual Examples
-  url: /AIVC/visual_examples/
+  url: /visual_examples/
 - title: RD Results
-  url: /AIVC/rd_results/
+  url: /rd_results/
 - title: Get the models!
   url: https://github.com/Orange-OpenSource/AIVC
 
