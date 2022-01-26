@@ -1,9 +1,9 @@
 ---
-title: Visual Examples
+# title: Visual Examples
 # feature_text: |
 #   Visual examples of AIVC behavior
 # feature_image: "https://picsum.photos/2560/600?image=873"
-# feature_image: ../assets/feature_images/Global_diagram.png
+feature_image: ../assets/feature_images/visualisation.png
 excerpt: "Visual examples of AIVC behavior"
 aside: false  # No about AIVC
 ---
@@ -17,14 +17,18 @@ aside: false  # No about AIVC
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
-
-
-Works on firefox and Safari! Refresh the page if the videos get out of sync.
-
-Examples are presented on the video sequence *Sports_1080P-6710* from the
-[CLIC 2021](http://clic.compression.cc/2021/) dataset.
+<div style="text-align: justify">
+Some insightful videos about how AIVC compress a video sequence. The examples are presented on the video sequence <i>Sports_1080P-6710</i>, extracted from the <a href="http://clic.compression.cc/2021/">CLIC 2021</a>  dataset.
+<br/>
+The videos embedded in this page work best in Firefox or Safari. Refresh the page if the videos get out of sync.
+</div>
+<br/>
 
 {% include figure.html image="../assets/diagram/Global_diagram.png" alt="Image with just alt text" %}
+<div style="text-align: center">
+<i>Overall diagram of the AIVC codec</i>
+</div>
+<br/>
 
 
 ## Videos from the paper

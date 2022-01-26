@@ -1,8 +1,9 @@
 ---
-title: Rate-distortion results
+# title: Rate-distortion results
 layout: page
 excerpt: "Category index"
 aside: false
+feature_image: ../assets/feature_images/visualisation.png
 ---
 # CLIC 2021 dataset
 
