@@ -6,8 +6,7 @@ aside: false
 feature_image: ../assets/feature_images/visualisation.png
 ---
 
-
-# CLIC 2021 dataset
+<!-- # CLIC 2021 dataset -->
 
 <div style="text-align: justify">
 In our paper, AIVC is evaluated against the HEVC Test Model (HM) 16.22 on the <a href="http://clic.compression.cc/2021/">CLIC 2021</a> validation dataset. In order to get comprehensive results, 3 coding configurations are evaluated:
@@ -19,6 +18,11 @@ In our paper, AIVC is evaluated against the HEVC Test Model (HM) 16.22 on the <a
 </ul>
 
 <img height="700" src="../assets/rd_results/rd_clic.png">
+<div style="text-align: center">
+<i>Results of AIVC vs HM16.22 on the CLIC21 validation set.</i>
+</div>
+<br/>
+
 
 # HEVC test sequences
 
