@@ -2,7 +2,7 @@
 $backgroundColour: #ffffff !default;
 $codeBackgroundColour: #fafafa !default;
 $featureBackgroundColour: #f9fafa !default;
-$accentColour: #05bf85 !default;
+$accentColour: #05bf85 !default; // 05bf85
 
 // Text colours
 $headingColour: #242e2b !default;
@@ -22,7 +22,7 @@ $bodytype: (
   regular: 400,
   bold: 700,
   italic: italic,
-  cap-height: 0.75
+  cap-height: 0.75,
 ) !default;
 
 $headingtype: (

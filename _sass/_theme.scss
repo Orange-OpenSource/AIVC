@@ -126,7 +126,7 @@ body {
   @include breakpoint(break-1) {
     @include justify-content(center);
     @include flex-direction(row);
-  }
+  };
 }
 
 .header,
