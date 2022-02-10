@@ -26,5 +26,5 @@ feature_image: ./assets/feature_images/visualisation.png
 ---
 
 <div style="text-align: center">
-{% include button.html text="Get the models" icon="github" link="https://github.com/Orange-OpenSource/AIVC" color="#2A9D8F" %} {% include button.html text="Read the paper 📝" link="(https://arxiv.org/abs/2202.04365" color="#E9C46A" %} {% include button.html text="See some slides 👨‍🏫" link="https://theoladune.github.io/AIVC-Seminar/" color="#E76F51" %}
+{% include button.html text="Get the models" icon="github" link="https://github.com/Orange-OpenSource/AIVC" color="#2A9D8F" %} {% include button.html text="Read the paper 📝" link="https://arxiv.org/abs/2202.04365" color="#E9C46A" %} {% include button.html text="See some slides 👨‍🏫" link="https://theoladune.github.io/AIVC-Seminar/" color="#E76F51" %}
 </div>
