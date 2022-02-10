@@ -17,10 +17,7 @@ __AIVC__ is a **fully-learned video coder**. It offers many practical features a
 | 7 Different rates target   | 1 MBit/s to 20 MBit/s (for 1080p videos)
 | Competitive performances| On par with HM (HEVC Test Model)
 
-AIVC is an refined version of the system described in our ICLR 21 paper: [_Conditional Coding for Flexible Learned Video Compression_, Ladune _et al._](https://arxiv.org/abs/2104.09103)
-
-A descriptive factsheet will be available soon!
-
+A paper describing AIVC is available at: [_AIVC: Artificial Intelligence based Video Codec_, Ladune _et al._](https://arxiv.org/abs/2202.04365)
 
 ## Rate-distortion performance
 
