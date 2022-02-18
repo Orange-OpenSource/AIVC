@@ -40,7 +40,7 @@ def infer_one_sequence(param):
         'model': None,
         # The GOP structure defined as in func_util/GOP_structure.py
         'GOP_struct': None,
-        # The name of the GOP structure, mainly for logging purpose
+        # The name of the GOP structure, needed to construct the GOP header
         'GOP_struct_name': None,
         # Absolute path of the folder containing the 3N PNG of the sequences
         # (if YUV) of the N PNG if RGB.
@@ -179,6 +179,7 @@ def infer_one_sequence(param):
         _, GOP_result = infer_one_GOP({
             'model': model,
             'GOP_struct': GOP_struct,
+            'GOP_struct_name': GOP_struct_name,
             'raw_frames': raw_frames,
             'l_codec': l_codec,
             'l_mof': l_mof,
@@ -256,6 +257,8 @@ def infer_one_GOP(param):
         'model': None,
         # The GOP structure defined as in func_util/GOP_structure.py
         'GOP_struct': None,
+        # The name of the GOP structure, needed to construct the GOP header
+        'GOP_struct_name': None,
         # The uncompressed frames (i.e. the frames to code), defined as:
         #   frame_0: {'y': tensor, 'u': tensor, 'v': tensor}
         #   frame_1: {'y': tensor, 'u': tensor, 'v': tensor}
@@ -282,6 +285,7 @@ def infer_one_GOP(param):
     # ========== RETRIEVE INPUTS ========== #
     model = get_value('model', param, DEFAULT_PARAM)
     GOP_struct = get_value('GOP_struct', param, DEFAULT_PARAM)
+    GOP_struct_name = get_value('GOP_struct_name', param, DEFAULT_PARAM)
     raw_frames = get_value('raw_frames', param, DEFAULT_PARAM)
     l_codec = get_value('l_codec', param, DEFAULT_PARAM)
     l_mof = get_value('l_mof', param, DEFAULT_PARAM)
@@ -302,6 +306,7 @@ def infer_one_GOP(param):
 
     model_input = {
         'GOP_struct': GOP_struct,
+        'GOP_struct_name': GOP_struct_name,
         'raw_frames': raw_frames,
         'idx_rate': idx_rate,
         'index_GOP_in_video': index_GOP_in_video,

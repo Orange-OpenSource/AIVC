@@ -16,7 +16,7 @@ import torch.quantization
 
 from format_conversion.yuv_to_png import yuv_to_png
 from func_util.cluster_mngt import set_compute_param, COMPUTE_PARAM, seed_all
-from func_util.GOP_structure import GOP_STRUCT_DIC
+from func_util.GOP_structure import generate_gop_struct
 from model_mngt.model_management import load_model
 from real_life.encode import encode
 from real_life.decode import Decoder
@@ -109,7 +109,7 @@ os.chdir('../../src/')
 encode({
     'model': model,
     'sequence_path': seq_path,
-    'GOP_struct': GOP_STRUCT_DIC.get(args.gop),
+    'GOP_struct': generate_gop_struct(args.gop),
     'GOP_struct_name': args.gop,
     'idx_rate': 0,
     'final_file': args.o,

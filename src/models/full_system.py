@@ -17,7 +17,7 @@ from func_util.img_processing import get_y_u_v, save_yuv_separately, cast_before
 from func_util.nn_util import get_value, dic_zeros_like, push_dic_to_device
 from func_util.cluster_mngt import COMPUTE_PARAM
 from func_util.GOP_structure import get_name_frame_code, get_depth_gop,\
-                                    FRAME_B, FRAME_P, FRAME_I, GOP_STRUCT_DIC
+                                    FRAME_B, FRAME_P, FRAME_I
 from models.codec_net import CodecNet
 from models.mode_net import ModeNet
 from models.motion_compensation import MotionCompensation
@@ -322,6 +322,8 @@ class FullNet(Module):
         DEFAULT_PARAM = {
             # The GOP structure defined as in func_util/GOP_structure.py
             'GOP_struct': None,
+            # The name of the GOP structure, needed to construct the GOP header
+            'GOP_struct_name': None,
             # The uncompressed frames (i.e. the frames to code), defined as:
             #   frame_0: {'y': tensor, 'u': tensor, 'v': tensor}
             #   frame_1: {'y': tensor, 'u': tensor, 'v': tensor}
@@ -343,6 +345,7 @@ class FullNet(Module):
 
         # ========== RETRIEVE INPUTS ========== #
         GOP_struct = get_value('GOP_struct', param, DEFAULT_PARAM)
+        GOP_struct_name = get_value('GOP_struct_name', param, DEFAULT_PARAM)
         raw_frames = get_value('raw_frames', param, DEFAULT_PARAM)
         idx_rate = get_value('idx_rate', param, DEFAULT_PARAM)
         index_GOP_in_video = get_value('index_GOP_in_video', param, DEFAULT_PARAM)
@@ -416,6 +419,7 @@ class FullNet(Module):
             code = push_dic_to_device(code, my_device)
             prev_ref = push_dic_to_device(prev_ref, my_device)
             next_ref = push_dic_to_device(next_ref, my_device)
+            cur_net_out = push_dic_to_device(cur_net_out, my_device)
             torch.cuda.empty_cache()
 
             # Add the current frame dictionaries to the global ones
@@ -450,11 +454,6 @@ class FullNet(Module):
             # Write a header for this GOP
             # We need the GOP struct, and the x, y and z shape (we'll retrieve
             # this from the rate estimation tensor).
-
-            for k in GOP_STRUCT_DIC:
-                if GOP_struct == GOP_STRUCT_DIC.get(k):
-                    GOP_struct_name = k
-                    break
 
             write_gop_header({
                 'header_path': bitstream_dir + str(index_GOP_in_video) + GOP_HEADER_SUFFIX,

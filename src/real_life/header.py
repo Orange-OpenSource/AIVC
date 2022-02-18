@@ -12,7 +12,7 @@ import math
 import pickle # Needed to save the temporary data_dim dictionnary
 
 from func_util.nn_util import get_value
-from func_util.GOP_structure import GOP_STRUCT_DIC
+from func_util.GOP_structure import generate_gop_struct
 from real_life.utils import BITSTREAM_SUFFIX, GOP_HEADER_SUFFIX, VIDEO_HEADER_SUFFIX
 
 """
@@ -22,13 +22,15 @@ size encoded-decoded by arithmetic coding.
 GOP header format:
 ------------------
 
-[idx_gop_struct (1 byte)]
-[idx_rate       (1 byte)] (can be decimal but will be multiplied by 16 and stored on one byte)
+[type_gop       (1 byte) ] (0: All Intra/Random Access, 1: Low-delay P)
+[nb_chained_gop (2 bytes)] (Only for RA, how many (X) successive gops e.g. X_GOP_16) (0 to 65535)
+[gop_size       (2 bytes)] (Only for RA and LDP, gop size Y e.g. 4_GOP_Y)  (0 to 65535)
+[idx_rate       (1 byte) ] (can be decimal but will be multiplied by 16 and stored on one byte)
 
 Video header format:
 --------------------
 
-(x, y and z referes to the input data, the latents and the hyperprior)
+(x, y and z refers to the input data, the latents and the hyperprior)
 
 [H_x (2 bytes)] [W_x (2 bytes)]
 [H_y (2 bytes)] [W_y (2 bytes)]
@@ -38,8 +40,6 @@ Video header format:
 [Index last frame    (2 bytes)]  This is needed to remove the padded frames
 """
 
-# Used in the header:
-GOP_NAME_LIST = list(GOP_STRUCT_DIC.keys())
 
 def write_video_header(param):
     DEFAULT_PARAM = {
@@ -155,8 +155,16 @@ def write_gop_header(param):
 
     byte_to_write = b''
 
-    idx_gop_struct = GOP_NAME_LIST.index(GOP_struct_name)
-    byte_to_write += idx_gop_struct.to_bytes(1, byteorder='big')
+    # Parse gop_struct_name
+    flag_LDP = 'LDP' in GOP_struct_name.split('_')
+    gop_size = int(GOP_struct_name.split('_')[-1])
+    if not(flag_LDP):
+        nb_chained_gops = int(GOP_struct_name.split('_')[0])
+    else:
+        nb_chained_gops = 0
+    byte_to_write += flag_LDP.to_bytes(1, byteorder='big')
+    byte_to_write += nb_chained_gops.to_bytes(2, byteorder='big')
+    byte_to_write += gop_size.to_bytes(2, byteorder='big')
 
     casted_idx_rate = int(round(idx_rate * 16))
     byte_to_write += casted_idx_rate.to_bytes(1, byteorder='big')
@@ -187,10 +195,17 @@ def read_gop_header(param):
     with open(header_path, 'rb') as fin:
         byte_stream = fin.read()
 
-    idx_gop_struct = byte_stream[0]
-    idx_rate = byte_stream[1] / 16
+    flag_LDP = bool(byte_stream[0])
+    nb_chained_gops = int.from_bytes(byte_stream[1:3], byteorder='big')
+    gop_size = int.from_bytes(byte_stream[3:5], byteorder='big')
+    idx_rate = byte_stream[5] / 16
 
-    GOP_struct = GOP_STRUCT_DIC.get(GOP_NAME_LIST[idx_gop_struct])
+    # Construct gop_struct name
+    if flag_LDP:
+        gop_struct_name = f'LDP_{gop_size}'
+    else:
+        gop_struct_name = f'{nb_chained_gops}_GOP_{gop_size}'
+    GOP_struct = generate_gop_struct(gop_struct_name)
 
     return GOP_struct, idx_rate
 
