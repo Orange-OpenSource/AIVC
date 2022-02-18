@@ -346,7 +346,7 @@ def uncat_one_GOP(param):
 
     # Extract the header
     # ! This is hardcoded
-    GOP_HEADER_SIZE_BYTES = 2
+    GOP_HEADER_SIZE_BYTES = 6
     byte_header = byte_stream[:GOP_HEADER_SIZE_BYTES]
     header_file = gop_file.rstrip(GOP_SUFFIX) + GOP_HEADER_SUFFIX
     with open(header_file, 'wb') as fout:

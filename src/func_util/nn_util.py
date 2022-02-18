@@ -97,8 +97,12 @@ def crop_dic(dic_to_crop, dic_target_size):
 
 
 def push_dic_to_device(x, device):
-    for k in ['y', 'u', 'v']:
-        if not(x.get(k) is None):
+    for k in x:
+        if x.get(k) is None:
+            continue
+        elif type(x.get(k)) is dict:
+            push_dic_to_device(x.get(k), device)
+        elif type(x.get(k)) is torch.Tensor:
             x[k] = x.get(k).to(device, non_blocking=True)
     return x
 

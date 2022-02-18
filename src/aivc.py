@@ -23,15 +23,15 @@ parser.add_argument(
 
 parser.add_argument(
     '--gop_size', default=32, type=int,
-    help='Only for RA coding. Size of the hierarchical GOP.' +
-    'Must be less or equal to the intra period.'
+    help='Only for RA coding. Size of the hierarchical GOP. Min is 2. ' +
+    'Must be less or equal to the intra period.' +
+    'Must be a power of 2 for RA and coding.'
 )
 
 parser.add_argument(
     '--intra_period', default=32, type=int,
-    help='Number of inter frames in between two intra frames. Max is 64. Min is 2.' +
+    help='Number of inter frames in between two intra frames. Min is 2. ' +
     'This is ignored for intra coding' +
-    'Must be a power of 2 for RA and LDP coding.' +
     'Must be a multiple of GOP size for RA coding.'
 )
 
@@ -78,34 +78,30 @@ args = parser.parse_args()
 
 # =================== Parse the desired coding structure ==================== #
 if args.coding_config == 'AI':
-    gop = 'GOP_0'
+    gop = '1_GOP_0'
 
 elif args.coding_config == 'LDP':
-
-    if args.intra_period not in [2, 4, 8, 16, 32, 64]:
-        print('[ERROR]: Intra period should be a power of 2, from 2 to 64.')
+    if args.intra_period not in range(2, 65535):
+        print('[ERROR]: Intra period should be in [2, 65535] for LDP.')
         sys.exit(1)
-    
-    gop = 'LDP_GOP_' + str(args.intra_period)
+    gop = f'LDP_{args.intra_period}'
 
 elif args.coding_config == 'RA':
-    if args.intra_period not in [2, 4, 8, 16, 32, 64]:
-        print('[ERROR]: Intra period should be a power of 2, from 2 to 64.')
-        sys.exit(1)
-
     nb_gop = args.intra_period / args.gop_size
-    
     if nb_gop % 1 != 0:
-        print('[ERROR]: Intra period must be a multiple of intra period')
+        print('[ERROR]: Intra period must be equal a multiple of GOP size')
         sys.exit(1)
-
     nb_gop = int(nb_gop)
 
-    if nb_gop == 1:
-        gop = 'GOP_'
-    else:
-        gop = str(nb_gop) + '_GOP_' 
-    gop += str(args.gop_size) 
+    if nb_gop not in range(1, 65535):
+        print('[ERROR]: Intra period must be equal to [1, 65535] times GOP size')
+        sys.exit(1)
+    if args.gop_size not in range(2, 65535):
+        print('[ERROR]: Intra period must be in [1, 65535]')
+        sys.exit(1)
+
+    gop = f'{nb_gop}_GOP_{args.gop_size}'
+
 else:
     print('[ERROR]: unknown coding configuration. Should be either RA, AI or LDP.')
     sys.exit(1)

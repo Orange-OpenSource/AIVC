@@ -10,7 +10,7 @@
 """
 Define different gop structure in this file.
 
-A GOP is a dictionnary of dictionnaries. First entries are called 
+A GOP is a dictionnary of dictionnaries. First entries are called
 <frame_i> where i is the index of the DISPLAY order (i.e. the temporal index).
 
 Then for each frame we have:
@@ -68,14 +68,12 @@ def do_next_temp_layer(frame_idx, cur_N, cnt_coding, gop):
 
 
 def chained_gop(gop_size, n):
-
     """
     Create a gop structure of <n> chained GOP. There is a single I for the
     whole gop structure.
     """
-
     first_gop = generate_ra_gop(gop_size)
-    
+
     for i in range(1, n):
         cur_gop = generate_ra_gop(gop_size)
         # Remove the I frame of the gop we want to chain
@@ -83,7 +81,7 @@ def chained_gop(gop_size, n):
         # We need to change all the frame indices of cur_gop
         # Example, gop 4:
         # first_gop = 0, 1, 2, 3, 4
-        # cur_gop   = 1, 2, 3, 4 
+        # cur_gop   = 1, 2, 3, 4
         # we want the frame names in cur gop to be 5, 6, 7, 8 so we add
         # an offset of i * gop_size
         frame_idx_offset = i * gop_size
@@ -94,7 +92,7 @@ def chained_gop(gop_size, n):
             # Append the shifted frame to the final gop structure
             new_frame_name = 'frame_' + str(new_frame_idx)
             first_gop[new_frame_name] = cur_gop.get(frame_name)
-            
+
             # Also shift the references
             old_prev_ref = first_gop.get(new_frame_name).get('prev_ref')
             old_next_ref = first_gop.get(new_frame_name).get('next_ref')
@@ -103,7 +101,7 @@ def chained_gop(gop_size, n):
                 new_next_ref = 'frame_' + str(int(old_next_ref.split('_')[-1]) + frame_idx_offset)
             else:
                 new_next_ref = old_next_ref
-            
+
             new_prev_ref = 'frame_' + str(int(old_prev_ref.split('_')[-1]) + frame_idx_offset)
             first_gop[new_frame_name]['prev_ref'] = new_prev_ref
             first_gop[new_frame_name]['next_ref'] = new_next_ref
@@ -139,86 +137,14 @@ def generate_ldp_gop(gop_size):
     return gop
 # ======= GENERATE RANDOM ACCESS GOPS WITH A RECURSIVE FUNCTION ======= #
 
-# ALL INTRA GOP
-GOP_0 = {
-    'frame_0': {
-        'type': FRAME_I,
-        'prev_ref': None,
-        'next_ref': None,
-        'coding_order': 0,
-    },
-}
 
-GOP_2 = generate_ra_gop(2)
-GOP_4 = generate_ra_gop(4)
-GOP_8 = generate_ra_gop(8)
-GOP_16 = generate_ra_gop(16)
-GOP_32 = generate_ra_gop(32)
-GOP_64 = generate_ra_gop(64)
-
-CHAIN_2_GOP_32 = chained_gop(32, 2)
-CHAIN_2_GOP_16 = chained_gop(16, 2)
-CHAIN_4_GOP_16 = chained_gop(16, 4)
-CHAIN_2_GOP_8 = chained_gop(8, 2)
-CHAIN_4_GOP_8 = chained_gop(8, 4)
-CHAIN_8_GOP_8 = chained_gop(8, 8)
-CHAIN_2_GOP_4 = chained_gop(4, 2)
-CHAIN_4_GOP_4 = chained_gop(4, 4)
-CHAIN_8_GOP_4 = chained_gop(4, 8)
-CHAIN_16_GOP_4 = chained_gop(4, 16)
-CHAIN_2_GOP_2 = chained_gop(2, 2)
-CHAIN_4_GOP_2 = chained_gop(2, 4)
-CHAIN_8_GOP_2 = chained_gop(2, 8)
-CHAIN_16_GOP_2 = chained_gop(2, 16)
-CHAIN_32_GOP_2 = chained_gop(2, 32)
-
-LDP_2 = generate_ldp_gop(2)
-LDP_4 = generate_ldp_gop(4)
-LDP_8 = generate_ldp_gop(8)
-LDP_10 = generate_ldp_gop(10)
-LDP_16 = generate_ldp_gop(16)
-LDP_32 = generate_ldp_gop(32)
-LDP_64 = generate_ldp_gop(64)
-
-GOP_STRUCT_DIC = {
-    'GOP_0': GOP_0,
-    'GOP_2': GOP_2,
-    'GOP_4': GOP_4,
-    'GOP_8': GOP_8,
-    'GOP_16': GOP_16,
-    'GOP_32': GOP_32,
-    'GOP_64': GOP_64,
-    # Chained version below
-    '2_GOP_32': CHAIN_2_GOP_32,
-    '2_GOP_16': CHAIN_2_GOP_16,
-    '4_GOP_16': CHAIN_4_GOP_16,
-    '2_GOP_8': CHAIN_2_GOP_8,
-    '4_GOP_8': CHAIN_4_GOP_8,
-    '8_GOP_8': CHAIN_8_GOP_8,
-    '2_GOP_4': CHAIN_2_GOP_4,
-    '4_GOP_4': CHAIN_4_GOP_4,
-    '8_GOP_4': CHAIN_8_GOP_4,
-    '16_GOP_4': CHAIN_16_GOP_4,
-    '2_GOP_2': CHAIN_2_GOP_2,
-    '4_GOP_2': CHAIN_4_GOP_2,
-    '8_GOP_2': CHAIN_8_GOP_2,
-    '16_GOP_2': CHAIN_16_GOP_2,
-    '32_GOP_2': CHAIN_32_GOP_2,
-    # Low-delay P GOP
-    'LDP_GOP_2': LDP_2,
-    'LDP_GOP_4': LDP_4,
-    'LDP_GOP_8': LDP_8,
-    'LDP_GOP_10': LDP_10,
-    'LDP_GOP_16': LDP_16,
-    'LDP_GOP_32': LDP_32,
-    'LDP_GOP_64': LDP_64,
-}
-
+# =============== USEFUL FUNCTIONS FOR GOP MANAGEMENT ================= #
 def get_gop_struct_name(GOP_struct):
     for k in GOP_STRUCT_DIC:
         if GOP_STRUCT_DIC.get(k) == GOP_struct:
             return k
-    
+
+
 def get_name_frame_code(GOP_struct, idx_code):
     """
     Return a list of name (frame_i) with all frames that have
@@ -230,7 +156,7 @@ def get_name_frame_code(GOP_struct, idx_code):
     for f in GOP_struct:
         if GOP_struct.get(f).get('coding_order') == idx_code:
             name_frame_code.append(f)
-    
+
     # If nothing has been found, return the empty list
     return name_frame_code
 
@@ -265,5 +191,57 @@ def get_current_gop_struct(nb_epoch_done, change_gop_struct_epoch, training_gop_
         # We have done the previous stage but we're not yet to the next one
         if (nb_epoch_done < start_next_stage) and (nb_epoch_done >= end_prev_stage):
             cur_gop_struct = training_gop_struct[i]
-    
+
     return cur_gop_struct
+# =============== USEFUL FUNCTIONS FOR GOP MANAGEMENT ================= #
+
+
+def generate_gop_struct(gop_struct_name: str):
+
+    # All intra configurations
+    if gop_struct_name == '1_GOP_0':
+        gop_struct = {
+            'frame_0': {
+                'type': FRAME_I,
+                'prev_ref': None,
+                'next_ref': None,
+                'coding_order': 0,
+            },
+        }
+    # Low delay P configuration
+    elif 'LDP' in gop_struct_name.split('_'):
+        gop_size = int(gop_struct_name.split('_')[-1])
+        gop_struct = generate_ldp_gop(gop_size)
+    # Random access configuration
+    else:
+        n_chained_gops = int(gop_struct_name.split('_')[0])
+        gop_size = int(gop_struct_name.split('_')[-1])
+        gop_struct = chained_gop(gop_size, n_chained_gops)
+
+    return gop_struct
+
+# # ALL INTRA GOP
+# GOP_0 = {
+#     'frame_0': {
+#         'type': FRAME_I,
+#         'prev_ref': None,
+#         'next_ref': None,
+#         'coding_order': 0,
+#     },
+# }
+
+# GOP_STRUCT_DIC = {'1_GOP_0': GOP_0}
+# # Generate RA gop
+# for gop_size in [4, 8, 16, 32, 64, 128, 256, 512, 1024]:
+#     for n_gops in range(1, 512):
+#         k = f'{n_gops}_GOP_{gop_size}'
+#         GOP_STRUCT_DIC[k] = chained_gop(gop_size, n_gops)
+
+# # Generate LDP gop:
+# for gop_size in range(2, 1024):
+#     k = f'LDP_{gop_size}'
+#     GOP_STRUCT_DIC[k] = generate_ldp_gop(gop_size)
+
+# print(len(GOP_STRUCT_DIC))
+
+
