@@ -55,8 +55,8 @@ submit = {}
 for idx in compressed_images_idx:   
     for c in ['y', 'u', 'v']:
         cur_key = str(idx) + '_' + c
-        submit[cur_key] = path_raw + str(idx) + '_' + c + '.png'
-        target[cur_key] = path_compressed + str(idx) + '_' + c + '.png'
+        target[cur_key] = path_raw + str(idx) + '_' + c + '.png'
+        submit[cur_key] = path_compressed + str(idx) + '_' + c + '.png'
 
 
 results = evaluate(submit, target)
