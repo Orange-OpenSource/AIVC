@@ -27,7 +27,7 @@ from real_life.decode import Decoder
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
-    '--gop', default='GOP_32', type=str,
+    '--gop', default='1_GOP_32', type=str,
     help='Name of the GOP structure to be used. '
 )
 
