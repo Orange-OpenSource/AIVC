@@ -143,7 +143,7 @@ $ docker build -t aivc .
 Finally, launch an interactive container of the aivc docker image
 
 ```bash
-$ docker run -it -v <path_to_aivc>:<path_to_aivc> aivc bash # <path_to_aivc> is the path where the repo is cloned
+$ docker run -it -v <path_to_aivc>:/AIVC aivc bash # <path_to_aivc> is the path where the repo is cloned
 ```
 
 ### Sanity check
@@ -151,7 +151,7 @@ $ docker run -it -v <path_to_aivc>:<path_to_aivc> aivc bash # <path_to_aivc> is 
 Finally, launch the following script to ensure than everything is working properly.
 
 ```
-$ cd AIVC/src
+$ cd /AIVC/src
 $ ./sanity_script.sh
 ```
 
