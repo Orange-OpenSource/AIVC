@@ -129,6 +129,9 @@ The best way to ensure reproducibility is to run the code within a docker contai
 ```
 FROM pytorch/pytorch:1.7.0-cuda11.0-cudnn8-devel
 
+# fix APT-KEY problem [https://forums.developer.nvidia.com/t/18-04-cuda-docker-image-is-broken/212892/16]
+RUN apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/3bf863cc.pub
+
 RUN apt-get update && \
     pip install scipy && \
     pip install torchac # Thanks to Fabian Mentzer for the package! https://github.com/fab-jul/torchac
@@ -148,7 +151,7 @@ $ docker run -it -v <path_to_aivc>:<path_to_aivc> aivc bash # <path_to_aivc> is 
 
 ### Sanity check
 
-Finally, launch the following script to ensure than everything is working properly.
+Finally, launch the following script to ensure that everything is working properly.
 
 ```
 $ cd AIVC/src
