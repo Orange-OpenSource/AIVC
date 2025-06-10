@@ -1,8 +1,8 @@
 # DEPRECATED
 
 > [!CAUTION]
-> The AIVC repository is now outdated and will be archived, as no further maintenance is planned.
-> We encourage you to explore our more recent our more recent work instead. The [Cool-chic neural video codec](https://github.com/Orange-OpenSource/Cool-Chic), which is a low-complexity alternative to the autoencoder-based codecs.
+> The AIVC repository is now outdated and archived, as no further maintenance is planned.
+> We encourage you to explore our more recent work instead. The [Cool-chic neural video codec](https://github.com/Orange-OpenSource/Cool-Chic), which is a low-complexity alternative to the autoencoder-based codecs.
 
 # AIVC: _Artificial Intelligence-based Video Coding_
 
