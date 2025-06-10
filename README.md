@@ -1,3 +1,5 @@
+# DEPRECATED: Please go check out [Cool-chic](https://github.com/Orange-OpenSource/Cool-Chic), our low-complexity neural video codec
+
 # AIVC: _Artificial Intelligence-based Video Coding_
 
 ## In a few words
